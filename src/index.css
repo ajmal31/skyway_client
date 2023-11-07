@@ -1,0 +1,20 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.shine-button:hover {
+  animation: shine 1s alternate infinite;
+}
+
+@keyframes shine {
+  0% {
+    text-shadow: none;
+  }
+  100% {
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ffffff;
+  }
+}

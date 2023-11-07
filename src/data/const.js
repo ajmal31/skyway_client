@@ -1,0 +1,1 @@
+export const USER_SRV_BASE_URL='http://localhost:3000/api/user-srv/'
