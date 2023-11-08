@@ -4,15 +4,6 @@ console.log('reach the api calling redux phase')
 import Cookies from 'js-cookie'
 
 
-//get token from cookies
-
-export const getToken=()=>{
-  
-    const token=localStorage.getItem('authToken')
-    return token
-
-}
-
 //create an axios instance
 const axiosInstance=axios.create();
 
@@ -21,7 +12,7 @@ axiosInstance.interceptors.request.use(
     (config)=>{
 
         //get token from cookies
-        const token=getToken()
+        const token=localStorage.getItem('authToken')
         if(token){
 
             config.headers['Authorization']=`bearer ${token}`

@@ -1,10 +1,13 @@
-import Cookies from "js-cookie"
-const Home=()=>{
 
+import { useDispatch } from "react-redux"
+import { userLogout } from "../../../redux/slices/UserSlice"
+const Home=()=>{
+ 
+    const dispatch=useDispatch() 
     const handleClick=()=>{
-        console.log('helo')
-        localStorage.removeItem('authToken')
-        // Cookies.remove('authToken')
+      
+         dispatch(userLogout())
+     
     }
 
     return(

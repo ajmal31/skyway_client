@@ -6,8 +6,9 @@ import { useme } from "../../../hooks/toast"
 import { fetchData } from "../../../redux/api/api"
 import { USER_SRV_BASE_URL } from "../../../data/const"
 import { useDispatch } from "react-redux"
-import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
+import { userLogin } from "../../../redux/slices/UserSlice"
+
 
 const LoginContent = () => {
 
@@ -44,11 +45,11 @@ const LoginContent = () => {
             const{authToken}=res.payload.data
             useme(message,success)
 
-            localStorage.setItem('authToken',authToken)
-            let a=localStorage.getItem('auhtToken')
- 
-
+            
+            dispatch(userLogin(authToken))
             navigate('/home')
+   
+            
             
         }
         else if(message==="please enter your valid password"||"user does not exist") useme(message,error)

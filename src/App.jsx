@@ -1,17 +1,17 @@
 
 //import pages here
-import React from "react"
-import { BrowserRouter as Router ,Routes,Route } from "react-router-dom"
+import React,{useState,useEffect} from "react"
+import { BrowserRouter as Router ,Routes,Route,useLocation,Navigate } from "react-router-dom"
 import UserLogin from "./pages/user/login/UserLogin"
 import UserRegister from "./pages/user/register/UserRegister"
-import { getToken } from "./redux/api/api"
 import Home from "./pages/user/home/Home"
-const token=getToken()
+import UserSlice from "./redux/slices/UserSlice"
+import { useSelector } from "react-redux"
+
 
 function App() {
-
       
-
+      const token=useSelector((state=UserSlice)=>state.userSlice.token)
 
  return(
  
@@ -19,9 +19,9 @@ function App() {
   
   <Routes>
 
-        <Route  path="/userlogin" element={<UserLogin/>} />
+        <Route  path="/userLogin" element={token? <h1>sorry you are logged in</h1>: <UserLogin/>} />
         <Route path="/userRegister" element={<UserRegister/>}/>
-        <Route path='/home' element={(token?<Home/>:<UserLogin/>)}/>
+        <Route path='/home' element={token?(<Home/>):<Navigate to={'/userLogin'} />}/>
         
 
 

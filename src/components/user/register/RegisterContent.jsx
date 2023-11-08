@@ -52,7 +52,7 @@ const RegisterContent = () => {
         
             if (response) {
                 useme('User registered successfully', success);
-                navigate('/userLogin');
+                navigate('/userlogin');
             }
         }
     };
