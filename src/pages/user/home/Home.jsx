@@ -3,8 +3,8 @@ const Home=()=>{
 
     const handleClick=()=>{
         console.log('helo')
-        // localStorage.removeItem('authToken')
-        Cookies.remove('authToken')
+        localStorage.removeItem('authToken')
+        // Cookies.remove('authToken')
     }
 
     return(
