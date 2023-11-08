@@ -43,11 +43,16 @@ const LoginContent = () => {
              
             const{authToken}=res.payload.data
             useme(message,success)
-         
-            Cookies.set('authtoken',authToken)
-            navigate('/home')
+
+            // localStorage.setItem('authToken',authToken)
+            // let a=localStorage.getItem('auhtToken')
+            // console.log('in login',a);
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 7);
+            Cookies.set('authToken',authToken,{expires:expirationDate})
+            console.log('expiry',expirationDate)
             
-           
+            navigate('/home')
             
         }
         else if(message==="please enter your valid password"||"user does not exist") useme(message,error)
