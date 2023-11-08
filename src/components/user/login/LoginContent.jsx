@@ -8,54 +8,81 @@ import { USER_SRV_BASE_URL } from "../../../data/const"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { userLogin } from "../../../redux/slices/UserSlice"
+import { GoogleLogin } from "@react-oauth/google"
+import { jwtDecode } from "jwt-decode"
 
 
 const LoginContent = () => {
 
-    const navigate=useNavigate()
-    const dispatch=useDispatch()
-    const [userCred,setUserCred]=useState({
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [userCred, setUserCred] = useState({
 
-        email:'',
-        password:''
+        email: '',
+        password: ''
     })
 
-    const error='error'
-    const success='success'
+    const error = 'error'
+    const success = 'success'
 
-    const handleLogin=async(e)=>{
+    const handleLogin = async (e) => {
         e.preventDefault()
         //two time alert occuring !! why?
-        if(userCred.email.length>30) useme('Please enter valid email',error)
-        else if(userCred.password.length<4) useme('please enter valid password',error)
-    
-    else{
-      
-        let obj={
-            method:'post',
-            url:USER_SRV_BASE_URL+'login',
-            data:userCred,
-            token:false
+        if (userCred.email.length > 30) useme('Please enter valid email', error)
+        else if (userCred.password.length < 4) useme('please enter valid password', error)
+
+        else {
+
+            let obj = {
+                method: 'post',
+                url: USER_SRV_BASE_URL + 'login',
+                data: userCred,
+                token: false
+            }
+            const res = await dispatch(fetchData(obj))
+
+            const { message } = res.payload.data
+            if (message === "user Logged in succesful") {
+
+                const { authToken } = res.payload.data
+                useme(message, success)
+
+
+                dispatch(userLogin(authToken))
+                navigate('/home')
+
+
+
+            }
+            else if (message === "please enter your valid password" || "user does not exist") useme(message, error)
+
+
         }
-        const res=await dispatch(fetchData(obj))
 
-        const {message}=res.payload.data
-        if(message==="user Logged in succesful") {
-             
-            const{authToken}=res.payload.data
-            useme(message,success)
+    }
 
-            
+    const handlegoogleLogin = async (credentials) => {
+        //exact value making like an object and assign to an variable
+        const data = { encodedData: credentials.credential }
+        console.log(data)
+        const obj = {
+            method: 'post',
+            url: USER_SRV_BASE_URL + 'googleLogin',
+            data: data,
+            token: false
+
+        }
+        const response = await dispatch(fetchData(obj))
+
+        const { authToken, message } = response.payload.data
+
+        if (!authToken) useme(message,'error')
+        else {
+            useme(message, 'success')
             dispatch(userLogin(authToken))
             navigate('/home')
-   
-            
-            
         }
-        else if(message==="please enter your valid password"||"user does not exist") useme(message,error)
 
-        
-    } 
 
     }
 
@@ -85,52 +112,61 @@ const LoginContent = () => {
             </div>
 
 
-      
-         <form onSubmit={handleLogin}>
-            <div className=" bg-secondory flex justify-center">
+
+            <form onSubmit={handleLogin}>
+                <div className=" bg-secondory flex justify-center">
 
 
-                <div className=" h-1/2 w-3/4 mt-20" >
-                    <div className="flex justify-start flex-col">
-                        {/* <p className="text-sm flex justify-start pl-2  text-gray-300">email</p> */}
+                    <div className=" h-1/2 w-3/4 mt-20" >
+                        <div className="flex justify-start flex-col">
+                            {/* <p className="text-sm flex justify-start pl-2  text-gray-300">email</p> */}
 
-                  
-                       {userCred.email.length>0? <label htmlFor=""className="text-sm flex flex-start text-gray-300 font-thin" >email</label>:null}
 
-                        <motion.input type="email" onChange={e=>setUserCred({...userCred,email:e.target.value})} className="mb-2 rounded-lg text-sm p-2.5 m-0 text-black bg-gray-300 outline-none border " placeholder="email" initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} />
+                            {userCred.email.length > 0 ? <label htmlFor="" className="text-sm flex flex-start text-gray-300 font-thin" >email</label> : null}
 
-                        {/* <p className="text-sm flex justify-start pl-2 text-gray-300" >password</p> */}
-                        {userCred.password.length>0? <label htmlFor=""className="text-sm flex flex-start text-gray-300 font-thin" >password</label>:null}
-                        <motion.input type="password" onChange={e=>setUserCred({...userCred,password:e.target.value})} className="mb-2 rounded-lg text-sm p-2.5 m-0  text-black bg-gray-300 outline-none border " placeholder="password" initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} />
-                        <motion.button
-                            type="submit"
-                            initial={{ scale: 1 }}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ boxShadow: "0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 20px #ffffff" }}
-                            className="shine-button bg-sec-button text-gray-300 font-Outfit-button font-semibold px-7 py-1 text-sm rounded-lg border mb-2 border-gray-500"
-                        >
-                            Next
-                        </motion.button>
+                            <motion.input type="email" required onChange={e => setUserCred({ ...userCred, email: e.target.value })} className="mb-2 rounded-lg text-sm p-2.5 m-0 text-black bg-gray-300 outline-none border " placeholder="email" initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} />
 
-                        <motion.button
+                            {/* <p className="text-sm flex justify-start pl-2 text-gray-300" >password</p> */}
+                            {userCred.password.length > 0 ? <label htmlFor="" className="text-sm flex flex-start text-gray-300 font-thin" >password</label> : null}
+                            <motion.input type="password" required onChange={e => setUserCred({ ...userCred, password: e.target.value })} className="mb-2 rounded-lg text-sm p-2.5 m-0  text-black bg-gray-300 outline-none border " placeholder="password" initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} />
+                            <motion.button
+                                type="submit"
+                                initial={{ scale: 1 }}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ boxShadow: "0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 20px #ffffff" }}
+                                className="shine-button bg-sec-button text-gray-300 font-Outfit-button font-semibold px-7 py-1 text-sm rounded-lg border mb-2 border-gray-500"
+                            >
+                                Next
+                            </motion.button>
+
+                            <GoogleLogin
+                                onSuccess={handlegoogleLogin}
+                                onError={() => {
+                                    console.log('Login Failed');
+                                }}
+                            />
+
+                            {/* <motion.button
                             initial={{ scale: 1 }}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ boxShadow: "0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 20px #ffffff" }}
                             className="shine-button bg-none text-gray-300 text-sm px-7 py-1  rounded-lg border font-serif border-gray-500"
                         >
                             Login with Google
-                        </motion.button>
-                        <div className="flex justify-end text-sm mt-1 mr-1 text-gray-400 font-thin">
+                        </motion.button> */}
 
-                            <Link to={'/userRegister'}>You don't Have an Account?</Link>
-                            <ToastContainer />
 
+                            <div className="flex justify-end text-sm mt-1 mr-1 text-gray-400 font-thin">
+
+                                <Link to={'/userRegister'}>You don't Have an Account?</Link>
+                                <ToastContainer />
+
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
-
-            </div>
             </form>
 
         </div>

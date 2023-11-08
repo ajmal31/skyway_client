@@ -19,7 +19,6 @@ export const UserSlice=createSlice({
           localStorage.setItem('authToken',action.payload)
 
          //store to redux
-
           state.token=action.payload
 
 
