@@ -7,9 +7,8 @@ import Cookies from 'js-cookie'
 //get token from cookies
 
 export const getToken=()=>{
- 
-     const token= Cookies.get('authToken')   
-    // const token=localStorage.getItem('authToken')
+  
+    const token=localStorage.getItem('authToken')
     return token
 
 }

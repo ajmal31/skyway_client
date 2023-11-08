@@ -44,14 +44,10 @@ const LoginContent = () => {
             const{authToken}=res.payload.data
             useme(message,success)
 
-            // localStorage.setItem('authToken',authToken)
-            // let a=localStorage.getItem('auhtToken')
-            // console.log('in login',a);
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getDate() + 7);
-            Cookies.set('authToken',authToken,{expires:expirationDate})
-            console.log('expiry',expirationDate)
-            
+            localStorage.setItem('authToken',authToken)
+            let a=localStorage.getItem('auhtToken')
+ 
+
             navigate('/home')
             
         }
