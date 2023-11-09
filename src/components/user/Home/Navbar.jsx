@@ -23,7 +23,7 @@ const Navbar=()=>{
 
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg>
-          <span className="ml-3 text-2xl text-gray-100 font-medium antialiased">Skyway</span>
+         <Link to={'/'}> <span className="ml-3 text-2xl text-gray-100 font-medium antialiased">Skyway</span></Link>
         </a>
         {/* Navbar */}
         <nav className="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
