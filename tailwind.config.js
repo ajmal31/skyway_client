@@ -17,7 +17,12 @@ module.exports = {
         'Outfit':['Outfit', 'sans-serif'],
         'Outfit-button':['Outfit','sans-serif']
         
+      },
+      letterSpacing: {
+        wider: '0.2em', // Increase the word spacing
+        widest: '0.0em', // Further increase the word spacing
       }
+      
       
     },
   },

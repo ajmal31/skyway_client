@@ -2,7 +2,8 @@ import {createSlice} from "@reduxjs/toolkit"
 
 const initialState={
 
-    token:localStorage.getItem('authToken')||null
+    token:localStorage.getItem('authToken')||null,
+    username:localStorage.getItem('username')||null
 }
 
 
@@ -15,11 +16,16 @@ export const UserSlice=createSlice({
      
         userLogin:(state,action)=>{
              
+         
+          const {authToken,username}=action?.payload
           //setting token 
-          localStorage.setItem('authToken',action.payload)
+          localStorage.setItem('authToken',authToken)
+          localStorage.setItem('username',username)
+          
 
          //store to redux
-          state.token=action.payload
+          state.token=authToken
+          state.username=username
 
 
              
@@ -27,7 +33,9 @@ export const UserSlice=createSlice({
         userLogout:(state,action)=>{
 
              localStorage.removeItem('authToken')
+             localStorage.removeItem('username')
              state.token=null
+             state.username=null
              
         }
         

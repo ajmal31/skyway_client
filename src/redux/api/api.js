@@ -1,14 +1,11 @@
 import { createAsyncThunk,createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-console.log('reach the api calling redux phase')
-import Cookies from 'js-cookie'
-
 
 //create an axios instance
-const axiosInstance=axios.create();
+const userAxiosInstance=axios.create();
 
 //adding request interceptors axios
-axiosInstance.interceptors.request.use(
+userAxiosInstance.interceptors.request.use(
     (config)=>{
 
         //get token from cookies
@@ -42,7 +39,7 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
         //if token is true should be check whether user is logged in if user not logged in redirect to login page
         if(token){
 
-            let response=await axiosInstance[method](url,data)
+            let response=await userAxiosInstance[method](url,data)
             return response
 
         }else{
@@ -78,9 +75,9 @@ const CommonSlice=createSlice({
         })
         .addCase(fetchData.fulfilled,(state,action)=>{
             
-            console.log('error happend hear fullfilled',action.payload)
+            
             state.data=action.payload.data
-            console.log('after desrelaization ',state.data)
+            
         })
         .addCase(fetchData.rejected,(state,action)=>{
             console.log('error happend here rejected state')

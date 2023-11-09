@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 
 function App() {
       
-      const token=useSelector((state=UserSlice)=>state.userSlice.token)
+      const token=useSelector((state=UserSlice)=>state.UserSlice.token)
 
  return(
  
@@ -21,7 +21,7 @@ function App() {
 
         <Route  path="/userLogin" element={token? <h1>sorry you are logged in</h1>: <UserLogin/>} />
         <Route path="/userRegister" element={<UserRegister/>}/>
-        <Route path='/home' element={token?(<Home/>):<Navigate to={'/userLogin'} />}/>
+        <Route path='/' element={(<Home/>)}/>
         
 
 

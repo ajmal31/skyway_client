@@ -8,7 +8,7 @@ export const store=configureStore({
      
         
         common:CommonSlice,
-        userSlice:UserSlice
+        UserSlice:UserSlice
 
     }
 

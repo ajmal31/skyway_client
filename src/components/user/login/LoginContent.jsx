@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { userLogin } from "../../../redux/slices/UserSlice"
 import { GoogleLogin } from "@react-oauth/google"
-import { jwtDecode } from "jwt-decode"
+
 
 
 const LoginContent = () => {
@@ -40,16 +40,16 @@ const LoginContent = () => {
                 token: false
             }
             const res = await dispatch(fetchData(obj))
+           
 
             const { message } = res.payload.data
             if (message === "user Logged in succesful") {
 
-                const { authToken } = res.payload.data
+                const { authToken,username } = res.payload.data
                 useme(message, success)
-
-
-                dispatch(userLogin(authToken))
-                navigate('/home')
+                
+                dispatch(userLogin(res.payload.data))
+                navigate('/')
 
 
 
@@ -63,6 +63,7 @@ const LoginContent = () => {
 
     const handlegoogleLogin = async (credentials) => {
         //exact value making like an object and assign to an variable
+
         const data = { encodedData: credentials.credential }
         console.log(data)
         const obj = {
@@ -73,14 +74,16 @@ const LoginContent = () => {
 
         }
         const response = await dispatch(fetchData(obj))
+        
 
-        const { authToken, message } = response.payload.data
+        const { authToken, message,username } = response.payload.data
 
         if (!authToken) useme(message,'error')
         else {
+            
             useme(message, 'success')
-            dispatch(userLogin(authToken))
-            navigate('/home')
+            dispatch(userLogin(response.payload.data))
+            navigate('/')
         }
 
 
