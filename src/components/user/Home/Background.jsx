@@ -15,7 +15,7 @@ const Background = () => {
 
         <div className=" w-full   ">
           {/* home page first screeen  */}
-          <div className="h-screen" >
+          <div className="h-screen  "  >
             <div className="flex flex-row  h-5/6 font-Outfit " >
 
               {/* first half */}
@@ -62,17 +62,30 @@ const Background = () => {
             </div>
           </div>
 
+          <div className="bg-primary w-full justify-center  font-Outfit text-white flex mb-24 ">
+            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className="  flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
+            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
+            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
+            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
 
+
+
+
+
+
+
+
+          </div>
 
           {/* Home page second screeen */}
-          <div className="h-screen" >
-            <div className="bg-red-500  flex flex-row  h-5/6 font-Outfit " >
+          <div className="h-screen " >
+            <div className="  flex flex-row  h-5/6 font-Outfit  " >
 
-              <div className="w-1/2 border flex justify-center items-center ">image section
+              <div className="w-1/2 flex justify-start items-center ">
 
                 {/* image section */}
 
-                <div className="flex mb-16 items-center">
+                <div className="flex mb-16 ">
                   <div className=" h-full">
                     <motion.img
                       // initial={{ x: '5vh' }}
@@ -84,13 +97,29 @@ const Background = () => {
                       //   repeatType: 'mirror',
                       //   ease: 'easeInOut'
                       // }}
-                      src="/home-bg-removed.png" alt="Your Image" className="w-6/7 mr-16 max-h-full object-contain"
+                      src="/Home-screen-2/people-handshake.png" alt="Your Image" className="w-6/7 mr-16 max-h-full object-contain"
                     />
                   </div>
                 </div>
 
               </div>
-              <div className="w-1/2 border flex justify-center items-center ">text section</div>
+              <div className="w-1/2  flex justify-center items-center ">
+
+
+
+                {/* Text section */}
+                <div className=" h-full flex items-center  pb-14   ">
+                  <div className="flex flex-col">
+                    <div className="text-gray-300 font-bold leading-tight font-Outfit tracking-wider text-4xl">
+                      Connecting Dreams, One Aspiration <br /> at a Time,<br /> Your Gateway to Success
+                    </div>
+                    <p className="text-gray-300 font-Outfit  text-base mt-3">Empowering dreams and connecting individuals <br />with trusted visa ✈</p>                    <div className="mt-3">
+                      <button className="text-gray-300 font-Outfit border-transparent shadow-2xl shadow-purple-950 hover:bg-transparent hover:border-white hover:border-y mr-5 rounded-3xl bg-sec-button px-6 pr-16 py-2.5">More&nbsp;</button>
+                      <button className="text-gray-300 font-Outfit shadow-2xl shadow-purple-950 hover:border-transparent hover:bg-sec-button rounded-3xl border px-6 pr-14 py-2.5">About us</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -99,12 +128,41 @@ const Background = () => {
 
           {/* Home page Third screen */}
           <div className="h-screen" >
-            <div className="bg-red-500  flex flex-row  h-5/6 font-Outfit " >
-
-              <div className=" w-full border flex justify-center items-center ">Testimonals</div>
+            <div className="   h-5/6 font-Outfit " >
 
 
-            </div>
+              {/* Testimonals */}
+              <div className=" w-full  flex justify-center ">
+                <div className=" w-80 ">
+
+                  <p className="text-gray-300  font-bold flex justify-center ">TESTIMONALS</p>
+                  <p className=" text-gray-300 flex justify-center font-bold text-4xl" >Read What Others <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Have to Say</p>
+                </div>
+
+
+
+              </div  >
+
+         
+               
+                <div className="flex h-screen  justify-center m-10  ">
+                  <div className=" flex flex-row w-5/6 h-3/6 text-white font-Outfit" >
+
+                    <motion.div initial={{scale:1}} whileHover={{scale:1.1}} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center shadow-2xl shadow-black ">username</motion.div>
+                    <motion.div initial={{scale:1}} whileHover={{scale:1.1}} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center shadow-2xl shadow-black ">username</motion.div>
+                    <motion.div initial={{scale:1}} whileHover={{scale:1.1}} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center shadow-2xl shadow-black ">username</motion.div>
+                    <motion.div initial={{scale:1}} whileHover={{scale:1.1}} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center shadow-2xl shadow-black ">username</motion.div>
+                   
+                    
+                    
+
+                  </div>
+                </div>
+              </div>
+           
+
+
+
           </div>
         </div>
 

@@ -11,7 +11,7 @@ const Navbar=()=>{
 
     return(
 
-    <header className="w-full bg-primary text-gray-100  font-Outfit px-10 shadow-sm">
+    <header className="w-full bg-primary text-gray-100  font-Outfit px-10 shadow-sm   ">
 
 
       {/* :DESKTOP MENU */}
@@ -24,9 +24,9 @@ const Navbar=()=>{
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg>
          <Link to={'/'}> <span className="ml-3 text-2xl text-gray-100 font-medium antialiased">Skyway</span></Link>
-        </a>
+        </a  >
         {/* Navbar */}
-        <nav className="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide">
+        <nav className="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide  ">
           <a href="#link" className="mr-8 hover:text-gray-300">Solutions</a>
           <a href="#link" className="mr-8 hover:text-gray-300">Ventures</a>
           <a href="#link" className="mr-8 hover:text-gray-300">About</a>
