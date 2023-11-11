@@ -13,6 +13,7 @@ userAxiosInstance.interceptors.request.use(
         if(token){
 
             config.headers['Authorization']=`bearer ${token}`
+            config.headers['Content-Type']='application/json'
             console.log(config.headers)
 
         }else{
@@ -38,9 +39,17 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
         //if token is false (upcoming data ) that apis not mandatory is check whether used is logged in or not
         //if token is true should be check whether user is logged in if user not logged in redirect to login page
         if(token){
-
-            let response=await userAxiosInstance[method](url,data)
-            return response
+            
+            if(method==='get'){
+                let response=await userAxiosInstance[method](url)
+                console.log('redux api call get ',response)
+                 return response
+            }else{
+                let response =await userAxiosInstance[method](url,data)
+                console.log('redux api call',response)
+                return response
+            }
+   
 
         }else{
             let response=await axios[method](url,data)
