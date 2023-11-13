@@ -1,12 +1,12 @@
 // import here componets if its required
-import Vlogin from "../../../components/venture/Login/Vlogin"
+import VRegister from "../../../components/venture/Login/VRegister"
 const VentureLogin=()=>{
 
 
 return(
 
 
-    <Vlogin/>
+    <VRegister/>
     
 )
 
