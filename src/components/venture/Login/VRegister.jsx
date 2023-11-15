@@ -1,55 +1,16 @@
-import { useState } from "react"
 import { useFormik } from "formik"
 import basicSchema from "../schema/Schema"
+import { useDispatch } from "react-redux"
+import { fetchData } from "../../../redux/api/api"
+import { VENTURE_SRV_BASE_URL } from "../../../data/const"
+import {useme} from "../../../hooks/toast"
+import { ToastContainer } from "react-toastify"
 
 
 const VRegister = () => {
 
 
-    const [cred, setCread] = useState({
-
-        firstName: "",
-        lastName: "",
-        ventureName: "",
-        phone_one: "",
-        phone_two: "",
-        official_email: "",
-        venture_category: "",
-        description: "",
-        expertise_contries: "",
-        min_max_service_amount: "",
-        official_portfolio: "",
-        webiste_link: "",
-        registration_number: "",
-        license_number: "",
-        social_media: "",
-        insurance_img: "",
-        license_img: "",
-        password_one: "",
-        confirm_password_one: "",
-        password_two: "",
-        confirm_password_two: ""
-
-
-
-    })
-
-
-    const handleClick = (e) => {
-
-        const { name, value } = e.target
-
-        setCread((prev) => ({
-
-            ...prev, [name]: value
-        }))
-    }
-    // const handleSubmit=(e)=>{
-    //     e.preventDefault()
-
-    //     console.log(cred)
-    // } 
-
+     const disapatch=useDispatch()
     const { handleBlur, handleChange, values, errors, touched, handleSubmit } = useFormik({
 
         initialValues: {
@@ -66,7 +27,7 @@ const VRegister = () => {
             min_max_service_amount: "",
             official_portfolio: "",
             website_link: "",
-            registration_number: "",
+            register_number: "",
             license_number: "",
             social_media: "",
             insurance_img: "",
@@ -77,11 +38,28 @@ const VRegister = () => {
             confirm_password_two: ""
         },
         validationSchema: basicSchema,
-        onSubmit: (values) => {
 
-            console.log('after submitting a values')
-            console.log(values)
-            alert('okey')
+        onSubmit: async(values) => {
+            const error='error'
+
+            const {password_one,confirm_password_one,password_two,confirm_password_two}=values
+            if(password_one!==confirm_password_one) return useme('password one and confirm password is not matching',error)
+            if(password_two!==confirm_password_two) return useme('password two and confirm password is not matching',error)
+            const obj={
+                url:VENTURE_SRV_BASE_URL+'register',
+                method:'post',
+                data:values,
+                token:false
+
+            }
+            
+            const response=await disapatch(fetchData(obj))
+            console.log('after geting response from ventur registeration',response)
+            console.log(response?.payload?.data?.errors[0].msg)
+            const {msg}=response?.payload?.data?.errors[0]
+            useme(msg,error)
+            
+             
         }
 
 
@@ -90,7 +68,7 @@ const VRegister = () => {
     return (
 
 
-        <form onSubmit={handleSubmit}>
+       <form onSubmit={handleSubmit}>
             <div className="bg-primary flex items-center flex-col   w-screen">
 
                 <div className="b flex flex-col  p-10 items-center w-5/6">
@@ -192,7 +170,7 @@ const VRegister = () => {
                                 <input
                                         type="email"
 
-                                        name="official_mail"
+                                        name="official_email"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
@@ -221,7 +199,14 @@ const VRegister = () => {
                              {/* text area hndling remaing  */}
                             </div>
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Description About your Venture
-                                <textarea name="description" onChange={handleClick} className="p-1    bg-transparent border rounded" />
+                                <textarea name="description"
+                                 onChange={handleChange}
+                                 onBlur={handleBlur} 
+                                 value={values?.description}
+                                 className="p-1 bg-transparent border rounded" />
+                                  {touched.description && errors.description && (
+                                        <div className="text-red-400">{errors.description}</div>
+                                    )}
                             </div>
 
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Expertise Country
@@ -241,7 +226,13 @@ const VRegister = () => {
                             </div>
                             {/* text area found */}
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Minimum to Maximum Price of your service
-                                <textarea name="min_max_service_amount" onChange={handleClick} className="p-1 bg-transparent border  rounded" />
+                                <textarea name="min_max_service_amount" 
+                                value={values?.min_max_service_amount}
+                                 onChange={handleChange} onBlur={handleBlur}
+                                  className="p-1 bg-transparent border  rounded" />
+                                   {touched.min_max_service_amount && errors.min_max_service_amount && (
+                                        <div className="text-red-400">{errors.min_max_service_amount}</div>
+                                    )}
                             </div>
 
                             <div className=" flex">
@@ -283,15 +274,15 @@ const VRegister = () => {
                                 <input
                                         type="number"
 
-                                        name="registration_number"
+                                        name="register_number"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
-                                        value={values?.registration_number}
+                                        value={values?.register_number}
 
                                         className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.registration_number && errors.registration_number && (
-                                        <div className="text-red-400">{errors.registration_number}</div>
+                                    {touched.register_number && errors.register_number && (
+                                        <div className="text-red-400">{errors.register_number}</div>
                                     )}
                                 </div>
                                 <div className="m-1 flex flex-col h-3/6 w-1/2">License Number
@@ -302,7 +293,7 @@ const VRegister = () => {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
-                                        value={values?.expertise_contries}
+                                        value={values?.license_number}
 
                                         className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
                                     {touched.license_number && errors.license_number && (
@@ -333,7 +324,7 @@ const VRegister = () => {
                                 <input
                                         type="file"
 
-                                        name="expertise_contries"
+                                        name="insurance_img"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
@@ -382,7 +373,7 @@ const VRegister = () => {
                                 <input
                                         type="password" 
 
-                                        name="confirm_first_password"
+                                        name="confirm_password_one"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
@@ -390,7 +381,7 @@ const VRegister = () => {
 
                                         className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
                                     {touched.confirm_password_one && errors.confirm_password_one && (
-                                        <div className="text-red-400">{errors.expertise_contries}</div>
+                                        <div className="text-red-400">{errors.confirm_password_one}</div>
                                     )}
                                 </div>
 
@@ -413,7 +404,7 @@ const VRegister = () => {
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">confirm second Password
                                 <input
-                                        type="text"
+                                        type="password"
 
                                         name="confirm_password_two"
                                         onChange={handleChange}
@@ -445,6 +436,7 @@ const VRegister = () => {
                 </div>
 
             </div>
+            <ToastContainer />
         </form>
 
 

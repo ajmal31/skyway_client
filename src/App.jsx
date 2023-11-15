@@ -13,6 +13,7 @@ import Home from "./pages/user/home/Home"
 import UserSlice from "./redux/slices/UserSlice"
 import { useSelector } from "react-redux"
 import Profile from "./pages/user/profile/Profile"
+import VentureList from "./pages/user/ventures/ventureList"
 
 
 //Venture related imports
@@ -34,11 +35,14 @@ function App() {
         <Route path="/userRegister" element={<UserRegister/>}/>
         <Route path='/' element={(<Home/>)}/>
         <Route path='/userProfile' element={token?<Profile/>:<Navigate to={'/userLogin'} />}/>
+        <Route path="/ventureList" element={token?<VentureList/>:<Navigate to={'/userLogin'}/>}/>
+
 
 
         {/* Venture Routes */}
          <Route path="/venture" element={<h1>Venture side</h1>}/> 
-         <Route path="/venture/login" element={<VentureLogin/>}/>
+         <Route path="/venture/register" element={<VentureLogin/>}/>
+         
 
 
         {/* Admin Routes */}

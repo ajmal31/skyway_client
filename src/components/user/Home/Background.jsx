@@ -127,7 +127,7 @@ const Background = () => {
 
 
           {/* Home page Third screen */}
-          <div className="h-screen" >
+          <div className="" >
             <div className="   h-5/6 font-Outfit " >
 
 

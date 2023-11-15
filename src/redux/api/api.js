@@ -30,6 +30,7 @@ userAxiosInstance.interceptors.request.use(
 
 //async thunk redux toolkit this will be handle 
 export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
+    console.log('redux obj',obj)
     try{ 
         const url=obj?.url
         const method=obj?.method
@@ -38,11 +39,13 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
         //here will  be hanlde some apis not complusory if user is logged in or not ..so in this case
         //if token is false (upcoming data ) that apis not mandatory is check whether used is logged in or not
         //if token is true should be check whether user is logged in if user not logged in redirect to login page
+    
         if(token){
             
             if(method==='get'){
                 let response=await userAxiosInstance[method](url)
                 console.log('redux api call get ',response)
+
                  return response
             }else{
                 let response =await userAxiosInstance[method](url,data)
@@ -52,8 +55,16 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
    
 
         }else{
-            let response=await axios[method](url,data)
-            return response
+            if(method==='get'){
+                console.log('enter herer')
+                console.log(url)
+                let response =await axios[method](url)
+                return response
+            }else{
+                let response=await axios[method](url,data)
+                return response
+            }
+            
         }
         
     }catch(err){
@@ -89,7 +100,7 @@ const CommonSlice=createSlice({
             
         })
         .addCase(fetchData.rejected,(state,action)=>{
-            console.log('error happend here rejected state')
+            console.log('error happend here rejected state',action.payload)
           
            state.error=action.payload         
        })

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
 import UserSlice from '../../../redux/slices/UserSlice'
+
 const Navbar=()=>{
 
     const [isOpen, setIsOpen] = useState(false)
@@ -28,7 +29,7 @@ const Navbar=()=>{
         {/* Navbar */}
         <nav className="hidden md:ml-auto md:flex flex-wrap items-center justify-center text-base tracking-wide  ">
           <a href="#link" className="mr-8 hover:text-gray-300">Solutions</a>
-          <a href="#link" className="mr-8 hover:text-gray-300">Ventures</a>
+          <Link to={'/ventureList'} className="mr-8 hover:text-gray-300">Ventures</Link>
           <a href="#link" className="mr-8 hover:text-gray-300">About</a>
           <a href="#link" className="mr-8 hover:text-gray-300">Contact</a>
         </nav>
