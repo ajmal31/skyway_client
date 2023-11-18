@@ -1,17 +1,12 @@
-// import here componets if its required
-import VRegister from "../../../components/venture/Login/VRegister"
+import URegister from "../../../components/user/register/URegister"
 const VentureLogin=()=>{
 
 
-return(
-
-
-    <VRegister/>
-    
-)
-
-
-
+    return (
+     
+          <URegister content={'ventureLogin'}/>
+        
+    )
 
 
 }

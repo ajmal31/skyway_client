@@ -1,37 +1,13 @@
-import { createAsyncThunk,createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import axiosInstance from './Axios/interceptors/reqInterceptor.js'
 import axios from 'axios'
 
-//create an axios instance
-const userAxiosInstance=axios.create();
-
-//adding request interceptors axios
-userAxiosInstance.interceptors.request.use(
-    (config)=>{
-
-        //get token from cookies
-        const token=localStorage.getItem('authToken')
-        if(token){
-
-            config.headers['Authorization']=`bearer ${token}`
-            config.headers['Content-Type']='application/json'
-            console.log(config.headers)
-
-        }else{
-
-            console.log('please be login ')
-            console.log('/userLogin')
-        }
-        return config
-    },(error)=>{
-
-        return Promise.reject(error)
-    }
-);
+console.log('calling api aync thunk')
 
 //async thunk redux toolkit this will be handle 
 export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
-    console.log('redux obj',obj)
     try{ 
+        console.log('enter the thunk',obj)
         const url=obj?.url
         const method=obj?.method
         const data=obj?.data
@@ -43,68 +19,37 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
         if(token){
             
             if(method==='get'){
-                let response=await userAxiosInstance[method](url)
-                console.log('redux api call get ',response)
+                let response=await axiosInstance[method](url)
+                
 
                  return response
             }else{
-                let response =await userAxiosInstance[method](url,data)
-                console.log('redux api call',response)
+                let response =await axiosInstance[method](url,data)
+                
                 return response
             }
    
 
         }else{
+            console.log('enter unless token ')
             if(method==='get'){
-                console.log('enter herer')
-                console.log(url)
+                console.log('enter here',method,url)
                 let response =await axios[method](url)
                 return response
             }else{
+                console.log('enter post  here',method,url)
                 let response=await axios[method](url,data)
+                console.log('response of unless token apicalls (exclude get method)')
                 return response
             }
             
         }
         
     }catch(err){
-
+        
         console.log(`erro occured while invoking api${url}`)
+        return err
 
     }
 
 })
-
-//common slice handle data status
-const CommonSlice=createSlice({
-
-    name:'common',
-    initialState:{
-
-        data:null,
-        loader:false,
-        error:null
-    },
-    reducers:{},
-    extraReducers:(builder)=>{
-
-        builder
-        .addCase(fetchData.pending,(state)=>{
-
-            state.loader=true
-        })
-        .addCase(fetchData.fulfilled,(state,action)=>{
-            
-            
-            state.data=action.payload.data
-            
-        })
-        .addCase(fetchData.rejected,(state,action)=>{
-            console.log('error happend here rejected state',action.payload)
-          
-           state.error=action.payload         
-       })
-    }
-})
-
-export default CommonSlice.reducer

@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
-import CommonSlice from './api/api'
+import commonSlice from "./api/Axios/commonSlice";
 import UserSlice from "./slices/UserSlice";
-console.log('reached the redux store')
+import ventureSlices from "./ventureSlices";
 export const store=configureStore({
 
     reducer:{
      
         
-        common:CommonSlice,
-        UserSlice:UserSlice
+        common:commonSlice,
+        UserSlice:UserSlice,
+        ventureSlices:ventureSlices
+
 
     }
 

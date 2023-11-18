@@ -103,13 +103,13 @@ const LoginContent = () => {
                         animate={{ y: '1vh' }}
                         exit={{ y: '1vh' }}
                         transition={{
-                            duration: 2, // Adjust the duration as needed
+                            duration: 0.8, // Adjust the duration as needed
                             repeat: Infinity, // Infinite animation loop
                             repeatType: 'reverse', // Reverse animation direction on each repeat
 
                         }}
 
-                        src="" alt="cover image" />
+                        src="/login-cover-image.png" alt="cover image" />
                 </div>
 
             </div>

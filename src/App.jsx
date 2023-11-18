@@ -18,6 +18,7 @@ import VentureList from "./pages/user/ventures/ventureList"
 
 //Venture related imports
 
+import VentureRegister from "./pages/venture/register/VentureRegister"
 import VentureLogin from "./pages/venture/Login/VentureLogin"
 
 
@@ -41,7 +42,10 @@ function App() {
 
         {/* Venture Routes */}
          <Route path="/venture" element={<h1>Venture side</h1>}/> 
-         <Route path="/venture/register" element={<VentureLogin/>}/>
+         <Route path="/venture/register" element={<VentureRegister/>}/>
+         <Route path="/venture/login" element={<VentureLogin/>}/>
+         <Route path="/venture/dashboard" element={<h1>Venture dashboard</h1>}/>
+         
          
 
 

@@ -6,12 +6,12 @@ import React from "react"
 import { Link, Navigate } from "react-router-dom"
 const Table = () => {
 
-    let arr = [1, 2, 3, 4, 5];
+    
     const dispatch = useDispatch();
     const [ventureList, setVentureList] = useState([]);
     
     const getAllventures=async()=>{
-        console.log('helo')
+
         const obj={
             method:'get',
             url:VENTURE_SRV_BASE_URL+'getAllVentures',
@@ -28,6 +28,21 @@ const Table = () => {
         
         getAllventures()
     },[]);
+
+    const handleRequest=async(vid)=>{
+        
+       const obj={
+         method:'post',
+         url:VENTURE_SRV_BASE_URL+'callRequested',
+         data:{ventureId:vid},
+         token:true
+       } 
+       const response=await dispatch(fetchData(obj))
+
+       console.log('response in client related request')
+       console.log(response)
+        
+    }
     return (
         <div className=" h-full w-full">
 
@@ -74,7 +89,8 @@ const Table = () => {
                         </td>
                         <td className="px-5 py-5 text-sm bg-secondory border-b border-gray-200">
                             <p className="text-gray-200 whitespace-no-wrap">
-                               <Link to={'/makeRequest'}>make request for a call</Link>
+                               {/* <Link to={handleRequest}>make request for a call</Link> */}
+                               <button  onClick={e=>handleRequest(value._id)} >Make Request for a call</button>
                                
                             </p>
                         </td>

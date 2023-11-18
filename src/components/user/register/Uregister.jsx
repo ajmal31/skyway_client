@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion'
 import RegisterContent from './RegisterContent';
 import LoginContent from '../login/LoginContent';
+import VloginContent from '../../venture/Login/VloginContent';
 
 
 function URegister(prop) {
@@ -20,11 +21,11 @@ function URegister(prop) {
 
                 className="bg-secondory h-5/6 w-3/5 px-20 rounded-2xl  shadow-slate-800  text-center text-zinc-50  font-Outfit font-bold text-4xl pt-12 " >
                  {
-                    prop.content==='login'?(<p className='text-gray-200'>Login</p>): prop.content==='register'? ( <p className='text-gray-200'>Create an Account</p>):'no title'
+                    prop.content==='login'?(<p className='text-gray-200'>Login</p>): prop.content==='register'? ( <p className='text-gray-200'>Create an Account</p>):prop.content==='ventureLogin'?(<p>Please Login Your Venture</p>):'no title'
                  } 
                
                  {
-                    prop.content==='login'?(<LoginContent/>): prop.content==='register'? (<RegisterContent/>):'no content'
+                    prop.content==='login'?(<LoginContent/>): prop.content==='register'? (<RegisterContent/>):prop?.content==='ventureLogin'?(<VloginContent/>):'no content'
                  }
                 
 

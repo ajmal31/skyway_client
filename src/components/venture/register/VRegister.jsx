@@ -3,14 +3,15 @@ import basicSchema from "../schema/Schema"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
 import { VENTURE_SRV_BASE_URL } from "../../../data/const"
-import {useme} from "../../../hooks/toast"
+import { useme } from "../../../hooks/toast"
 import { ToastContainer } from "react-toastify"
+import { Link } from "react-router-dom"
 
 
 const VRegister = () => {
 
 
-     const disapatch=useDispatch()
+    const disapatch = useDispatch()
     const { handleBlur, handleChange, values, errors, touched, handleSubmit } = useFormik({
 
         initialValues: {
@@ -39,27 +40,27 @@ const VRegister = () => {
         },
         validationSchema: basicSchema,
 
-        onSubmit: async(values) => {
-            const error='error'
+        onSubmit: async (values) => {
+            const error = 'error'
 
-            const {password_one,confirm_password_one,password_two,confirm_password_two}=values
-            if(password_one!==confirm_password_one) return useme('password one and confirm password is not matching',error)
-            if(password_two!==confirm_password_two) return useme('password two and confirm password is not matching',error)
-            const obj={
-                url:VENTURE_SRV_BASE_URL+'register',
-                method:'post',
-                data:values,
-                token:false
+            const { password_one, confirm_password_one, password_two, confirm_password_two } = values
+            if (password_one !== confirm_password_one) return useme('password one and confirm password is not matching', error)
+            if (password_two !== confirm_password_two) return useme('password two and confirm password is not matching', error)
+            const obj = {
+                url: VENTURE_SRV_BASE_URL + 'register',
+                method: 'post',
+                data: values,
+                token: false
 
             }
-            
-            const response=await disapatch(fetchData(obj))
-            console.log('after geting response from ventur registeration',response)
+
+            const response = await disapatch(fetchData(obj))
+            console.log('after geting response from ventur registeration', response)
             console.log(response?.payload?.data?.errors[0].msg)
-            const {msg}=response?.payload?.data?.errors[0]
-            useme(msg,error)
-            
-             
+            const { msg } = response?.payload?.data?.errors[0]
+            useme(msg, error)
+
+
         }
 
 
@@ -68,7 +69,7 @@ const VRegister = () => {
     return (
 
 
-       <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="bg-primary flex items-center flex-col   w-screen">
 
                 <div className="b flex flex-col  p-10 items-center w-5/6">
@@ -99,7 +100,7 @@ const VRegister = () => {
 
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Last Name
-                                <input
+                                    <input
                                         type="text"
 
                                         name="lastName"
@@ -117,24 +118,24 @@ const VRegister = () => {
                             </div>
                             {/* Venute name */}
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Venture Name
-                            <input
-                                        type="text"
+                                <input
+                                    type="text"
 
-                                        name="ventureName"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
+                                    name="ventureName"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
 
-                                        value={values?.ventureName}
+                                    value={values?.ventureName}
 
-                                        className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.ventureName && errors.ventureName && (
-                                        <div className="text-red-400">{errors.ventureName}</div>
-                                    )}
+                                    className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
+                                {touched.ventureName && errors.ventureName && (
+                                    <div className="text-red-400">{errors.ventureName}</div>
+                                )}
                             </div>
                             {/* Phone numbers */}
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Phone number 1
-                                <input
+                                    <input
                                         type="text"
 
                                         name="phone_one"
@@ -149,7 +150,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">phone number 2
-                                <input
+                                    <input
                                         type="number"
 
                                         name="phone_two"
@@ -167,7 +168,7 @@ const VRegister = () => {
                             </div>
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Official Email
-                                <input
+                                    <input
                                         type="email"
 
                                         name="official_email"
@@ -182,7 +183,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Venture Category
-                                <input
+                                    <input
                                         type="text"
 
                                         name="venture_category"
@@ -196,48 +197,48 @@ const VRegister = () => {
                                         <div className="text-red-400">{errors.venture_category}</div>
                                     )}
                                 </div>
-                             {/* text area hndling remaing  */}
+                                {/* text area hndling remaing  */}
                             </div>
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Description About your Venture
                                 <textarea name="description"
-                                 onChange={handleChange}
-                                 onBlur={handleBlur} 
-                                 value={values?.description}
-                                 className="p-1 bg-transparent border rounded" />
-                                  {touched.description && errors.description && (
-                                        <div className="text-red-400">{errors.description}</div>
-                                    )}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values?.description}
+                                    className="p-1 bg-transparent border rounded" />
+                                {touched.description && errors.description && (
+                                    <div className="text-red-400">{errors.description}</div>
+                                )}
                             </div>
 
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Expertise Country
-                            <input
-                                        type="text"
+                                <input
+                                    type="text"
 
-                                        name="expertise_contries"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
+                                    name="expertise_contries"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
 
-                                        value={values?.expertise_contries}
+                                    value={values?.expertise_contries}
 
-                                        className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.expertise_contries && errors.expertise_contries && (
-                                        <div className="text-red-400">{errors.expertise_contries}</div>
-                                    )}
+                                    className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
+                                {touched.expertise_contries && errors.expertise_contries && (
+                                    <div className="text-red-400">{errors.expertise_contries}</div>
+                                )}
                             </div>
                             {/* text area found */}
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Minimum to Maximum Price of your service
-                                <textarea name="min_max_service_amount" 
-                                value={values?.min_max_service_amount}
-                                 onChange={handleChange} onBlur={handleBlur}
-                                  className="p-1 bg-transparent border  rounded" />
-                                   {touched.min_max_service_amount && errors.min_max_service_amount && (
-                                        <div className="text-red-400">{errors.min_max_service_amount}</div>
-                                    )}
+                                <textarea name="min_max_service_amount"
+                                    value={values?.min_max_service_amount}
+                                    onChange={handleChange} onBlur={handleBlur}
+                                    className="p-1 bg-transparent border  rounded" />
+                                {touched.min_max_service_amount && errors.min_max_service_amount && (
+                                    <div className="text-red-400">{errors.min_max_service_amount}</div>
+                                )}
                             </div>
 
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Official Portfolio (link)
-                                <input
+                                    <input
                                         type="text"
 
                                         name="official_portfolio"
@@ -252,7 +253,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">webiste Link
-                                <input
+                                    <input
                                         type="text"
 
                                         name="website_link"
@@ -271,7 +272,7 @@ const VRegister = () => {
 
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Registration Number
-                                <input
+                                    <input
                                         type="number"
 
                                         name="register_number"
@@ -286,7 +287,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className="m-1 flex flex-col h-3/6 w-1/2">License Number
-                                <input
+                                    <input
                                         type="number"
 
                                         name="license_number"
@@ -304,24 +305,24 @@ const VRegister = () => {
                             </div>
                             {/* social media account section */}
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">social Media Account Link
-                            <input
-                                        type="text"
+                                <input
+                                    type="text"
 
-                                        name="social_media"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
+                                    name="social_media"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
 
-                                        value={values?.social_media}
+                                    value={values?.social_media}
 
-                                        className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.social_media && errors.social_media && (
-                                        <div className="text-red-400">{errors.social_media}</div>
-                                    )}
+                                    className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
+                                {touched.social_media && errors.social_media && (
+                                    <div className="text-red-400">{errors.social_media}</div>
+                                )}
                             </div>
                             {/* uploads */}
                             <div className=" flex ">
                                 <div className=" mr-1 flex flex-col h-3/6 w-1/2">upload your insurance
-                                <input
+                                    <input
                                         type="file"
 
                                         name="insurance_img"
@@ -336,7 +337,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className="  flex flex-col h-3/6 w-1/2">upload your License
-                                <input
+                                    <input
                                         type="file"
 
                                         name="license_img"
@@ -355,7 +356,7 @@ const VRegister = () => {
                             {/* Password section */}
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">first Password
-                                <input
+                                    <input
                                         type="password"
 
                                         name="password_one"
@@ -370,8 +371,8 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">confirm first Password
-                                <input
-                                        type="password" 
+                                    <input
+                                        type="password"
 
                                         name="confirm_password_one"
                                         onChange={handleChange}
@@ -388,7 +389,7 @@ const VRegister = () => {
                             </div>
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">second Password
-                                <input
+                                    <input
                                         type="password"
 
                                         name="password_two"
@@ -403,7 +404,7 @@ const VRegister = () => {
                                     )}
                                 </div>
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">confirm second Password
-                                <input
+                                    <input
                                         type="password"
 
                                         name="confirm_password_two"
@@ -420,18 +421,28 @@ const VRegister = () => {
 
                             </div>
                             {/* check box */}
-                            <div className=" m-1 flex justify-start items-start flex-col h-3/6 w-1/2">Agree term and conditions
-                                <input type="checkbox" className="p-1 bg-gray-300 rounded" />
+                            <div className=" m-1 flex justify-start mb-4 items-start  h-3/6 w-1/2">
+                                <input type="checkbox" className=" m-1 bg-gray-300 rounded" />
+                                <p>Agree term and conditions</p>
                             </div>
-                            <div>
-
+                           
+                            <div className="h-3/6 w-1/2 mb-2 flex justify-start ">
+                                <button className="bg-sec-button p-2 px-10 rounded-xl" type="submit">submit</button>
+                               
                             </div>
-                            <button type="submit">submit</button>
+                        
+                            <div className="h-3/6 w-1/2 flex justify-start ">
+                                
+                                <Link to={'/venture/login'} >Already Have an Account</Link>
+                            </div>
+                            <br />
 
                         </div>
+                        
 
 
                     </div>
+                    
 
                 </div>
 
