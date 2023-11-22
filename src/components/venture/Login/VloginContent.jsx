@@ -32,15 +32,29 @@ const VloginContent = () => {
 
         const response = await dispatch(fetchData(obj))
         console.log('response in client related venture login', response)
-        const { message,token } = response?.payload?.data
+        const { message,token,pending,ventureName } = response?.payload?.data
         console.log('meesage and token',message,token)
-        if (message==='venture login succesful') {
-            const ventureToken = token
+        const data={
+            ventureToken : token,
+            ventureName,
+            pending,
+        }
+        if (message==='venture login succesful'&&!pending) {
+            console.log('enter successtate')
+            
 
-            dispatch(ventureLogin(ventureToken))
+            dispatch(ventureLogin(data))
             return navigate('/venture/dashboard')
 
-        }else  return useme(message,'error')
+        }else if(pending){
+
+
+            console.log('enter pending state')
+            dispatch(ventureLogin(data))
+            return navigate('/venture/pending')
+
+        } 
+        else return useme(message,'error')
        
 
 

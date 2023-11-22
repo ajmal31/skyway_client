@@ -1,4 +1,4 @@
-import URegister from "../../../components/user/register/URegister"
+import URegister from "../../../components/common/Uregister"
 const userRegister =()=>{
 
     return (

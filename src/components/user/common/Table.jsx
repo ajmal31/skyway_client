@@ -1,22 +1,22 @@
 import { useEffect, useState }from "react"
-import { VENTURE_SRV_BASE_URL } from "../../../data/const"
+import { VENTURE_SRV_BASE_URL,USER_SRV_BASE_URL } from "../../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
 import React from "react"
 import { Link, Navigate } from "react-router-dom"
-const Table = () => {
+const Table = ({api}) => {
 
-    
+   
     const dispatch = useDispatch();
     const [ventureList, setVentureList] = useState([]);
     
     const getAllventures=async()=>{
 
         const obj={
-            method:'get',
-            url:VENTURE_SRV_BASE_URL+'getAllVentures',
-            data:null,
-            token:false
+            method:api.method,
+            url:api.url,
+            data:api.data,
+            token:api.token
         }
         const response=await dispatch(fetchData(obj))
         setVentureList(response?.payload?.data?.response)
@@ -33,13 +33,13 @@ const Table = () => {
         
        const obj={
          method:'post',
-         url:VENTURE_SRV_BASE_URL+'callRequested',
+         url:USER_SRV_BASE_URL+'callRequested',
          data:{ventureId:vid},
          token:true
        } 
        const response=await dispatch(fetchData(obj))
 
-       console.log('response in client related request')
+       console.log('response in client related request MAKE A CALL')
        console.log(response)
         
     }

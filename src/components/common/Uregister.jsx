@@ -1,8 +1,8 @@
 
 import { motion } from 'framer-motion'
-import RegisterContent from './RegisterContent';
-import LoginContent from '../login/LoginContent';
-import VloginContent from '../../venture/Login/VloginContent';
+import RegisterContent from '../user/register/RegisterContent';
+import LoginContent from '../user/login/LoginContent';
+import VloginContent from '../venture/Login/VloginContent';
 
 
 function URegister(prop) {

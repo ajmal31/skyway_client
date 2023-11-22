@@ -10,7 +10,10 @@ module.exports = {
         'primary': '#000235',
         'secondory':'#13124F',
         'button':'#011A98',
-        'sec-button':"#3B25C2"
+        'sec-button':"#3B25C2",
+        'admin-primary':"#F2F2F2",
+        "admin-secondory":"#FFFFFF",
+        "admin-button":"#1C1C1C"
 
       },
       fontFamily:{

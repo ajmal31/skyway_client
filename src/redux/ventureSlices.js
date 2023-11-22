@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
 
-    ventureToken:localStorage.getItem('ventureToken')||null
+    ventureToken:localStorage.getItem('ventureToken')||null,
+    ventureName:localStorage.getItem('venutureName')||null,
+    venture_status:localStorage.getItem('venture_status')||null
    
 }
 
@@ -16,11 +18,17 @@ export const ventureSlice=createSlice({
         ventureLogin:(state,actions)=>{
            
             console.log('in redux',actions)
-            const ventureToken=actions.payload
-            localStorage.setItem('ventureToken',ventureToken)
+            const {pending,ventureName,ventureToken}=actions.payload
+            const ventureStatus=pending
             
-            state.ventureToken=ventureToken
-          
+            localStorage.setItem('ventureToken',ventureToken)
+            localStorage.setItem('ventureName',ventureName)
+            localStorage.setItem('venture_status',ventureStatus)
+            
+            // state.ventureToken=ventureToken
+            state.ventureName=localStorage.getItem('ventureName')
+            state.ventureToken=localStorage.getItem('ventureToken')
+            state.venture_status=localStorage.getItem('venture_status')
 
         }
     }

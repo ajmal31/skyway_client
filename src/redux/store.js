@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import commonSlice from "./api/Axios/commonSlice";
 import UserSlice from "./slices/UserSlice";
 import ventureSlices from "./ventureSlices";
+import adminSlice from "./slices/adminSlice";
 export const store=configureStore({
 
     reducer:{
@@ -9,7 +10,8 @@ export const store=configureStore({
         
         common:commonSlice,
         UserSlice:UserSlice,
-        ventureSlices:ventureSlices
+        ventureSlices:ventureSlices,
+        adminSlice:adminSlice
 
 
     }
