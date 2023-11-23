@@ -15,10 +15,8 @@ const adminSlice=createSlice({
         adminLogin:(state,action)=>{
 
 
-            console.log('ations',action)
+            
             const {email,token}=action.payload
-            console.log('in redux')
-            console.log(token,email)
             localStorage.setItem('adminToken',token)
             localStorage.setItem('admin_email',email)
 
@@ -33,7 +31,7 @@ const adminSlice=createSlice({
             localStorage.removeItem('adminToken')
             localStorage.removeItem('admin_email')
 
-            state.email=null,
+            state.email=null
             state.token=null
         }
 

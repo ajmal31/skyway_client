@@ -23,7 +23,7 @@ const Table = ({api}) => {
         
 
     }
-    console.log('response in client',ventureList)
+ 
     useEffect(() => {
         
         getAllventures()

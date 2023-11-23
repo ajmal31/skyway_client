@@ -27,6 +27,7 @@ import ventureSlices from "./redux/ventureSlices"
 //Admin Related imports
 import AdminLogin from "./pages/admin/Login/AdminLogin"
 import adminSlice from "./redux/slices/adminSlice"
+import AdminHome from "./pages/admin/home/AdminHome"
 
 
 
@@ -65,7 +66,7 @@ function App() {
    
         {/* Admin Routes */}
         <Route path="/admin/login" element={!adminToken?(<AdminLogin/>):<Navigate to={'/admin'}/>}/>
-        <Route path="/admin/" element={adminToken?<h1>Helo Iam the Admin Home Page</h1>:<Navigate to={'/admin/login'}/>}/>
+        <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'}/>}/>
 
 
   </Routes>
