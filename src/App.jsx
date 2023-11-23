@@ -21,13 +21,15 @@ import VentureList from "./pages/user/ventures/ventureList"
 import VentureRegister from "./pages/venture/register/VentureRegister"
 import VentureLogin from "./pages/venture/Login/VentureLogin"
 import VentureDashbord from "./pages/venture/dashbord/VentureDashbord"
-import ventureSlices from "./redux/ventureSlices"
+import ventureSlices from "./redux/slices/ventureSlices"
 
 
 //Admin Related imports
 import AdminLogin from "./pages/admin/Login/AdminLogin"
 import adminSlice from "./redux/slices/adminSlice"
-import AdminHome from "./pages/admin/home/AdminHome"
+import UsersList from "./pages/admin/usersList/UsersList"
+import AdminHome from "./pages/admin/home/Home"
+import ListVentures from "./pages/admin/venturesList/ListVentures"      
 
 
 
@@ -54,7 +56,7 @@ function App() {
         <Route path="/userRegister" element={<UserRegister/>}/>
         <Route path='/' element={(<Home/>)}/>
         <Route path='/userProfile' element={userToken?<Profile/>:<Navigate to={'/userLogin'} />}/>
-        <Route path="/ventureList" element={userToken?<VentureList/>:<Navigate to={'/userLogin'}/>}/>
+        <Route path="/ventureList" element={<VentureList/>}/>
 
 
          {/* venture Routes */}
@@ -66,7 +68,9 @@ function App() {
    
         {/* Admin Routes */}
         <Route path="/admin/login" element={!adminToken?(<AdminLogin/>):<Navigate to={'/admin'}/>}/>
-        <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'}/>}/>
+        <Route path="/admin/users" element={adminToken?<UsersList/>:<Navigate to={'/admin/login'}/>}/>
+        <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'} />}/>
+        <Route path="/admin/ventures" element={adminToken?<ListVentures/>:<Navigate to={'/admin/login'} />}/>
 
 
   </Routes>

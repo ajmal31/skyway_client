@@ -4,11 +4,15 @@ import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
 import React from "react"
 import { Link, Navigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import UserSlice from "../../../redux/slices/UserSlice"
+import { useNavigate } from "react-router-dom"
 const Table = ({api}) => {
 
-   
+   const navigate=useNavigate()
     const dispatch = useDispatch();
     const [ventureList, setVentureList] = useState([]);
+    const token=useSelector((state=UserSlice)=>state.UserSlice.token)
     
     const getAllventures=async()=>{
 
@@ -16,7 +20,9 @@ const Table = ({api}) => {
             method:api.method,
             url:api.url,
             data:api.data,
-            token:api.token
+            token:api.token,
+
+
         }
         const response=await dispatch(fetchData(obj))
         setVentureList(response?.payload?.data?.response)
@@ -30,12 +36,15 @@ const Table = ({api}) => {
     },[]);
 
     const handleRequest=async(vid)=>{
+
+     if(!token)return navigate('/userLogin') 
         
        const obj={
          method:'post',
          url:USER_SRV_BASE_URL+'callRequested',
          data:{ventureId:vid},
-         token:true
+         token:true,
+         to:'user'
        } 
        const response=await dispatch(fetchData(obj))
 

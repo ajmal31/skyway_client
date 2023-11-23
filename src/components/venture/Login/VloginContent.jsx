@@ -6,7 +6,7 @@ import { VENTURE_SRV_BASE_URL } from '../../../data/const'
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api";
 import { useNavigate } from "react-router-dom";
-import { ventureLogin } from "../../../redux/ventureSlices";
+import { ventureLogin } from "../../../redux/slices/ventureSlices";
 import { useme } from "../../../hooks/toast";
 const VloginContent = () => {
 

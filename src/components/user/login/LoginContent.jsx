@@ -37,7 +37,8 @@ const LoginContent = () => {
                 method: 'post',
                 url: USER_SRV_BASE_URL + 'login',
                 data: userCred,
-                token: false
+                token: false,
+                
             }
             const res = await dispatch(fetchData(obj))
            

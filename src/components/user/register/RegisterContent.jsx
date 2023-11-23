@@ -39,7 +39,8 @@ const RegisterContent = () => {
                 method: 'post',
                 url: USER_SRV_BASE_URL + 'register',
                 data: register,
-                token: false
+                token: false,
+                
             };
             console.log(register);
 

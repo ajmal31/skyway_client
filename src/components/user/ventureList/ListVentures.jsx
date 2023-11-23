@@ -7,7 +7,8 @@ const ListVentures = () => {
     method:'get',
     url:VENTURE_SRV_BASE_URL+'getAllVentures',
     data:null,
-    token:false
+    token:false,
+    
 }
 
 

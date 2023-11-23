@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axiosInstance from './Axios/interceptors/reqInterceptor.js'
+import userAxiosInstance from './Axios/interceptors/user/reqInterceptor.js'
+import adminAxiosInstance from './Axios/interceptors/admin/reqInterceptor.js'
+import ventureAxiosInstance from './Axios/interceptors/venture/reqInterceptor.js'
 import axios from 'axios'
 
 console.log('calling api aync thunk')
@@ -12,34 +14,66 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
         const method=obj?.method
         const data=obj?.data
         const token= obj?.token
+        const to=obj?.to
         //here will  be hanlde some apis not complusory if user is logged in or not ..so in this case
         //if token is false (upcoming data ) that apis not mandatory is check whether used is logged in or not
         //if token is true should be check whether user is logged in if user not logged in redirect to login page
     
         if(token){
-            
-            if(method==='get'){
-                let response=await axiosInstance[method](url)
-                
+            if(to==='user'){
 
-                 return response
-            }else{
-                let response =await axiosInstance[method](url,data)
+                if(method==='get'){
+                    let response=await userAxiosInstance[method](url)
+                    
+    
+                     return response
+                }else{
+                    let response =await userAxiosInstance[method](url,data)
+                    
+                    return response
+                }
+
+            }else if(to==='admin'){
+
                 
-                return response
+                if(method==='get'){
+                    let response=await adminAxiosInstance[method](url)
+
+                     return response
+                }else{
+                    let response =await adminAxiosInstance[method](url,data)
+                    
+                    return response
+                }
+
+            }else if(to==='venture'){
+
+                
+                if(method==='get'){
+                    let response=await ventureAxiosInstance[method](url)
+                    
+    
+                     return response
+                }else{
+                    let response =await ventureAxiosInstance[method](url,data)
+                    
+                    return response
+                }
+
             }
+            
    
 
         }else{
-            console.log('enter unless token ')
+            
             if(method==='get'){
-                console.log('enter here',method,url)
+               
                 let response =await axios[method](url)
                 return response
             }else{
-                console.log('enter post  here',method,url)
+              
                 let response=await axios[method](url,data)
-                console.log('response of unless token apicalls (exclude get method)')
+                
                 return response
             }
             
