@@ -41,6 +41,7 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
 
                      return response
                 }else{
+                    console.log('reach expecteed')
                     let response =await adminAxiosInstance[method](url,data)
                     
                     return response

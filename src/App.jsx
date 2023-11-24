@@ -38,7 +38,8 @@ function App() {
       const userToken=useSelector((state=UserSlice)=>state.UserSlice.token)
       //venture Essential creds
       const ventureToken=useSelector((state=ventureSlices)=>state.ventureSlices.ventureToken)
-      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.venture_status)
+      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)
+      console.log('in app .js status od the venture',ventureStatus,'ventures token',ventureToken)
       
       //admin Essential creds
       const adminToken=useSelector((state=adminSlice)=>state.adminSlice.token)
@@ -62,8 +63,9 @@ function App() {
          {/* venture Routes */}
          <Route path="/venture/register" element={ventureToken?<Navigate to={"/venture/dashboard"}/>:<VentureRegister/>}/>
          <Route path="/venture/login" element={ventureToken?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
-         <Route path="/venture/dashboard" element={ ventureToken &&ventureStatus? <Navigate to={'/venture/pending'}/>:ventureToken&&!ventureStatus?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
-         <Route path="/venture/pending" element={ventureStatus?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
+         <Route path="/venture/dashboard" element={ ventureStatus==="true"? <Navigate to={'/venture/pending'}/>:ventureStatus==="false"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/pending" element={ventureStatus==="true"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
+      
          
    
         {/* Admin Routes */}

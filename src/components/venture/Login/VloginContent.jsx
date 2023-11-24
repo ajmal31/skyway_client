@@ -49,7 +49,7 @@ const VloginContent = () => {
         }else if(pending){
 
 
-            console.log('enter pending state')
+           
             dispatch(ventureLogin(data))
             return navigate('/venture/pending')
 

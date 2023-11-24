@@ -13,9 +13,9 @@ const VentureDashbord = () => {
     return (
         <div className="h-screen w-screen p-8 flex  gap-8 bg-primary"  >
 
+<h1 className="text-white ">Dahsbord of the venture</h1>
 
-
-            <div className="h-full w-2/12 shadow-2xl shadow-black">
+            {/* <div className="h-full w-2/12 shadow-2xl shadow-black">
 
                 <Sidebar api={apiDetails} />
             </div>
@@ -25,7 +25,7 @@ const VentureDashbord = () => {
              <h1 className="text-white font-Outfit text-xl">USERS</h1>
                 <Table />
 
-            </div>
+            </div> */}
         </div>
     )
 }

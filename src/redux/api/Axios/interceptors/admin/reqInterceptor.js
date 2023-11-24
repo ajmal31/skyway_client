@@ -4,15 +4,17 @@ const adminAxiosInstance=axios.create();
 
 //configuring in the request interceptor
 adminAxiosInstance.interceptors.request.use(
+    
         (config)=>{
     
             //get token from cookies
             const token=localStorage.getItem('adminToken')
+            console.log('admin Token',token)
             if(token){
     
                 config.headers['Authorization']=`bearer ${token}`
                 config.headers['Content-Type']='application/json'
-                console.log(config.headers)
+                console.log('header after setin header',config.headers)
     
             }else{
     

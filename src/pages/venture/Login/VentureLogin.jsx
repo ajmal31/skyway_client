@@ -3,7 +3,7 @@ const VentureLogin=()=>{
 
 
     return (
-     
+      
           <URegister content={'ventureLogin'}/>
         
     )
