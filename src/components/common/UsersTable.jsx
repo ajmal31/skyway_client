@@ -49,7 +49,7 @@ const UsersTable = (prop) => {
                     {users?.map((value,index)=>(
                         
                         <tr className={roll==="venture" ? "bg-secondory text-gray-200 ":"bg-admin-primary"}>
-                    {console.log('single data',value)}
+                    
                         <td className="p-3 ">{roll==='venture'?value?.username:value?.data?.username}</td>
                         <td className="p-3">{roll==='venture'?value?.email:value?.data?.email}</td>
                         <td className="p-3">{roll==='venture'?value?.phone:value?.data?.phone}</td>

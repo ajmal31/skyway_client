@@ -2,6 +2,7 @@ import { useState } from "react";
 import Banner from "./Banner";
 import Navbar from "./Navbar";
 import { easeInOut, motion } from 'framer-motion'
+import Card from "../common/Card";
 
 const Background = () => {
 
@@ -10,12 +11,12 @@ const Background = () => {
       <Navbar />
 
 
-      <div className="flex flex-col justify-center items-center px-16 bg-primary">
+      <div className="flex flex-col justify-center items-center px-16 mb-0 bg-primary">
 
 
         <div className=" w-full   ">
           {/* home page first screeen  */}
-          <div className="h-screen  "  >
+          <div className="h-screen"  >
             <div className="flex flex-row  h-5/6 font-Outfit " >
 
               {/* first half */}
@@ -60,26 +61,14 @@ const Background = () => {
               </div>
 
             </div>
+            <h1 className="text-gray-300 text-center font-Outfit text-5xl font-bold " >Top ventures</h1>
           </div>
-
-          <div className="bg-primary w-full justify-center  font-Outfit text-white flex mb-24 ">
-            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className="  flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
-            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
-            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
-            <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className=" flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">helo1</motion.div>
-
-
-
-
-
-
-
-
-          </div>
+          
+          <Card/>
 
           {/* Home page second screeen */}
-          <div className="h-screen " >
-            <div className="  flex flex-row  h-5/6 font-Outfit  " >
+          <div className="h-screen mt-24   " >
+            <div className="  flex flex-row  h-5/6 font-Outfit    " >
 
               <div className="w-1/2 flex justify-start items-center ">
 
