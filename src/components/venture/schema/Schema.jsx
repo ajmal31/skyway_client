@@ -30,7 +30,7 @@ const basicSchema=yup.object().shape({
     description:yup
     .string('name must be string')
     .required('description is required')
-    .min(50).max(150),
+    .min(1350).max(1430),
     expertise_contries:yup
     .string('name must be string')
     .required('contry is  is required'),

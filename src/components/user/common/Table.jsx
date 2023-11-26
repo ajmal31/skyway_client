@@ -39,21 +39,7 @@ const Table = ({ api }) => {
     }, []);
 
     //Venture connecting Request
-    const handleRequest = async (vid) => {
-
-        if (!token) return navigate('/userLogin')
-
-        const obj = {
-            method: 'post',
-            url: USER_SRV_BASE_URL + 'callRequested',
-            data: { ventureId: vid },
-            token: true,
-            to: 'user'
-        }
-        const response = await dispatch(fetchData(obj))
-
-
-    }
+    
 
 
     //pagination section
@@ -111,7 +97,7 @@ const Table = ({ api }) => {
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
                                 <p className="text-gray-300 whitespace-no-wrap">
                                     {/* <Link to={handleRequest}>make request for a call</Link> */}
-                                   <Link to={'/ventureDetails'} > <button   >Know More</button></Link>
+                                   <Link to={`/ventureDetails/${value?._id}`} > <button   >Know More</button></Link>
 
                                 </p>
                             </td>
@@ -130,12 +116,12 @@ const Table = ({ api }) => {
             <span  >
                 <button onClick={e => handlePagination(page - 1)}>Prev &nbsp; </button>
             </span>
-
+           {console.log('example',Math.ceil(ventureList?.length))}
             {/* Pagination ui */}
             {
                 //create Array the size of the array is 5 devided of the main array and destructure 
                 //here and map take it the index
-                [...Array(Math?.ceil(ventureList?.length / 5))].map((val, index) => (
+                [...Array(Math?.ceil(ventureList&&ventureList?.length / 5))].map((val, index) => (
 
                     <span className="bg-secondory content-center  ">
 

@@ -5,12 +5,12 @@ import { fetchData } from "../../../redux/api/api"
 import { VENTURE_SRV_BASE_URL } from "../../../data/const"
 import { useme } from "../../../hooks/toast"
 import { ToastContainer } from "react-toastify"
-import { Link } from "react-router-dom"
+import { Link,useNavigate } from "react-router-dom"
 
 
 const VRegister = () => {
 
-
+   const navigate=useNavigate()
     const disapatch = useDispatch()
     const { handleBlur, handleChange, values, errors, touched, handleSubmit } = useFormik({
 
@@ -38,7 +38,7 @@ const VRegister = () => {
             password_two: "",
             confirm_password_two: ""
         },
-        validationSchema: basicSchema,
+        // validationSchema: basicSchema,
 
         onSubmit: async (values) => {
             const error = 'error'
@@ -55,10 +55,19 @@ const VRegister = () => {
             }
 
             const response = await disapatch(fetchData(obj))
+            const {success}=response?.payload?.data
+           if(success){
+            console.log('ventuer register success')
+            useme(success,"success")
+            return navigate('/venture/login')
+
+           }
             console.log('after geting response from ventur registeration', response)
-            console.log(response?.payload?.data?.errors[0].msg)
+            if(response?.payload?.data?.error) return useme(response?.payload?.data?.error,"error")
+    
             const { msg } = response?.payload?.data?.errors[0]
-            useme(msg, error)
+            msg && useme(msg, error)
+            
 
 
         }

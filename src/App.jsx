@@ -59,7 +59,7 @@ function App() {
         <Route path='/' element={(<Home/>)}/>
         <Route path='/userProfile' element={userToken?<Profile/>:<Navigate to={'/userLogin'} />}/>
         <Route path="/ventureList" element={<VentureList/>}/>
-        <Route path="/ventureDetails" element={<VentureDetails/>}/>
+        <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
 
 
          {/* venture Routes */}
