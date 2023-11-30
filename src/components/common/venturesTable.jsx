@@ -10,30 +10,30 @@ const VenturesTable = () => {
     const [ventures, setVentures] = useState([])
 
     const getData = async () => {
-
+       
         const obj = {
-            method: 'get',
-            url: ADMIN_SRV_BASE_URL + 'getAllVentures',
-            data: null,
+            method: 'post',
+            url: VENTURE_SRV_BASE_URL + 'getAllVentures',
+            data: {type:"all"},
             token: true,
             to: 'admin'
         }
 
         const response = await dispatch(fetchData(obj))
         console.log('response in venture tables ', response)
-        setVentures(response?.payload?.data)
+        setVentures(response?.payload?.data?.response)
 
     }
     //  should change token to true somehitng in backend while making true  solve it 
     const updateVentureStatus = async (ventureId) => {
 
-        
+
         const obj = {
             method: 'post',
-            url: ADMIN_SRV_BASE_URL + 'updateVentureStatus',
+            url: VENTURE_SRV_BASE_URL + 'updateVentureStatus',
             data: { id: ventureId },
-            token: false,
-            to: 'admin'
+            token: true,
+            to: 'venture'
         }
         const response = await dispatch(fetchData(obj))
         console.log(response)
@@ -51,7 +51,18 @@ const VenturesTable = () => {
         getData()
 
 
-    },[])
+    }, [])
+
+    //pagination
+
+    const [count, setCount] = useState(8)
+    const [page, setPage] = useState(1)
+    const handlePagination=(selectedPageCount)=>{
+
+        if(selectedPageCount<=Math.ceil(ventures?.length/count)&&selectedPageCount>0&&selectedPageCount!==page)
+        setPage(selectedPageCount)
+
+    }
 
     return (
 
@@ -72,15 +83,16 @@ const VenturesTable = () => {
 
                 <br />
                 <tbody  >
-                    {ventures?.map((value, index) => (
-
+                    {ventures?.slice((page * (count) - count), page * count)?.map((value, index) => (
+                        
                         <tr className="bg-admin-primary  ">
-                            <td className="p-3 ">{value?.ventureReplicated?.ventureName}</td>
+                            {console.log('maping value',value)}
+                            <td className="p-3 ">{value?.ventureName}</td>
                             <td className="p-3">50000</td>
                             <td className="p-3">20000</td>
 
-                            <td className="p-3 ">{value?.ventureReplicated.admin_allowed}</td>
-                            {value.ventureReplicated.admin_allowed === "pending" ? <button className="border px-5 " onClick={e => updateVentureStatus(value.ventureReplicated._id)} > <td className="p-3">Allow</td></button> : ''}
+                            <td className="p-3 ">{value?.admin_allowed}</td>
+                            {value?.admin_allowed === "pending" ? <button className="border px-5 " onClick={e => updateVentureStatus(value?._id)} > <td className="p-3">Allow</td></button> : ''}
                             <button className="border px-5 ml-2" > <td className="p-3 text-right ">Rejected</td></button>
                         </tr>
 
@@ -92,7 +104,30 @@ const VenturesTable = () => {
 
 
             </table>
-        </div>
+            {/* pagination ui */}
+            <div className="flex justify-end " >
+                <span className="p-1 border" >
+                    <button onClick={e => handlePagination(page-1)} >Prev</button>
+                </span>
+                {[...Array(Math.ceil(ventures?.length / count))].map((_, index) => (
+
+
+
+                    < span className="p-1 border px-3">
+
+                        <button onClick={e=>handlePagination(index+1)} >{index+1}</button>
+
+                    </span>
+                ))
+
+                }
+
+                <span className="p-1 border" >
+                    <button onClick={e => handlePagination(page+1)} >Next</button>
+                </span>
+            </div>
+
+        </div >
     )
 
 }

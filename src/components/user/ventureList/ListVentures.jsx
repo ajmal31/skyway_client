@@ -4,9 +4,9 @@ import { VENTURE_SRV_BASE_URL } from "../../../data/const"
 const ListVentures = () => {
 
   const obj={
-    method:'get',
+    method:'post',
     url:VENTURE_SRV_BASE_URL+'getAllVentures',
-    data:null,
+    data:{type:'allowed'},
     token:false,
     
 }

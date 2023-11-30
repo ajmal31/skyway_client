@@ -35,13 +35,23 @@ export const ventureSlice=createSlice({
 
             localStorage.setItem('pending',false)
             state.pending="false"
+        },
+        ventureLogout:(state,action)=>{
+
+            localStorage.removeItem('ventureToken')
+            localStorage.removeItem('ventureName')
+            localStorage.removeItem('pending')
+
+            state.ventureName=null
+            state.ventureToken=null
+            state.pending=null
         }
         
     }
 
 })
 
-export const{ventureLogin,changeVentureStatus}=ventureSlice.actions
+export const{ventureLogin,changeVentureStatus,ventureLogout}=ventureSlice.actions
 export default ventureSlice.reducer
     
    

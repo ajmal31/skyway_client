@@ -33,8 +33,6 @@ const Table = ({ api }) => {
 
 
     }
-    // let temp=[...]
-    // console.log('venutereListim',temp&&temp.reverse())
 
     useEffect(() => {
 
@@ -119,7 +117,7 @@ const Table = ({ api }) => {
             <span  >
                 <button onClick={e => handlePagination(page - 1)}>Prev &nbsp; </button>
             </span>
-           {console.log('example',Math.ceil(ventureList?.length))}
+          
             {/* Pagination ui */}
             {
                 //create Array the size of the array is 5 devided of the main array and destructure 
