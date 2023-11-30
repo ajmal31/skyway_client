@@ -28,8 +28,9 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
     
                      return response
                 }else{
+                    console.log('expected block')
                     let response =await userAxiosInstance[method](url,data)
-                    
+                    console.log('response from expected block')
                     return response
                 }
 

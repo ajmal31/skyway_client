@@ -28,10 +28,13 @@ const Table = ({ api }) => {
 
         }
         const response = await dispatch(fetchData(obj))
-        setVentureList(response?.payload?.data?.response)
+        setVentureList([...response?.payload?.data?.response].reverse())
+
 
 
     }
+    // let temp=[...]
+    // console.log('venutereListim',temp&&temp.reverse())
 
     useEffect(() => {
 

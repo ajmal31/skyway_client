@@ -37,11 +37,17 @@ export const UserSlice=createSlice({
              state.token=null
              state.username=null
              
+        },
+        changeUsername:(state,action)=>{
+
+          localStorage.setItem('username',action.payload)
+          state.username=action.payload
+
         }
         
     },
 })
 
 
-export const {userLogin,userLogout}=UserSlice.actions
+export const {userLogin,userLogout,changeUsername}=UserSlice.actions
 export default UserSlice.reducer 

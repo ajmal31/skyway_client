@@ -4,99 +4,150 @@ import { userLogout } from "../../../redux/slices/UserSlice"
 import { useEffect, useState } from "react"
 import { USER_SRV_BASE_URL } from "../../../data/const"
 import { fetchData } from "../../../redux/api/api"
+import { ToastContainer } from "react-toastify"
+import { useme } from "../../../hooks/toast"
+import { changeUsername } from "../../../redux/slices/UserSlice"
 const Uprofile = () => {
+
+    const [userCred, setUserCred] = useState({})
+    const [edit, setEdit] = useState(false)
+    const [updateUserCred, setUpdateUserCred] = useState({
+        username: userCred?.username,
+        email: "",
+        region: "",
+        destination: "",
+        phone: ""
+
+    })
+
+    const handUpdateUser = (e) => {
+
+
+        let val = e.target.value
+        let name = e.target.name
+
+        setUserCred({ ...userCred, [name]: val })
+
+
+    }
+    const updateButton = async() => {
+
+        let testNumber = userCred?.phone + "";
+        const numberLen = testNumber?.length;
+        const regionLen = userCred?.region?.length;
+        const destLen = userCred?.destination?.length;
+        const error = 'error';
+        const success = 'success';
+        console.log('email in update button', userCred?.email)
+        if (userCred?.username.length <= 0) useme("please enter a valid name", error)
+        else if (!/^.+@.+\.[a-zA-Z]{2,3}$/.test(userCred.email))useme("enter a valid email", error)
+        else if (userCred?.email?.length > 30) useme('Email limit exceeded', error);
+        else if (numberLen !== 10) useme('Please enter a valid number', error);
+        else if (regionLen < 2) useme('Please enter a valid region', error);
+        else if (destLen < 2) useme('Please enter a valid destination', error);
+        else {
+
+            setEdit(false)
+            console.log('inside the update button', userCred)
+
+            const obj={
+                method:'post',
+                url:USER_SRV_BASE_URL+'updateUser',
+                data:userCred,
+                token:true,
+                to:'user'
+           }
+           const response=await dispatch(fetchData(obj))
+           dispatch(changeUsername(response?.payload?.data?.response?.username))
+           useme("Profile Updated",'info')
+           
+        }
+
+
+    }
+
     //user Logout
-    const dispatch=useDispatch()
-     const Logout=()=>{
+    const dispatch = useDispatch()
+    const Logout = () => {
         dispatch(userLogout())
-     }
-     
+    }
+
+    const getUserDetails = async () => {
+
+
+        const obj = {
+            method: 'get',
+            url: USER_SRV_BASE_URL + "getUser",
+            data: null,
+            token: true,
+            to: 'user'
+        }
+        const response = await dispatch(fetchData(obj))
+        console.log('response of the api call', response)
+        setUserCred(response?.payload?.data?.response)
+
+    }
+    console.log('response in userProfile', userCred)
+    useEffect(() => {
+
+        getUserDetails()
+
+    }, [])
+
     return (
 
         <div className="bg-primary w-screen  h-screen">
 
             <Navbar />
 
-            {/* <span className="bg-secondory flex flex-row-2 mx-20 shadow-2xl rounded-3xl pl-16  h-1/2 w-1/2  ">
 
 
 
-                <div className="row-span-3 flex justify-center  bg-secondory items-center w-1/4" >
+            <div className=" w-full flex px-16 pt-10 flex-col text-gray-200 font-Outfit ">
+                <div className=" flex   " >
 
-
-
-                    <div className=" border w-2/2 rounded-full h-1/2" >
-                        <img src="/user-profile.png"
-                            className="w-full h-full object-cover rounded-full" alt="" />
-                    </div>
-
-                </div>
-                <span className="col-span-3 row-span-3 w-3/4  " >
-                    <div className="bg-secondory border-gray-300 rounded-3xl pt-5 pl-5">
-                        <label htmlFor="" className="text-gray-300 text-sm">Username</label>
-                        <h2 className="text-white font-bold">John Doe</h2>
-                        <hr className="border-b border-gray-300 w-2/3 " />
-                        <label htmlFor="" className="text-gray-300 text-sm">Email</label>
-                        <p className="text-white font-bold ">john.doe@example.com</p>
-                        <hr className="border-b border-gray-300 w-2/3" />
-                        <label htmlFor="" className="text-gray-300 text-sm">Region</label>
-                        <p className="text-white font-bold ">india</p>
-                        <hr className="border-b border-gray-300 w-2/3" />
-                        <label htmlFor="" className="text-gray-300 text-sm">Destination</label>
-                        <p className="text-white font-bold ">France</p>
-                        <hr className="border-b border-gray-300 w-2/3" />
-                        <label htmlFor="" className="text-gray-300 text-sm">Phone</label>
-                        <p className="text-white font-bold ">9747343216</p>
-                        <hr className="border-b border-gray-300 w-2/3" />
-                        <button onClick={Logout} className="text-gray-300 " >Logout</button>
-
-                    </div>
-                </span>
-
-                
-
-
-
-
-
-            </span>
-             */}
-            
-
-              <div className=" w-full flex px-16 pt-10 flex-col text-gray-200 font-Outfit ">
-                 <div className=" flex   " >
-                    
                     <div className="w-1/2 m-2 bg-secondory flex rounded-2xl">
-                      
-                      <div className="  w-1/3 border-gray-500 border-r mr-3 flex justify-center  ">profile photo</div>
-                      <div className="flex-grow  rounded-2xl ">
-                      {/* user details content */}
-                      
-                      <label htmlFor="" className="text-gray-500 text-sm  ">Username</label><br />
-                       <input type="text" value='Muhammed Ajmal' className="bg-transparent outline-none" />
-                        <hr className="border-b border-gray-500 w-2/3 " />
-                        <label htmlFor="" className="text-gray-500 text-sm">Email</label><br />
-                        <input type="text" value='ajmalmuhammed846@gmail.com' className="bg-transparent outline-none" />
-                        <hr className="border-b border-gray-500 w-2/3" />
-                        <label htmlFor="" className="text-gray-500 text-sm">Region</label><br />
-                        <input type="text" value='india' className="bg-transparent outline-none" />
-                        <hr className="border-b border-gray-500 w-2/3" />
-                        <label htmlFor="" className="text-gray-500 text-sm">Destination</label><br />
-                        <input type="text" value='UAE' className="bg-transparent outline-none" />
-                        <hr className="border-b border-gray-500 w-2/3" />
-                        <label htmlFor="" className="text-gray-500 text-sm">Phone</label><br />
-                        <input type="text" value='9747343216' className="bg-transparent outline-none" />
-                        <hr className="border-b border-gray-500 w-2/3" />
-                        <br />
-                        <button onClick={Logout} className="text-gray-300 " >Logout</button> 
-                      
-                      </div>
+
+                        <div className="  w-1/3 border-gray-500 border-r mr-3 flex justify-center  ">profile photo</div>
+                        <div className="flex-grow  rounded-2xl ">
+                            {/* user details content */}
+
+                            <label htmlFor="" className="text-gray-500 text-sm  ">Username</label><br />
+                            {edit ? <input type="text" onChange={handUpdateUser} name="username" value={userCred?.username} className="bg-transparent outline-none" /> : <input type="text" onChange={handUpdateUser} readOnly value={userCred?.username} className="bg-transparent outline-none" />}
+                            <hr className="border-b border-gray-500 w-2/3 " />
+                            <label htmlFor="" className="text-gray-500 text-sm">Email</label><br />
+                            {edit ? <input type="email" onChange={handUpdateUser} name="email" value={userCred?.email} className="bg-transparent outline-none" /> : <input type="email" onChange={handUpdateUser} readOnly value={userCred?.email} className="bg-transparent outline-none" />}
+                            <hr className="border-b border-gray-500 w-2/3" />
+                            <label htmlFor="" className="text-gray-500 text-sm">Region</label><br />
+                            {edit ? <input type="text" onChange={handUpdateUser} name="region" value={userCred?.region} className="bg-transparent outline-none" /> : <input type="text" onChange={handUpdateUser} readOnly value={userCred?.region} className="bg-transparent outline-none" />}
+                            <hr className="border-b border-gray-500 w-2/3" />
+                            <label htmlFor="" className="text-gray-500 text-sm">Destination</label><br />
+                            {edit ? <input type="text" onChange={handUpdateUser} name="destination" value={userCred?.destination} className="bg-transparent outline-none" /> : <input type="text" onChange={handUpdateUser} readOnly value={userCred?.destination} className="bg-transparent outline-none" />}
+                            <hr className="border-b border-gray-500 w-2/3" />
+                            <label htmlFor="" className="text-gray-500 text-sm">Phone</label><br />
+                            {edit ? <input type="number" onChange={handUpdateUser} name="phone" value={userCred?.phone} className="bg-transparent outline-none" /> : <input type="number" onChange={handUpdateUser} readOnly value={userCred?.phone} className="bg-transparent outline-none" />}
+                            <hr className="border-b border-gray-500 w-2/3" />
+                            <br />
+                            <div>
+                                <button onClick={Logout} className="text-gray-300 border p-1 rounded-xl px-3 hover:bg-button " >Logout</button>
+                                <div className="text-end pb-3 mr-5">
+                                    {!edit ?
+
+                                        <button onClick={e => setEdit(true)} >Edit</button>
+                                        : <button onClick={updateButton}  >update</button>}
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
                     </div>
                     <div className="w-1/2 m-2 bg-gray-500"> documents section </div>
-                 </div>
-              </div>
+                </div>
+            </div>
 
-
+            <ToastContainer />
         </div>
 
     )

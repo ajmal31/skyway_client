@@ -1,26 +1,28 @@
 import { USER_SRV_BASE_URL } from "../../../data/const"
-const Modal = ({visible,onClose,connectUser,id}) => {
+const Modal = ({ visible, onClose, connectUser, id }) => {
 
-    if(!visible) return null
-     
-    console.log(id)
-    
-    const handleOnClose=()=>onClose()
+    if (!visible) return null
 
-    const handleRequest=()=>connectUser(id)
+    //this function will be close the modal
+    const handleOnClose = () => onClose()
+
+    //this function handling Connecting user Request
+    const handleRequest = () => connectUser(id)
 
     return (
 
-        <div className="bg-secondory h-1/3  backdrop-blur-md z-50 rounded-3xl bg-opacity-30 fixed w-1/6 " >
+        <div className="h-full w-full backdrop-blur-sm backdrop-brightness-50 top-0 left-0 flex justify-center items-center z-50 fixed  "  onClick={handleOnClose} >
+            <div className="bg-secondory h-1/3  rounded-3xl   w-1/6 " onClick={e=>e.stopPropagation()} >
 
-            <div className="h-1/3 flex items-start  justify-end  ">
-                <button onClick={handleOnClose} className="m-2">✖</button>
+                {/* <div className="h-1/3 flex items-start  justify-end  ">
+                    <button className="m-2">✖</button>
+                </div> */}
+
+                <div className="justify-center items-center  flex w-full h-full ">
+                    <button className="border p-3 rounded-3xl hover:bg-button " onClick={handleRequest} >📞Request for a Call</button>
+                </div>
+
             </div>
-
-            <div className="justify-center items-start  flex w-full h-2/ mt-2">
-                <button className="border p-3 rounded-3xl hover:bg-button " onClick={handleRequest} >📞Request for a Call</button>
-            </div>
-
         </div>
     )
 

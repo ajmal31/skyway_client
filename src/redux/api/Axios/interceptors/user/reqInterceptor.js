@@ -11,9 +11,9 @@ userAxiosInstance.interceptors.request.use(
             if(token){
     
                 config.headers['Authorization']=`bearer ${token}`
-                config.headers['Content-Type']='application/json'
+                // config.headers['Content-Type']='application/json'
                 console.log(config.headers)
-    
+               console.log('header completed')
             }else{
     
                 console.log('please be login ')
