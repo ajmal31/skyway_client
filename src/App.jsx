@@ -33,6 +33,9 @@ import AdminHome from "./pages/admin/home/Home"
 import ListVentures from "./pages/admin/venturesList/ListVentures"      
 
 
+// Chat Related Imports
+import Chat from "./pages/chat/Chat"
+
 
 function App() {
       //user Essential creds
@@ -75,6 +78,10 @@ function App() {
         <Route path="/admin/users" element={adminToken?<UsersList/>:<Navigate to={'/admin/login'}/>}/>
         <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'} />}/>
         <Route path="/admin/ventures" element={adminToken?<ListVentures/>:<Navigate to={'/admin/login'} />}/>
+
+
+        {/* chat Routes */}
+        <Route path="/chats" element={<Chat/>} />
 
 
   </Routes>

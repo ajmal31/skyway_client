@@ -1,11 +1,11 @@
 import UsersTable from "./UsersTable"
 import VenturesTable from "./venturesTable"
-import { ADMIN_SRV_BASE_URL } from "../../data/const"
+import { ADMIN_SRV_BASE_URL, USER_SRV_BASE_URL } from "../../data/const"
 const Admincontent = (prop) => {
 
         const apiDetails={
             method:'get',
-            url:ADMIN_SRV_BASE_URL+'getAllUsers',
+            url:USER_SRV_BASE_URL+'getAllUsers',
             data:null,
             token:true,
             to:'admin'
