@@ -10,11 +10,11 @@ const VenturesTable = () => {
     const [ventures, setVentures] = useState([])
 
     const getData = async () => {
-       
+
         const obj = {
             method: 'post',
             url: VENTURE_SRV_BASE_URL + 'getAllVentures',
-            data: {type:"all"},
+            data: { type: "all" },
             token: true,
             to: 'admin'
         }
@@ -57,10 +57,10 @@ const VenturesTable = () => {
 
     const [count, setCount] = useState(8)
     const [page, setPage] = useState(1)
-    const handlePagination=(selectedPageCount)=>{
+    const handlePagination = (selectedPageCount) => {
 
-        if(selectedPageCount<=Math.ceil(ventures?.length/count)&&selectedPageCount>0&&selectedPageCount!==page)
-        setPage(selectedPageCount)
+        if (selectedPageCount <= Math.ceil(ventures?.length / count) && selectedPageCount > 0 && selectedPageCount !== page)
+            setPage(selectedPageCount)
 
     }
 
@@ -84,9 +84,9 @@ const VenturesTable = () => {
                 <br />
                 <tbody  >
                     {ventures?.slice((page * (count) - count), page * count)?.map((value, index) => (
-                        
+
                         <tr className="bg-admin-primary  ">
-                            {console.log('maping value',value)}
+                            {console.log('maping value', value)}
                             <td className="p-3 ">{value?.ventureName}</td>
                             <td className="p-3">50000</td>
                             <td className="p-3">20000</td>
@@ -105,27 +105,30 @@ const VenturesTable = () => {
 
             </table>
             {/* pagination ui */}
-            <div className="flex justify-end " >
-                <span className="p-1 border" >
-                    <button onClick={e => handlePagination(page-1)} >Prev</button>
-                </span>
-                {[...Array(Math.ceil(ventures?.length / count))].map((_, index) => (
-
-
-
-                    < span className="p-1 border px-3">
-
-                        <button onClick={e=>handlePagination(index+1)} >{index+1}</button>
-
+            {
+                ventures?.length &&
+                <div className="flex justify-end " >
+                    <span className="p-1 border" >
+                        <button onClick={e => handlePagination(page - 1)} >Prev</button>
                     </span>
-                ))
+                    {[...Array(Math.ceil(ventures?.length / count))].Map((_, index) => (
 
-                }
 
-                <span className="p-1 border" >
-                    <button onClick={e => handlePagination(page+1)} >Next</button>
-                </span>
-            </div>
+
+                        < span className="p-1 border px-3">
+
+                            <button onClick={e => handlePagination(index + 1)} >{index + 1}</button>
+
+                        </span>
+                    ))
+
+                    }
+
+                    <span className="p-1 border" >
+                        <button onClick={e => handlePagination(page + 1)} >Next</button>
+                    </span>
+                </div>
+            }
 
         </div >
     )

@@ -1,5 +1,4 @@
 import axios from "axios";
-console.log('api call  interceptor and instance')
 const userAxiosInstance=axios.create();
 
 //configuring in the request interceptor

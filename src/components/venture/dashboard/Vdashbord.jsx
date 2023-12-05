@@ -1,13 +1,13 @@
 import Sidebar from "../../user/common/Sidebar"
 import Table from "../../user/common/Table"
 import UsersTable from "../../common/UsersTable"
-import { VENTURE_SRV_BASE_URL } from "../../../data/const"
+import { USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../../data/const"
 const VentureDashbord = () => {
 
     
     const apiDetails={
         method:'get',
-        url:VENTURE_SRV_BASE_URL+'getAllUsers',
+        url:USER_SRV_BASE_URL+'getAllConnectedUsers',
         data:null,
         token:true,
         to:"venture"

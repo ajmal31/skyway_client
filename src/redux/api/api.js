@@ -4,7 +4,6 @@ import adminAxiosInstance from './Axios/interceptors/admin/reqInterceptor.js'
 import ventureAxiosInstance from './Axios/interceptors/venture/reqInterceptor.js'
 import axios from 'axios'
 
-console.log('calling api aync thunk')
 
 //async thunk redux toolkit this will be handle 
 export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
@@ -28,9 +27,9 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
     
                      return response
                 }else{
-                    console.log('expected block')
+                    
                     let response =await userAxiosInstance[method](url,data)
-                    console.log('response from expected block')
+                   
                     return response
                 }
 
@@ -42,7 +41,7 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
 
                      return response
                 }else{
-                    console.log('reach expecteed')
+                    
                     let response =await adminAxiosInstance[method](url,data)
                     
                     return response
@@ -52,8 +51,9 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
 
                 
                 if(method==='get'){
+                    console.log('expected')
                     let response=await ventureAxiosInstance[method](url)
-                    
+                    console.log('exprected repsonse ',response)
     
                      return response
                 }else{

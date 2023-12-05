@@ -42,12 +42,10 @@ function App() {
       const userToken=useSelector((state=UserSlice)=>state.UserSlice.token)
       //venture Essential creds
       const ventureToken=useSelector((state=ventureSlices)=>state.ventureSlices.ventureToken)
-      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)
-      console.log('in app .js status od the venture',ventureStatus,'ventures token',ventureToken)
-      
+      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)      
       //admin Essential creds
       const adminToken=useSelector((state=adminSlice)=>state.adminSlice.token)
-      console.log('hei here we go with admin tokne',adminToken)
+
       
 
 
