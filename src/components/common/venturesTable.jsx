@@ -2,10 +2,14 @@ import { useEffect, useState } from "react"
 import { ADMIN_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../redux/api/api"
+import { useSelector } from "react-redux"
 import { changeVentureStatus } from "../../redux/slices/ventureSlices"
+import ventureSlices from "../../redux/slices/ventureSlices"
 
 const VenturesTable = () => {
 
+    const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)
+    console.log('ventureStatus from redux',ventureStatus)
     const dispatch = useDispatch()
     const [ventures, setVentures] = useState([])
 
@@ -36,10 +40,9 @@ const VenturesTable = () => {
             to: 'venture'
         }
         const response = await dispatch(fetchData(obj))
-        console.log(response)
-        const { message } = response?.payload?.data
-        console.log('hi ', message)
-        if (message === 'status changed') {
+        console.log(response.payload?.data?.statusChanged)
+        
+        if (response?.payload?.data?.statusChanged) {
             console.log('going to update redux venture status')
             return dispatch(changeVentureStatus())
 
@@ -106,12 +109,12 @@ const VenturesTable = () => {
             </table>
             {/* pagination ui */}
             {
-                ventures?.length &&
+                ventures?.length>=8 &&
                 <div className="flex justify-end " >
                     <span className="p-1 border" >
                         <button onClick={e => handlePagination(page - 1)} >Prev</button>
                     </span>
-                    {[...Array(Math.ceil(ventures?.length / count))].Map((_, index) => (
+                    {[...Array(Math.ceil(ventures?.length / count))]?.Map((_, index) => (
 
 
 

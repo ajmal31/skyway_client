@@ -3,6 +3,7 @@ import commonSlice from "./api/Axios/commonSlice";
 import UserSlice from "./slices/UserSlice";
 import ventureSlices from "./slices/ventureSlices";
 import adminSlice from "./slices/adminSlice";
+import chatSlice from "./slices/chatSlice";
 export const store=configureStore({
 
     reducer:{
@@ -11,7 +12,8 @@ export const store=configureStore({
         common:commonSlice,
         UserSlice:UserSlice,
         ventureSlices:ventureSlices,
-        adminSlice:adminSlice
+        adminSlice:adminSlice,
+        chatSlice:chatSlice
 
 
     }

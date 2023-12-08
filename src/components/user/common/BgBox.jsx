@@ -6,15 +6,17 @@ import Modal from "./Modal"
 import { useEffect, useState } from "react"
 import { useme } from "../../../hooks/toast"
 import { ToastContainer } from "react-toastify"
-import { VENTURE_SRV_BASE_URL, USER_SRV_BASE_URL } from "../../../data/const"
+import { VENTURE_SRV_BASE_URL, USER_SRV_BASE_URL, CHAT_SRV_BASE_URL } from "../../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
+import { useNavigate } from "react-router-dom"
 const BgBox = ({ id }) => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [venutureData, setVentureData] = useState({})
   //taking particular venture details
-  const makeCall = async () => {
+  const getOneVenture = async () => {
 
     const obj = {
       method: 'get',
@@ -26,24 +28,65 @@ const BgBox = ({ id }) => {
     const response = await dispatch(fetchData(obj))
     setVentureData(response?.payload?.data)
 
-
   }
 
-
+  //Invoking in the initial stage 
   useEffect(() => {
 
-    makeCall()
+    getOneVenture()
   }, [])
 
   const [visible, setVisible] = useState(false)
 
   //Closing the modal
   const handleOnClose = () => setVisible(false)
-  const handleRequest = async (vid, venture) => {
-    if (venture) {
+  const handleRequest = async (vid, venture, userId) => {
+    console.log('what happeening heare !!!', id, venture, userId)
+    if (venture?.status === 'allowed') {
+      console.log('enter chat created block "unExpected Block')
       // create chat 
-     }
+      console.log('we are going to make chat configurations')
+      //chat service api details
+      const apiDetails = {
+        method: 'post',
+        url: CHAT_SRV_BASE_URL + 'createChat',
+        data: { receiverId: vid, senderId: userId },
+        token: true,
+        to: 'user'
+      }
+      //venture service api details
+      const apiDetails_two = {
+        method: 'post',
+        url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat',
+        data: { vid: vid},
+        token: true,
+        to: 'venture'
+      }
+      //User service api details
+      const apiDetails_three = {
+        method: 'post',
+        url: USER_SRV_BASE_URL + 'getUserUpdateChat',
+        data: { userId: userId},
+        token: true,
+        to: 'user'
+      }
+      //creating chat
+      let chatCreated = await dispatch(fetchData(apiDetails))
+      //take data from venture Hear receiver id represing the 
+      //venture( hear will be only boolen while RabbitMQ make
+      // request so handle it using that boolean)👆
+
+      //This api call taken venture details based on the id and 
+      //update to chat service👇
+      let ventureData = await dispatch(fetchData(apiDetails_two))
+     
+      //This api call take user details based ont he id and 
+      //update to chat service👇
+      let userData=await dispatch(fetchData(apiDetails_three))
+      navigate('/chats')
+    }
     else {
+      console.log('enter expected block')
       const obj = {
         method: 'post',
         url: USER_SRV_BASE_URL + 'callRequested',

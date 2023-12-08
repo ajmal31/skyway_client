@@ -80,6 +80,7 @@ function App() {
 
         {/* chat Routes */}
         <Route path="/chats" element={<Chat/>} />
+        <Route path="/venture/chats" element={<Chat roll={'venture'}/>}/>
 
 
   </Routes>

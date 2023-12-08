@@ -1,7 +1,12 @@
 import Dp from "./Dp"
-
+import { useSelector } from "react-redux"
+import chatSlice from "../../redux/slices/chatSlice"
 const ChatContent = () => {
 
+    const data=useSelector((state=chatSlice)=>state.chatSlice)
+    console.log('resonse from chatslice',data)
+    if(!data)console.log('user Id not selected')
+    else console.log('user selected go and take userDetails',data)
     return (
         <div className="bg-secondory h-full w-3/5 p-5 text-gray-300 rounded-xl " >
             <div className=" w-full h-full" >

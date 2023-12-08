@@ -38,7 +38,7 @@ const VRegister = () => {
             password_two: "",
             confirm_password_two: ""
         },
-        // validationSchema: basicSchema,
+        validationSchema: basicSchema,
 
         onSubmit: async (values) => {
             const error = 'error'
