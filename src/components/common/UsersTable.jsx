@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { fetchData } from "../../redux/api/api"
 import { ADMIN_SRV_BASE_URL, USER_SRV_BASE_URL } from "../../data/const"
 import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const UsersTable = (prop) => {
     const { roll, api } = prop?.content
@@ -11,6 +11,7 @@ const UsersTable = (prop) => {
     const dispatch = useDispatch()
     const [users, setUsers] = useState([])
     const [ventureId, setVentureId] = useState('')
+    const navigate=useNavigate()
 
     //api call destination
     const getData = async () => {
@@ -58,7 +59,7 @@ const UsersTable = (prop) => {
             setPage(selectedPage)
     }
     const goChat=()=>{
-
+      navigate('/venture/chat')
         
     }
 
@@ -101,7 +102,7 @@ const UsersTable = (prop) => {
                                 value?.ventures?.[value?.ventures?.findIndex(venture => venture.ventureId === ventureId)].status == "pending" ?
                                 <Link onClick={e => handleAllow(value?._id)} >
                                     <button className={buttonStyle} >Allow</button>
-                                </Link> : <Link><button className={buttonStyle} onClick={goChat} >Make a chat</button></Link>
+                                </Link> : <Link to={'/venture/chats'} ><button className={buttonStyle} >Make a chat</button></Link>
 
                             }
                         </tr>

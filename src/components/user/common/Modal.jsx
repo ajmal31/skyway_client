@@ -38,11 +38,11 @@ const Modal = ({ visible, onClose, connectUser, id }) => {
     }
     //This user connected ventures Array of object
     let temp = userCred
-    let k = Array.from(temp);
+    let k = Array?.from(temp);
     
     //if user connected multiples venture array contain multiple id s..so in this synario we should know
     //showing ventture wthere already connected or not ?
-    const venture = k.find(venture => venture.ventureId === id);
+    const venture = k?.find(venture => venture.ventureId === id);
 
 
 

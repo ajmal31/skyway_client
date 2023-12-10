@@ -78,9 +78,13 @@ function App() {
         <Route path="/admin/ventures" element={adminToken?<ListVentures/>:<Navigate to={'/admin/login'} />}/>
 
 
-        {/* chat Routes */}
+        {/* chat Routes for users */}
         <Route path="/chats" element={<Chat/>} />
         <Route path="/venture/chats" element={<Chat roll={'venture'}/>}/>
+
+
+
+        
 
 
   </Routes>

@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-    senderId:null,
-    receiverId:null
+    oppsitePersonData:null
 }
 
 const chatSlice=createSlice({
@@ -14,8 +13,7 @@ const chatSlice=createSlice({
             const {senderId,receiverId}=action.payload
             console.log('enter the selcted user slice action',senderId,receiverId)
 
-            state.senderId=senderId
-            state.receiverId=receiverId
+            state.oppsitePersonData=action.payload
 
             console.log('actionssss',state)
 
