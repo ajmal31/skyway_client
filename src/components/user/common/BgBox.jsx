@@ -26,6 +26,7 @@ const BgBox = ({ id }) => {
       to: "venture"
     }
     const response = await dispatch(fetchData(obj))
+    console.log('venture data is get',response)
     setVentureData(response?.payload?.data)
 
   }
@@ -41,11 +42,11 @@ const BgBox = ({ id }) => {
   //Closing the modal
   const handleOnClose = () => setVisible(false)
   const handleRequest = async (vid, venture, userId) => {
-    console.log('what happeening heare !!!', id, venture, userId)
+
     if (venture?.status === 'allowed') {
-      console.log('enter chat created block "unExpected Block')
+      
       // create chat 
-      console.log('we are going to make chat configurations')
+
       //chat service api details
       const apiDetails = {
         method: 'post',
@@ -86,7 +87,7 @@ const BgBox = ({ id }) => {
       navigate('/chats')
     }
     else {
-      console.log('enter expected block')
+      console.log('enter expected block',vid)
       const obj = {
         method: 'post',
         url: USER_SRV_BASE_URL + 'callRequested',
@@ -94,6 +95,7 @@ const BgBox = ({ id }) => {
         token: true,
         to: 'user'
       }
+      console.log('venture id in client',vid)
       const response = await dispatch(fetchData(obj))
       const { data } = response.payload
       if (data === "You Already Requested This venture. please wait for their response")

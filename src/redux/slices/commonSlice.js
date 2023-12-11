@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchData } from "../api"
-console.log('api call common slice ')
+import {fetchData} from "../api/api"
 //common slice handle data status
 const commonSlice=createSlice({
 

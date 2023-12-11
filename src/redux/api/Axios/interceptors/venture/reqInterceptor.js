@@ -12,10 +12,9 @@ ventureAxiosInstance.interceptors.request.use(
         //get token from cookies
 
         const token = localStorage.getItem('ventureToken')
-        console.log('venture interceptor token ',token)
+
         if (token) {
 
-            console.log('tooken inside interceptor',token)
             config.headers['Authorization'] = `bearer ${token}`
             // config.headers['Content-Type']='application/json'
             // config.headers['Accept']='application/json'

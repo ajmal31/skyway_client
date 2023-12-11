@@ -8,7 +8,6 @@ import axios from 'axios'
 //async thunk redux toolkit this will be handle 
 export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
     try{ 
-        console.log('enter the thunk',obj)
         const url=obj?.url
         const method=obj?.method
         const data=obj?.data
@@ -51,10 +50,8 @@ export const fetchData=createAsyncThunk('fetchData',async(obj)=>{
 
                 
                 if(method==='get'){
-                    console.log('expected')
+                   
                     let response=await ventureAxiosInstance[method](url)
-                    console.log('exprected repsonse ',response)
-    
                      return response
                 }else{
                     let response =await ventureAxiosInstance[method](url,data)

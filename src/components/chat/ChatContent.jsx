@@ -1,11 +1,11 @@
 
 import { useSelector } from "react-redux"
 import chatSlice from "../../redux/slices/chatSlice"
-import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL } from "../../data/const"
+import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../redux/api/api"
 import { useEffect, useState } from "react"
-const ChatContent = () => {
+const ChatContent = ({roll}) => {
 
 
     const data = useSelector((state = chatSlice) => state.chatSlice)
@@ -14,8 +14,6 @@ const ChatContent = () => {
     const [user,setUser]=useState({})
 
 
-    console.log('oppsite person data',data)
-   
     useEffect(() => {
         getChat()
 
@@ -29,28 +27,35 @@ const ChatContent = () => {
 
         const apiDetails_chat = {
             method: 'post',
-            url: CHAT_SRV_BASE_URL + 'getChat',
-            data: {receiverId:data?.oppsitePersonData?._id},
+            url: CHAT_SRV_BASE_URL + 'getChat/'+roll,
+            data: {receiverId:data?.oppsitePersonData?._id,roll:roll},
             token: true,
             //here user because user token is should wanna check user is logged or not
-            to: 'user'
+            to: roll //somtime it venture sometimes it usee so..it will be handle dynamicc header tokens
         }
         const apiDetails_user = {
             method: 'get',
             url: USER_SRV_BASE_URL + 'getUser',
             data: null,
             token: true,
-            //here user because user token is should wanna check user is logged or not
             to: 'user'
         }
-        
+        const apiDetails_venture = {
+            method: 'get',
+            url: VENTURE_SRV_BASE_URL + 'getOneVenture',
+            data: null,
+            token: true,
+            to: 'venture'
+        }
 
         const response_chat = await dispatch(fetchData(apiDetails_chat))
         let messages=Array.from(response_chat?.payload?.data?.message)
         setChat(messages)
-        const response_user=await dispatch(fetchData(apiDetails_user))
-        console.log('user detauls in chat',response_user)
-        setUser(response_user?.payload?.data?.response)
+        const response_user=await dispatch(fetchData(roll==="user"?apiDetails_user:apiDetails_venture))
+        console.log('current user data',response_user)
+        if(roll==="user")setUser(response_user?.payload?.data?.response)
+        else setUser(response_user?.payload?.data)
+
         
 
         

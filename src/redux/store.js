@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import commonSlice from "./api/Axios/commonSlice";
+import commonSlice from "./slices/commonSlice";
 import UserSlice from "./slices/UserSlice";
 import ventureSlices from "./slices/ventureSlices";
 import adminSlice from "./slices/adminSlice";

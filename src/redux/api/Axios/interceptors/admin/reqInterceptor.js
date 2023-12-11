@@ -1,5 +1,4 @@
 import axios from "axios";
-console.log('api call  interceptor and instance venutre')
 const adminAxiosInstance=axios.create();
 
 //configuring in the request interceptor
@@ -14,7 +13,7 @@ adminAxiosInstance.interceptors.request.use(
     
                 config.headers['Authorization']=`bearer ${token}`
                 config.headers['Content-Type']='application/json'
-                console.log('header after setin header',config.headers)
+                
     
             }else{
     
