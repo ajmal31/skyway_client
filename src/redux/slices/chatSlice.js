@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-    oppsitePersonData:null
+    oppsitePersonData:null,
+    chatId:null
 }
 
 const chatSlice=createSlice({
@@ -18,9 +19,13 @@ const chatSlice=createSlice({
 
             console.log('current chat slice oppsotie person data',state.oppsitePersonData)
 
+        },
+        chatId:(state,action)=>{
+
         }
+        
     }
 
 })
-export const {selectedUser}=chatSlice.actions
+export const {selectedUser,chatId}=chatSlice.actions
 export default chatSlice.reducer

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import cookie from "js-cookie"
 
 const initialState={
 
@@ -41,10 +42,13 @@ export const ventureSlice=createSlice({
             localStorage.removeItem('ventureToken')
             localStorage.removeItem('ventureName')
             localStorage.removeItem('pending')
+            cookie.remove('ventureId')
 
             state.ventureName=null
             state.ventureToken=null
             state.pending=null
+
+
         }
         
     }

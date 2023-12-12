@@ -8,6 +8,7 @@ import { fetchData } from "../../../redux/api/api";
 import { useNavigate } from "react-router-dom";
 import { ventureLogin } from "../../../redux/slices/ventureSlices";
 import { useme } from "../../../hooks/toast";
+import cookie from "js-cookie"
 const VloginContent = () => {
 
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ const VloginContent = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log('cred', cred)
+
         const obj = {
             method: 'post',
             url: VENTURE_SRV_BASE_URL + 'login',
@@ -31,31 +32,30 @@ const VloginContent = () => {
         }
 
         const response = await dispatch(fetchData(obj))
-        console.log('response in client related venture login', response)
-        const { message,token,pending,ventureName } = response?.payload?.data
-        console.log('meesage and token',message,token)
-        const data={
-            ventureToken : token,
+
+        const { message, token, pending, ventureName, ventureId } = response?.payload?.data
+
+        const data = {
+            ventureToken: token,
             ventureName,
             pending,
         }
-        if (message==='venture login succesful'&&!pending) {
-            console.log('enter successtate')
-            
+
+        if (message === 'venture login succesful' && pending === "false") {
+            //venture Id storing to coooki
+            cookie.set('ventureId',ventureId,{expires:7})
 
             dispatch(ventureLogin(data))
             return navigate('/venture/dashboard')
 
-        }else if(pending){
+        } else if (pending === "true") {
 
-
-           
             dispatch(ventureLogin(data))
             return navigate('/venture/pending')
 
-        } 
-        else return useme(message,'error')
-       
+        }
+        else return useme(message, 'error')
+
 
 
 

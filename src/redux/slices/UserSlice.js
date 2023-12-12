@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
+import cookie from 'js-cookie'
 
 const initialState={
 
@@ -34,6 +35,8 @@ export const UserSlice=createSlice({
 
              localStorage.removeItem('authToken')
              localStorage.removeItem('username')
+             cookie.remove('userId')
+
              state.token=null
              state.username=null
              

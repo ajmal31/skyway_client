@@ -95,10 +95,9 @@ const BgBox = ({ id }) => {
         token: true,
         to: 'user'
       }
-      console.log('venture id in client',vid)
       const response = await dispatch(fetchData(obj))
-      const { data } = response.payload
-      if (data === "You Already Requested This venture. please wait for their response")
+      const { data } = response?.payload
+      if (data&&data === "You Already Requested This venture. please wait for their response")
         useme(data, 'warning')
       else useme(data, 'success')
     }

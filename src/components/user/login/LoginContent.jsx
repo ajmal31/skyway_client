@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { userLogin } from "../../../redux/slices/UserSlice"
 import { GoogleLogin } from "@react-oauth/google"
+import cookie from "js-cookie"
 
 
 
@@ -41,14 +42,13 @@ const LoginContent = () => {
                 
             }
             const res = await dispatch(fetchData(obj))
-           
-
+            console.log('after login',res)
             const { message } = res.payload.data
             if (message === "user Logged in succesful") {
-
-                const { authToken,username } = res.payload.data
-                useme(message, success)
                 
+                const { authToken,username,userId} = res.payload.data
+                useme(message, success)
+                cookie.set("userId",userId)
                 dispatch(userLogin(res.payload.data))
                 navigate('/')
 
@@ -66,7 +66,7 @@ const LoginContent = () => {
         //exact value making like an object and assign to an variable
 
         const data = { encodedData: credentials.credential }
-        console.log(data)
+       
         const obj = {
             method: 'post',
             url: USER_SRV_BASE_URL + 'googleLogin',
