@@ -14,9 +14,8 @@ userAxiosInstance.interceptors.request.use(
                
                
             }else{
-    
-                console.log('please be login ')
-                console.log('/userLogin')
+                console.log('please be login')
+                document.location.href="/userLogin"
             }
             return config
         },(error)=>{

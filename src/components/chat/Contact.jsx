@@ -16,25 +16,6 @@ const Contact = ({ chats,roll }) => {
        
     }
 
-    // const getUser=async()=>{
-    //      //get user api details
-    //     const apiDetails_two = {
-    //         method: 'get',
-    //         url: USER_SRV_BASE_URL + 'getUser',
-    //         data: null,
-    //         token: true,
-    //         to: 'user'
-    //     }
-       
-    //     const response_one=await dispatch(fetchData(apiDetails_two))
-    //     setUser(response_one?.payload?.data?.response)
-        
-    // }
-
-    // useEffect(()=>{
-    //   //?
-    // },[])
-
 
     return (
         <div>

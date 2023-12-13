@@ -87,7 +87,6 @@ const BgBox = ({ id }) => {
       navigate('/chats')
     }
     else {
-      console.log('enter expected block',vid)
       const obj = {
         method: 'post',
         url: USER_SRV_BASE_URL + 'callRequested',

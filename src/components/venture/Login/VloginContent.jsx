@@ -43,7 +43,7 @@ const VloginContent = () => {
 
         if (message === 'venture login succesful' && pending === "false") {
             //venture Id storing to coooki
-            cookie.set('ventureId',ventureId,{expires:7})
+            cookie.set('ventureId',ventureId,{expires: 7})
 
             dispatch(ventureLogin(data))
             return navigate('/venture/dashboard')

@@ -19,9 +19,6 @@ const chatSlice=createSlice({
 
             console.log('current chat slice oppsotie person data',state.oppsitePersonData)
 
-        },
-        chatId:(state,action)=>{
-
         }
         
     }

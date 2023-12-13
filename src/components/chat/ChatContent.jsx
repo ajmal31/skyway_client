@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CHAT_SRV_BASE_URL} from "../../data/const";
+import { CHAT_SRV_BASE_URL } from "../../data/const";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../../redux/api/api";
 import { useEffect, useState } from "react";
@@ -23,7 +23,6 @@ const ChatContent = ({ roll }) => {
     const [chat, setChat] = useState([]);
     //storing Input message
     const [message, setMessage] = useState('');
-     
     //taking chat details and storing messages to chat state
     const getChat = async () => {
         const apiDetails_chat = {
@@ -35,22 +34,27 @@ const ChatContent = ({ roll }) => {
         };
 
         const response_chat = await dispatch(fetchData(apiDetails_chat));
-        let messages = Array.from(response_chat?.payload?.data?.message);
+        let messages = Array?.from(response_chat?.payload?.data?.message && response_chat?.payload?.data?.message);
         setChat(messages);
-        
+
         //return chat id (Game Changer😍)
         return response_chat?.payload?.data?._id
     };
 
 
 
+
+
+
+
+
     useEffect(() => {
         const fetchData = async () => {
-            let response=await getChat();
-            if(response){
+            let response = await getChat();
+            if (response) {
                 socket.emit("joinRoom", response);
 
-            }       
+            }
         };
 
         fetchData();
@@ -59,14 +63,24 @@ const ChatContent = ({ roll }) => {
     //Handling message
     const handleMessage = () => {
         const payload = {
-            senderId: user?._id,
+            senderId: roll === "venture" ? ventureId : userId,
             receiverId: data?.oppsitePersonData?._id,
             message: message
         };
 
-        socket.emit('message', payload);
+        socket.emit('message', payload)
         setMessage('');
+        console.group('after updating payload', chat)
     };
+
+    useEffect(() => {
+        socket.on('received', (data) => {
+            console.log(`message recieved ${roll} side`)
+            setChat([...chat, data])
+
+        })
+
+    },[handleMessage])
 
     return (
         <div className="bg-secondory h-full w-3/5 p-5 text-gray-300 rounded-xl">
@@ -87,7 +101,7 @@ const ChatContent = ({ roll }) => {
                 <hr className="border-gray-500" />
                 <div className="max-w-screen-md mx-auto s  mt-10">
                     <div className="flex flex-col mb-2 px-1 scroll-ml-10 items-start">
-                        {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll==="venture"?ventureId:userId} />)}
+                        {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll === "venture" ? ventureId : userId} />)}
                     </div>
                 </div>
                 <div className="h-5/6 w-full flex">
