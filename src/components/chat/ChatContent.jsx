@@ -21,8 +21,12 @@ const ChatContent = ({ roll }) => {
     const dispatch = useDispatch();
     //for storing chat messages
     const [chat, setChat] = useState([]);
+    console.log(chat, 'chat')
     //storing Input message
     const [message, setMessage] = useState('');
+
+
+
     //taking chat details and storing messages to chat state
     const getChat = async () => {
         const apiDetails_chat = {
@@ -34,6 +38,8 @@ const ChatContent = ({ roll }) => {
         };
 
         const response_chat = await dispatch(fetchData(apiDetails_chat));
+        if (!response_chat?.payload?.data || response_chat?.payload?.data?.message.length < 1)
+            return setChat([])
         let messages = Array?.from(response_chat?.payload?.data?.message && response_chat?.payload?.data?.message);
         setChat(messages);
 
@@ -43,7 +49,11 @@ const ChatContent = ({ roll }) => {
 
 
 
+    socket.on('received', (data) => {
+        console.log(`message recieved ${roll} side`)
+        setChat([...chat, data])
 
+    })
 
 
 
@@ -65,22 +75,21 @@ const ChatContent = ({ roll }) => {
         const payload = {
             senderId: roll === "venture" ? ventureId : userId,
             receiverId: data?.oppsitePersonData?._id,
-            message: message
+            content: message
         };
+        console.log('current payload', payload)
+        setChat([...chat, payload])
+            socket.emit('message', payload)
+            setMessage('');
+            console.group('after updating payload', chat)
 
-        socket.emit('message', payload)
-        setMessage('');
-        console.group('after updating payload', chat)
+
     };
 
-    useEffect(() => {
-        socket.on('received', (data) => {
-            console.log(`message recieved ${roll} side`)
-            setChat([...chat, data])
 
-        })
 
-    },[handleMessage])
+
+
 
     return (
         <div className="bg-secondory h-full w-3/5 p-5 text-gray-300 rounded-xl">

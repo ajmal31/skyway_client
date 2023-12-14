@@ -42,7 +42,7 @@ const RegisterContent = () => {
                 token: false,
                 
             };
-            console.log(register);
+
 
             const res = await dispatch(fetchData(obj));
 

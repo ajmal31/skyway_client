@@ -21,6 +21,7 @@ import VentureDetails from "./pages/user/ventureDetails/VentureDetails"
 import { userLogout } from "./redux/slices/UserSlice"
 
 
+
 //Venture related imports
 
 import VentureRegister from "./pages/venture/register/VentureRegister"
@@ -84,6 +85,7 @@ function App() {
         <Route path="/ventureList" element={<VentureList/>}/>
         <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
         <Route path="/chats" element={userToken&&userId?<Chat/>:<Navigate to={'/userlogin'}/>} />
+        {/* <Route path="/otp" element={<Otp/>}/> */}
 
 
          {/* venture Routes */}
