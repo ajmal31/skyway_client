@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CHAT_SRV_BASE_URL } from "../../data/const";
+import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../../redux/api/api";
 import { useEffect, useState } from "react";
@@ -24,6 +24,7 @@ const ChatContent = ({ roll }) => {
     console.log(chat, 'chat')
     //storing Input message
     const [message, setMessage] = useState('');
+    const [header,setHeader]=useState({})
 
     
 
@@ -42,6 +43,7 @@ const ChatContent = ({ roll }) => {
             return setChat([])
         let messages = Array?.from(response_chat?.payload?.data?.message && response_chat?.payload?.data?.message);
         setChat(messages);
+        setHeader(response_chat?.payload?.data)
 
         //return chat id (Game Changer😍)
         return response_chat?.payload?.data?._id
@@ -54,7 +56,6 @@ const ChatContent = ({ roll }) => {
         setChat([...chat, data])
 
     })
-
 
 
 
@@ -101,7 +102,8 @@ const ChatContent = ({ roll }) => {
                     </div>
                     <div className="w-10/12  h-full">
                         <div>
-                            <p className="font-semibold mt-3">Zarah</p>
+                            {console.log('header',roll==="venture"?data.oppsitePersonData.username:data.oppsitePersonData.ventureName)}
+                            <p className="font-semibold mt-3">{roll==="user"?data?.oppsitePersonData?.username:data?.oppsitePersonData.ventureName}</p>
                             <p className="">Last seen 12.30 pm</p>
                         </div>
                     </div>
