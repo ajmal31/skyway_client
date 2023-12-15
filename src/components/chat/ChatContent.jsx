@@ -2,11 +2,12 @@ import { useSelector } from "react-redux";
 import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../../redux/api/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { CHAT_SRV_SOCKET_URL } from "../../data/const";
 import cookie from "js-cookie";
 import { io } from "socket.io-client";
 import { ChatMessage } from "./ChatMessage";
+import EmptyChat from "./EmptyChat";
 //socket port spectification
 const socket = io(CHAT_SRV_SOCKET_URL);
 
@@ -21,12 +22,18 @@ const ChatContent = ({ roll }) => {
     const dispatch = useDispatch();
     //for storing chat messages
     const [chat, setChat] = useState([]);
-    console.log(chat, 'chat')
+
     //storing Input message
     const [message, setMessage] = useState('');
     const [header,setHeader]=useState({})
+    const scrollDownRef=useRef(null)
 
-    
+    //scroll handler
+    useEffect(() => {
+        if (scrollDownRef.current) {
+            scrollDownRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    },[chat]);
 
     //taking chat details and storing messages to chat state
     const getChat = async () => {
@@ -78,22 +85,22 @@ const ChatContent = ({ roll }) => {
             receiverId: data?.oppsitePersonData?._id,
             content: message
         };
-        console.log('current payload', payload)
         setChat([...chat, payload])
             socket.emit('message', payload)
             setMessage('');
-            console.group('after updating payload', chat)
+            
 
 
     };
 
 
 
-    if(!data.oppsitePersonData)return <h1 className="font-Outfit text-gray-300">Please select a chat</h1>
+
+    if(!data.oppsitePersonData)return <EmptyChat/>
 
      return(
-        <div className="bg-secondory h-full w-3/5 p-5 text-gray-300 rounded-xl">
-            <div className="w-full h-full">
+        <div className="bg-secondory h-full w-3/5 p-10 text-gray-300 rounded-xl">
+            <div className="w-full h-full ">
                 <div className="h-1/6 w-full pt-2 flex bg-secondory">
                     <div className="w-2/12 flex flex-wrap justify-center items-center">
                         <div className="h-full w-4/5 rounded-full">
@@ -109,11 +116,13 @@ const ChatContent = ({ roll }) => {
                     </div>
                 </div>
                 <hr className="border-gray-500" />
-                <div className="max-w-screen-md mx-auto s  mt-10">
-                    <div className="flex flex-col mb-2 px-1 scroll-ml-10 items-start">
+                <div className="max-w-screen-md mx-auto   mt-10">
+                    <div className="flex flex-col mb-2 px-1 overflow-auto  max-h-72 items-start">
                         {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll === "venture" ? ventureId : userId} />)}
+                        <div ref={scrollDownRef} ></div>
                     </div>
                 </div>
+                
                 <div className="h-5/6 w-full flex">
                     <div className="flex w-full items-end justify-end">
                         <div className="w-full flex gap-2  ">
