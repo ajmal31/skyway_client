@@ -37,7 +37,7 @@ const VenturesTable = () => {
             url: VENTURE_SRV_BASE_URL + 'updateVentureStatus',
             data: { id: ventureId },
             token: true,
-            to: 'venture'
+            to: 'admin'
         }
         const response = await dispatch(fetchData(obj))
         console.log(response.payload?.data?.statusChanged)

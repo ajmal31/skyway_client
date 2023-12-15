@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 
 const UsersTable = (prop) => {
-    const { roll, api } = prop?.content
+    const { roll="admin", api } = prop?.content
 
 
     const dispatch = useDispatch()
@@ -96,13 +96,13 @@ const UsersTable = (prop) => {
                             <td className="p-3 ">not found</td>
 
 
-                            {roll === "venture" &&
+                            {roll === "venture" ?
                                 //button desgin venture side
                                 // console.log(ventureId)
                                 value?.ventures?.[value?.ventures?.findIndex(venture => venture.ventureId === ventureId)].status == "pending" ?
                                 <Link onClick={e => handleAllow(value?._id)} >
                                     <button className={buttonStyle} >Allow</button>
-                                </Link> : <Link to={'/venture/chats'} ><button className={buttonStyle} >Make a chat</button></Link>
+                                </Link> : <Link to={'/venture/chats'} ><button className={buttonStyle} >Make a chat</button></Link>:''
 
                             }
                         </tr>

@@ -25,7 +25,9 @@ const commonSlice=createSlice({
             
         })
         .addCase(fetchData.rejected,(state,action)=>{
-            console.log('error happend here rejected state',action.payload)
+            console.log('state',state)
+            console.log('error happend here rejected state',action)
+            console.log('url',action.meta.arg.url)
           
            state.error=action.payload         
        })

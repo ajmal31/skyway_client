@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify"
 import { useme } from "../../../hooks/toast"
 import { changeUsername } from "../../../redux/slices/UserSlice"
 import Modal from "../modal/Modal"
+import { motion } from "framer-motion"
 const Uprofile = () => {
 
     const [userCred, setUserCred] = useState({})
@@ -40,7 +41,6 @@ const Uprofile = () => {
         const destLen = userCred?.destination?.length;
         const error = 'error';
         const success = 'success';
-        console.log('email in update button', userCred?.email)
         if (userCred?.username.length <= 0) useme("please enter a valid name", error)
         else if (!/^.+@.+\.[a-zA-Z]{2,3}$/.test(userCred.email)) useme("enter a valid email", error)
         else if (userCred?.email?.length > 30) useme('Email limit exceeded', error);
@@ -60,15 +60,28 @@ const Uprofile = () => {
                 to: 'user'
             }
             const response = await dispatch(fetchData(obj))
-            dispatch(changeUsername(response?.payload?.data?.response?.username))
-            useme("Profile Updated", 'info')
+            const message=response?.payload?.data?.response?.message
+            if (message) {
+
+                useme(message,'warning')
+
+            }
+            else if (response?.payload?.data?.response) {
+
+                dispatch(changeUsername(response?.payload?.data?.response?.username))
+                useme("Profile Updated", 'info')
+
+            }
+             
+            
+
 
         }
 
 
     }
 
-    //user Logout
+    //user Logou
     const dispatch = useDispatch()
     const Logout = () => {
         dispatch(userLogout())
@@ -98,7 +111,20 @@ const Uprofile = () => {
 
     //modal
     const [visible, setVisible] = useState(false)
-    const handlVisible =()=> setVisible(false)
+    const handlVisible = () => setVisible(false)
+    const verifySuccess = async () => {
+        console.log('verify succes function')
+
+        const apiDetails = {
+            method: 'get',
+            url: USER_SRV_BASE_URL + "numberVerified",
+            data: null,
+            token: true,
+            to: "user"
+        }
+        const response = await dispatch(fetchData(apiDetails))
+        setUserCred(response?.payload?.data)
+    }
 
     return (
 
@@ -106,7 +132,7 @@ const Uprofile = () => {
 
             <Navbar />
 
-            <Modal visible={visible} onClose={handlVisible} phoneNumber={userCred?.phone} />
+            <Modal visible={visible} onClose={handlVisible} phoneNumber={userCred?.phone} verifySuccess={verifySuccess} />
 
 
             <div className=" w-full flex px-16 pt-10 flex-col text-gray-200 font-Outfit ">
@@ -114,7 +140,7 @@ const Uprofile = () => {
 
                 <div className=" flex   " >
 
-                    <div className="w-1/2 m-2 bg-secondory flex rounded-2xl">
+                    <motion.div className="w-1/2 m-2 hover:translate-y-[-20px] transition duration-500 ease-in-out bg-secondory flex rounded-2xl">
 
 
                         <div className="  w-1/3 border-gray-500 border-r mr-3 flex justify-center  ">profile photo</div>
@@ -142,7 +168,7 @@ const Uprofile = () => {
                                 <button onClick={Logout} className="text-gray-300 border p-1 rounded-xl px-3 hover:bg-button " >Logout</button>
 
                                 <div className="text-end pb-3 mr-5">
-                                    {!edit && !userCred?.phoneVerifcation ? <button className="border border-gray-500 px-1 rounded-xl" onClick={e=>setVisible(true)} >Verify Number ?</button> : ''}
+                                    {!edit && !userCred?.phone_verification ? <button className="border border-gray-500 px-1 rounded-xl" onClick={e => setVisible(true)} >Verify Number ?</button> : ''}
                                     {!edit ?
 
                                         <button onClick={e => setEdit(true)} className="ml-4" >Edit</button>
@@ -155,12 +181,12 @@ const Uprofile = () => {
 
                         </div>
 
-                    </div>
+                    </motion.div>
                     <div className="w-1/2 m-2 bg-gray-500"> documents section </div>
                 </div>
             </div>
 
-            <ToastContainer />
+           
         </div>
 
     )

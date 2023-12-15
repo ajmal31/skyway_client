@@ -25,7 +25,7 @@ const ChatContent = ({ roll }) => {
     //storing Input message
     const [message, setMessage] = useState('');
 
-
+    
 
     //taking chat details and storing messages to chat state
     const getChat = async () => {
@@ -88,10 +88,9 @@ const ChatContent = ({ roll }) => {
 
 
 
+    if(!data.oppsitePersonData)return <h1 className="font-Outfit text-gray-300">Please select a chat</h1>
 
-
-
-    return (
+     return(
         <div className="bg-secondory h-full w-3/5 p-5 text-gray-300 rounded-xl">
             <div className="w-full h-full">
                 <div className="h-1/6 w-full pt-2 flex bg-secondory">

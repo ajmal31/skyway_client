@@ -1,56 +1,59 @@
-import {createSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import cookie from 'js-cookie'
 
-const initialState={
+const initialState = {
 
-    token:localStorage.getItem('authToken')||null,
-    username:localStorage.getItem('username')||null
+  token: localStorage.getItem('authToken') || null,
+  username: localStorage.getItem('username') || null
 }
 
 
-export const UserSlice=createSlice({
+export const UserSlice = createSlice({
 
-    name:'user',
-    initialState:initialState,
+  name: 'user',
+  initialState: initialState,
 
-    reducers:{ 
-     
-        userLogin:(state,action)=>{
-             
-         
-          const {authToken,username}=action?.payload
-          //setting token 
-          localStorage.setItem('authToken',authToken)
-          localStorage.setItem('username',username)
-          
+  reducers: {
 
-         //store to redux
-          state.token=authToken
-          state.username=username
+    userLogin: (state, action) => {
 
 
-             
-        },
-        userLogout:(state,action)=>{
+      const { authToken, username } = action?.payload
+      //setting token 
+      localStorage.setItem('authToken', authToken)
+      localStorage.setItem('username', username)
 
-             localStorage.removeItem('authToken')
-             localStorage.removeItem('username')
-             cookie.remove('userId')
 
-             state.token=null
-             state.username=null
-             
-        },
-        changeUsername:(state,action)=>{
+      //store to redux
+      state.token = authToken
+      state.username = username
 
-          localStorage.setItem('username',action.payload)
-          state.username=action.payload
 
-        }
-        
+
     },
+    userLogout: (state, action) => {
+
+      localStorage.removeItem('authToken')
+      localStorage.removeItem('username')
+      cookie.remove('userId')
+
+      state.token = null
+      state.username = null
+
+    },
+    changeUsername: (state, action) => {
+      if (action.payload) {
+        localStorage.setItem('username', action.payload)
+        state.username = action.payload
+
+      }
+
+
+    }
+
+  },
 })
 
 
-export const {userLogin,userLogout,changeUsername}=UserSlice.actions
+export const { userLogin, userLogout, changeUsername } = UserSlice.actions
 export default UserSlice.reducer 

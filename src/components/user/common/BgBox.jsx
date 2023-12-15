@@ -26,7 +26,7 @@ const BgBox = ({ id }) => {
       to: "venture"
     }
     const response = await dispatch(fetchData(obj))
-    console.log('venture data is get',response)
+    console.log('venture data is get', response)
     setVentureData(response?.payload?.data)
 
   }
@@ -44,7 +44,7 @@ const BgBox = ({ id }) => {
   const handleRequest = async (vid, venture, userId) => {
 
     if (venture?.status === 'allowed') {
-      
+
       // create chat 
 
       //chat service api details
@@ -59,7 +59,7 @@ const BgBox = ({ id }) => {
       const apiDetails_two = {
         method: 'post',
         url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat',
-        data: { vid: vid},
+        data: { vid: vid },
         token: true,
         to: 'venture'
       }
@@ -67,7 +67,7 @@ const BgBox = ({ id }) => {
       const apiDetails_three = {
         method: 'post',
         url: USER_SRV_BASE_URL + 'getUserUpdateChat',
-        data: { userId: userId},
+        data: { userId: userId },
         token: true,
         to: 'user'
       }
@@ -80,10 +80,10 @@ const BgBox = ({ id }) => {
       //This api call taken venture details based on the id and 
       //update to chat service👇
       let ventureData = await dispatch(fetchData(apiDetails_two))
-     
+
       //This api call take user details based ont he id and 
       //update to chat service👇
-      let userData=await dispatch(fetchData(apiDetails_three))
+      let userData = await dispatch(fetchData(apiDetails_three))
       navigate('/chats')
     }
     else {
@@ -96,9 +96,12 @@ const BgBox = ({ id }) => {
       }
       const response = await dispatch(fetchData(obj))
       const { data } = response?.payload
-      if (data&&data === "You Already Requested This venture. please wait for their response")
+      console.log('after request msg',data)
+      if (data && data === "You Already Requested This venture. please wait for their response"||"Please verify your number") {
+        console.log('enter restricted area')
         useme(data, 'warning')
-      else useme(data, 'success')
+      }
+     else useme(data, 'success')
     }
 
 
