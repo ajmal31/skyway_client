@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
-import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../../redux/api/api";
 import { useEffect, useState,useRef } from "react";
-import { CHAT_SRV_SOCKET_URL } from "../../data/const";
+import { CHAT_SRV_SOCKET_URL,CHAT_SRV_BASE_URL } from "../../data/const";
 import cookie from "js-cookie";
 import { io } from "socket.io-client";
 import { ChatMessage } from "./ChatMessage";
@@ -35,8 +34,20 @@ const ChatContent = ({ roll }) => {
         }
     },[chat]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            let response = await getChat();
+            if (response) {
+                socket.emit("joinRoom", response);
+
+            }
+        };
+
+        fetchData();
+    }, [data?.oppsitePersonData]);
+
     //taking chat details and storing messages to chat state
-    const getChat = async () => {
+    async function getChat(){
         const apiDetails_chat = {
             method: 'post',
             url: CHAT_SRV_BASE_URL + 'getChat/' + roll,
@@ -56,27 +67,11 @@ const ChatContent = ({ roll }) => {
         return response_chat?.payload?.data?._id
     };
 
-
-
     socket.on('received', (data) => {
-        console.log(`message recieved ${roll} side`)
         setChat([...chat, data])
 
     })
 
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            let response = await getChat();
-            if (response) {
-                socket.emit("joinRoom", response);
-
-            }
-        };
-
-        fetchData();
-    }, [data?.oppsitePersonData]);
 
     //Handling message
     const handleMessage = () => {
@@ -92,8 +87,6 @@ const ChatContent = ({ roll }) => {
 
 
     };
-
-
 
 
     if(!data.oppsitePersonData)return <EmptyChat/>

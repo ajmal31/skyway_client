@@ -163,7 +163,6 @@ const LoginContent = () => {
                             <div className="flex justify-end text-sm mt-1 mr-1 text-gray-400 font-thin">
 
                                 <Link to={'/userRegister'}>You don't Have an Account?</Link>
-                                <ToastContainer />
 
                             </div>
                         </div>
