@@ -12,6 +12,7 @@ const VenturesTable = () => {
     console.log('ventureStatus from redux',ventureStatus)
     const dispatch = useDispatch()
     const [ventures, setVentures] = useState([])
+    // const [ventureStatus,setVentureStatus]=useState(null)
 
     const getData = async () => {
 
@@ -25,6 +26,7 @@ const VenturesTable = () => {
 
         const response = await dispatch(fetchData(obj))
         console.log('response in venture tables ', response)
+        // setVentureStatus(response?.payload?.data?.response?.admin_allowed)
         setVentures(response?.payload?.data?.response)
 
     }
@@ -40,10 +42,11 @@ const VenturesTable = () => {
             to: 'admin'
         }
         const response = await dispatch(fetchData(obj))
-        console.log(response.payload?.data?.statusChanged)
-        
-        if (response?.payload?.data?.statusChanged) {
+        console.log('afte changing venture status')
+        console.log(response)
+        if (response?.payload?.data) {
             console.log('going to update redux venture status')
+            
             return dispatch(changeVentureStatus())
 
         }
@@ -54,7 +57,7 @@ const VenturesTable = () => {
         getData()
 
 
-    }, [])
+    }, [ventureStatus])
 
     //pagination
 
@@ -95,8 +98,10 @@ const VenturesTable = () => {
                             <td className="p-3">20000</td>
 
                             <td className="p-3 ">{value?.admin_allowed}</td>
-                            {value?.admin_allowed === "pending" ? <button className="border px-5 " onClick={e => updateVentureStatus(value?._id)} > <td className="p-3">Allow</td></button> : ''}
-                            <button className="border px-5 ml-2" > <td className="p-3 text-right ">Rejected</td></button>
+                            <div>
+                            {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id)} > <td className="p-2">Allow</td></button> : ''}
+                            <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-2 text-right ">Reject</td></button>
+                            </div>
                         </tr>
 
 

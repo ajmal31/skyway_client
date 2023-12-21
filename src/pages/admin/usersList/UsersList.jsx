@@ -1,4 +1,4 @@
-import Home from "../../../components/admin/Home/Home"
+import Home from "../../../components/admin/Home/Dashboard"
 import Sidebar from "../../../components/common/Sidebar"
 import Admincontent from "../../../components/common/AdminContent"
 

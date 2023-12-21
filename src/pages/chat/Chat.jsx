@@ -52,7 +52,7 @@ const Chat = ({ roll="user" }) => {
 
     return (
 
-        <div className=" bg-primary px-16 py-10  flex gap-3 " >
+        <div className=" bg-primary px-16 py-10 h-screen flex gap-3 " >
 
             <ChatSideBar chats={allchats} roll={roll} />
             <ChatContent roll={roll}/>

@@ -35,7 +35,7 @@ import { ventureLogout } from "./redux/slices/ventureSlices"
 import AdminLogin from "./pages/admin/Login/AdminLogin"
 import adminSlice from "./redux/slices/adminSlice"
 import UsersList from "./pages/admin/usersList/UsersList"
-import AdminHome from "./pages/admin/home/Home"
+import AdminHome from "./pages/admin/home/Dasboard"
 import ListVentures from "./pages/admin/venturesList/ListVentures"      
 
 

@@ -35,8 +35,7 @@ const basicSchema=yup.object().shape({
     .string('name must be string')
     .required('contry is  is required'),
     min_max_service_amount:yup
-    .string()
-    .required('required field'),
+    .string(),
     official_portfolio: yup
     .string()
     .required('official portfolio is required'),

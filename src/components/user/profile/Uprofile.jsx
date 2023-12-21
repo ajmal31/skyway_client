@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 import Navbar from "../Home/Navbar"
 import { userLogout } from "../../../redux/slices/UserSlice"
 import { useEffect, useState } from "react"
-import { USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../../data/const"
+import { USER_SRV_BASE_URL } from "../../../data/const"
 import { fetchData } from "../../../redux/api/api"
 import { useme } from "../../../hooks/toast"
 import { changeUsername } from "../../../redux/slices/UserSlice"
@@ -13,15 +13,14 @@ const Uprofile = () => {
 
     const [userCred, setUserCred] = useState({})
     const [edit, setEdit] = useState(false)
-    const [selectedFile,setSelectedFile]=useState('')
-    const [showUploadButton,setShowUploadButton]=useState(false)
-    const [documents,setDocuments]=useState({
-        govId:null,
-        aadhar:null,
-        pan:null,
-        passport:null
+    const [showUploadButton, setShowUploadButton] = useState(false)
+    const [documents, setDocuments] = useState({
+        govId: null,
+        aadhar: null,
+        pan: null,
+        passport: null
     })
-    
+
     //div animation configuration
     const commonMotion = {
 
@@ -33,77 +32,72 @@ const Uprofile = () => {
     const documentLabels = [
         {
             label: "upload your Government id",
-            value:documents.governmentId,
-            name:'govId'
+            value: documents.governmentId,
+            name: 'govId'
 
         },
         {
             label: "upload your Adharcard",
-            value:documents.adhar,
-            name:'aadhar'
+            value: documents.adhar,
+            name: 'aadhar'
 
         },
         {
             label: "upload your pan card",
-            value:documents.pancard,
-            name:"pan"
+            value: documents.pancard,
+            name: "pan"
 
         },
         {
             label: "upload your Passport",
-            value:documents.passport,
-            name:'passport'
+            value: documents.passport,
+            name: 'passport'
 
         }
 
     ]
 
-    useEffect(()=>{
-       
-       const {govId,aadhar,pan,passport}=documents
-       if(govId&&aadhar&&pan&&passport!==null)setShowUploadButton(true)
+    useEffect(() => {
 
-     },[documents])
-   
+        const { govId, aadhar, pan, passport } = documents
+        if (govId && aadhar && pan && passport !== null) setShowUploadButton(true)
+
+    }, [documents])
+
     //selected input storing to partiular state key
     const handleUploadChange = (e) => {
 
         let file = e.target.files[0];
         let name = e.target.name;
-      
+
         setDocuments((prevDocuments) => ({
-          ...prevDocuments,
-          [name]: file,
+            ...prevDocuments,
+            [name]: file,
         }));
 
-        
-      };
-    console.log('is there any change happend',documents)
-      
 
-    const handleUpload=async()=>{
+    };
 
-        console.log(documents)
-        const formdata=new FormData
+
+    const handleUpload = async () => {
+
+        const formdata = new FormData
         for (const key in documents) {
             if (documents[key] instanceof File) {
-                console.log('entered')
-              await formdata.append("file", documents[key]);
-            }else {
-                console.log('not entered')
+                await formdata.append("file", documents[key]);
             }
-          }
-          const apiDetails={
-            method:'post',
-            url:VENTURE_SRV_BASE_URL+'upload',
-            data:formdata,
-            token:false,
-            to:'venture'
-          }
-       let response=await dispatch(fetchData(apiDetails))
-       console.log('response',response)
-    }  
-    
+        }
+        const apiDetails = {
+            method: 'post',
+            url: USER_SRV_BASE_URL + 'upload',
+            data: formdata,
+            token: false,
+            to: 'user'
+        }
+        let response = await dispatch(fetchData(apiDetails))
+        console.log('response of the document upload',response)
+    }
+
 
     const handUpdateUser = (e) => {
         let val = e.target.value
@@ -259,30 +253,31 @@ const Uprofile = () => {
                     </motion.div>
                     <motion.div {...commonMotion} className="w-1/2 m-2 shadow-2xl  shadow-stone-950 bg-secondory rounded-2xl p-7 ">
 
-                    <div className="h-full w-full  flex flex-col  " >
-                        {documentLabels?.map((val, index) => (
+                        <div className="h-full w-full  flex flex-col  " >
+                            {documentLabels?.map((val, index) => (
                                 <span>
-                                <label htmlFor="">{val.label}</label>
-                               
-                                <div onClick={()=>document.getElementById(val.name).click()}  >
-                                <IoCloudUploadSharp className="w-10 h-10 cursor-pointer  " />
-                                <input type="file" name={val.name} id={val.name}  onChange={handleUploadChange} style={{display:'none'}} />
-                                </div>
-                                <hr className="border-b border-gray-500 w-2/3" />
-                                
+                                    <label htmlFor="">{val.label}</label>
+
+                                    <div onClick={() => document.getElementById(val.name).click()}  >
+                                        {console.log("val", val.value)}
+                                        <IoCloudUploadSharp className="w-10 h-10 cursor-pointer  " />
+                                        <input type="file" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
+                                    </div>
+                                    <hr className="border-b border-gray-500 w-2/3" />
+
                                 </span>
-                                
-                           
 
-                        ))}
-                        { showUploadButton ?
-                            <div className="flex justify-end" >
-                            <button className="border p-1 px-3 rounded-2xl" onClick={handleUpload} >upload</button>
-                           </div>:''
 
-                        }
-                       
-                         </div>
+
+                            ))}
+                            {showUploadButton ?
+                                <div className="flex justify-end" >
+                                    <button className="border p-1 px-3 rounded-2xl" onClick={handleUpload} >upload</button>
+                                </div> : ''
+
+                            }
+
+                        </div>
 
 
 

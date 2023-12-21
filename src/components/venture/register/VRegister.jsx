@@ -235,7 +235,7 @@ const VRegister = () => {
                                 )}
                             </div>
                             {/* text area found */}
-                            <div className=" m-1 flex flex-col h-3/6 w-2/2">Minimum to Maximum Price of your service
+                            <div className=" m-1 flex flex-col h-3/6 w-2/2">Minimum to Maximum Price of your service (optional)
                                 <textarea name="min_max_service_amount"
                                     value={values?.min_max_service_amount}
                                     onChange={handleChange} onBlur={handleBlur}

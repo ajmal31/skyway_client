@@ -61,7 +61,7 @@ const BgBox = ({ id }) => {
         url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat',
         data: { vid: vid },
         token: true,
-        to: 'venture'
+        to: 'user'
       }
       //User service api details
       const apiDetails_three = {
