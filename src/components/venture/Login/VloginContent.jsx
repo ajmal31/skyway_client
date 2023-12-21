@@ -33,26 +33,31 @@ const VloginContent = () => {
 
         const response = await dispatch(fetchData(obj))
 
-        const { message, token, pending, ventureName, ventureId } = response?.payload?.data
+        const { message, token, admin_allowed, ventureName, ventureId } = response?.payload?.data
 
         const data = {
             ventureToken: token,
             ventureName,
-            pending,
+            admin_allowed,
+        
         }
 
-        if (message === 'venture login succesful' && pending === "false") {
+        if (message === 'venture login succesful' && admin_allowed === "allowed") {
             //venture Id storing to coooki
             cookie.set('ventureId',ventureId,{expires: 7})
 
             dispatch(ventureLogin(data))
             return navigate('/venture/dashboard')
 
-        } else if (pending === "true") {
+        } else if (admin_allowed === "pending") {
 
             dispatch(ventureLogin(data))
             return navigate('/venture/pending')
 
+        }else if(admin_allowed==="rejected"){
+            dispatch(ventureLogin(data))
+            useme("sorry you can't enter the platform. founded Illegal activities","error")
+            return <h1>Founded illegal activities so you can't enter the platform </h1>
         }
         else return useme(message, 'error')
 

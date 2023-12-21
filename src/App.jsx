@@ -53,7 +53,7 @@ function App() {
       const userId=cookie.get('userId')
       //venture Essential creds
       const ventureToken=useSelector((state=ventureSlices)=>state.ventureSlices.ventureToken)
-      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)
+      const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.admin_allowed)
       const ventureId=cookie.get('ventureId')      
       //admin Essential creds
       const adminToken=useSelector((state=adminSlice)=>state.adminSlice.token)
@@ -92,8 +92,8 @@ function App() {
          {/* venture Routes */}
          <Route path="/venture/register" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureRegister/>}/>
          <Route path="/venture/login" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
-         <Route path="/venture/dashboard" element={ ventureStatus==="true"? <Navigate to={'/venture/pending'}/>:ventureStatus==="false"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
-         <Route path="/venture/pending" element={ventureStatus==="true"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
+         <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken?<Chat roll={'venture'}/>:<Navigate to={'/venture/login'} />}/>
       
          

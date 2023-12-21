@@ -5,7 +5,7 @@ const initialState={
 
     ventureToken:localStorage.getItem('ventureToken')||null,
     ventureName:localStorage.getItem('venutureName')||null,
-    pending:localStorage.getItem('pending')||null
+    admin_allowed:localStorage.getItem('admin_allowed')||null
    
 }
 
@@ -18,35 +18,34 @@ export const ventureSlice=createSlice({
 
         ventureLogin:(state,actions)=>{
            
-            console.log('in redux',actions)
-            const {pending,ventureName,ventureToken}=actions.payload
-            const ventureStatus=pending
+            const {admin_allowed,ventureName,ventureToken}=actions.payload
+            const ventureStatus=admin_allowed
             
             localStorage.setItem('ventureToken',ventureToken)
             localStorage.setItem('ventureName',ventureName)
-            localStorage.setItem('pending',ventureStatus)
+            localStorage.setItem('admin_allowed',ventureStatus)
             
             // state.ventureToken=ventureToken
             state.ventureName=ventureName
             state.ventureToken=ventureToken
-            state.pending=pending
+            state.admin_allowed=admin_allowed
 
         },
         changeVentureStatus:(state,action)=>{
 
-            localStorage.setItem('pending',false)
-            state.pending="false"
+            localStorage.setItem('admin_allowed',"allowed")
+            state.admin_allowed="allowed"
         },
         ventureLogout:(state,action)=>{
 
             localStorage.removeItem('ventureToken')
             localStorage.removeItem('ventureName')
-            localStorage.removeItem('pending')
+            localStorage.removeItem('admin_allowed')
             cookie.remove('ventureId')
 
             state.ventureName=null
             state.ventureToken=null
-            state.pending=null
+            state.admin_allowed=null
 
 
         }

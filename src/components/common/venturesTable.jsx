@@ -5,6 +5,7 @@ import { fetchData } from "../../redux/api/api"
 import { useSelector } from "react-redux"
 import { changeVentureStatus } from "../../redux/slices/ventureSlices"
 import ventureSlices from "../../redux/slices/ventureSlices"
+import { ImBlocked } from "react-icons/im";
 
 const VenturesTable = () => {
 
@@ -31,13 +32,13 @@ const VenturesTable = () => {
 
     }
     //  should change token to true somehitng in backend while making true  solve it 
-    const updateVentureStatus = async (ventureId) => {
+    const updateVentureStatus = async (ventureId,status) => {
 
 
         const obj = {
             method: 'post',
             url: VENTURE_SRV_BASE_URL + 'updateVentureStatus',
-            data: { id: ventureId },
+            data: { id: ventureId,status:status },
             token: true,
             to: 'admin'
         }
@@ -99,8 +100,8 @@ const VenturesTable = () => {
 
                             <td className="p-3 ">{value?.admin_allowed}</td>
                             <div>
-                            {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id)} > <td className="p-2">Allow</td></button> : ''}
-                            <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-2 text-right ">Reject</td></button>
+                            {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id,"allowed")} > <td className="p-2">Allow</td></button> : ''}
+                            {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-2 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:<ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" />}
                             </div>
                         </tr>
 
