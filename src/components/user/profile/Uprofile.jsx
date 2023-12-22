@@ -9,11 +9,13 @@ import { changeUsername } from "../../../redux/slices/UserSlice"
 import Modal from "../modal/Modal"
 import { motion } from "framer-motion"
 import { IoCloudUploadSharp } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
 const Uprofile = () => {
 
     const [userCred, setUserCred] = useState({})
     const [edit, setEdit] = useState(false)
     const [showUploadButton, setShowUploadButton] = useState(false)
+    const [uploadedDocuments, setUploadedDocuments] = useState({});
     const [documents, setDocuments] = useState({
         govId: null,
         aadhar: null,
@@ -58,9 +60,10 @@ const Uprofile = () => {
     ]
 
     useEffect(() => {
-
+       
         const { govId, aadhar, pan, passport } = documents
         if (govId && aadhar && pan && passport !== null) setShowUploadButton(true)
+        else setShowUploadButton(false)
 
     }, [documents])
 
@@ -74,6 +77,11 @@ const Uprofile = () => {
             ...prevDocuments,
             [name]: file,
         }));
+
+        setUploadedDocuments((prevDocuments) => ({
+            ...prevDocuments,
+            [name]: file.name
+        }))
 
 
     };
@@ -95,7 +103,7 @@ const Uprofile = () => {
             to: 'user'
         }
         let response = await dispatch(fetchData(apiDetails))
-        console.log('response of the document upload',response)
+        console.log('response of the document upload', response)
     }
 
 
@@ -195,6 +203,20 @@ const Uprofile = () => {
         setUserCred(response?.payload?.data)
     }
 
+    //removing uploaded file 
+    const removeUpload = (name) => {
+
+        setUploadedDocuments((prev) => {
+            const { [name]: _, ...rest } = prev;
+            return rest
+        });
+        setDocuments((prev)=>({
+            ...prev,[name]:null
+        }))
+        const input = document.getElementById(name);
+        input.value = ''; // Resetting the value to empty string
+        input.value = null; // Resetting the value to null
+    }
     return (
 
         <div className="bg-primary w-screen  h-screen">
@@ -255,12 +277,19 @@ const Uprofile = () => {
 
                         <div className="h-full w-full  flex flex-col  " >
                             {documentLabels?.map((val, index) => (
-                                <span>
+                                <span key={index}>
                                     <label htmlFor="">{val.label}</label>
 
                                     <div onClick={() => document.getElementById(val.name).click()}  >
-                                        {console.log("val", val.value)}
-                                        <IoCloudUploadSharp className="w-10 h-10 cursor-pointer  " />
+                                        {uploadedDocuments[val?.name] ? (
+                                            <div className="flex gap-5 my-3 text-gray-400  " onClick={e => e.stopPropagation()} >
+
+                                                <p className="border px-3 rounded-xl">{uploadedDocuments[val?.name]}</p>
+                                                <IoMdCloseCircle className="text-2xl" onClick={e => removeUpload(val.name)} />
+                                            </div>
+                                        ) : <IoCloudUploadSharp className="w-10 h-10 cursor-pointer duration-500 " />
+                                        }
+
                                         <input type="file" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
                                     </div>
                                     <hr className="border-b border-gray-500 w-2/3" />
