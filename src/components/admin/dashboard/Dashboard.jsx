@@ -50,7 +50,7 @@ const Dashboard = () => {
                             <div className="w-1/3 h-1/2 flex border-r-2 border-gray-500 justify-center items-center  " >
                                 <HiMiniUsers className="text-6xl text-gray-600 " />
                             </div>
-                            <div className="w-2/3 flex justify-center items-center text-2xl font-bold  h-1/2" >
+                            <div className="w-2/3 flex justify-center items-center text-1xl font-bold  h-1/2" >
                                 <p className="text-gray-700" >7687 M</p>
                             </div>
                         </div>
@@ -70,13 +70,13 @@ const Dashboard = () => {
                         </div>
                         <div className="flex w-full h-2/3 mt-3 ">
                             <div className="border-r-2 border-gray-400 flex justify-center items-center w-4/12 h-1/2  "  >
-                                <p className="text-2xl" >1300</p>
+                                <p className="text-1xl" >1300</p>
                             </div>
                             <div className="border-r-2 flex justify-center items-center border-gray-400 w-4/12 h-1/2 " >
-                            <p className="text-2xl" >200</p>
+                            <p className="text-1xl" >200</p>
                             </div>
                             <div className=" justify-center flex items-center w-4/12 h-1/2 " >
-                            <p className="text-2xl" >100</p>
+                            <p className="text-1xl" >100</p>
                             </div>
                         </div>
                     </motion.div>
@@ -94,10 +94,10 @@ const Dashboard = () => {
                         </div>
                         <div className="flex w-full h-2/3 mt-3  ">
                             <div className="border-r-2 border-gray-400 flex justify-center items-center pr-6 w-6/12 h-1/2  "  >
-                                <p className="text-2xl" >598695</p>
+                                <p className="text-1xl" >598695</p>
                             </div>
                             <div className=" flex justify-center ml-2 items-center border-gray-400 w-6/12 h-1/2 " >
-                            <p className="text-2xl" >8508343</p>
+                            <p className="text-1xl" >8508343</p>
                             </div>
                             
                         </div>
