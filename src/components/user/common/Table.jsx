@@ -74,7 +74,7 @@ const Table = ({ api }) => {
                 <tbody>
                     {ventureList?.length>0&&ventureList?.slice(page * 5 - 5, page * 5)?.map((value, index) => (
 
-                        <tr key={index}>
+                        <tr key={index} >
 
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
                                 <div className="flex items-center">

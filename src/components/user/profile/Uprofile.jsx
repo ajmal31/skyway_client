@@ -10,12 +10,14 @@ import Modal from "../modal/Modal"
 import { motion } from "framer-motion"
 import { IoCloudUploadSharp } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
+import { Link } from "react-router-dom"
 const Uprofile = () => {
 
     const [userCred, setUserCred] = useState({})
     const [edit, setEdit] = useState(false)
     const [showUploadButton, setShowUploadButton] = useState(false)
     const [uploadedDocuments, setUploadedDocuments] = useState({});
+    const [documentsFromDb, setDocumentsFromDb] = useState([])
     const [documents, setDocuments] = useState({
         govId: null,
         aadhar: null,
@@ -60,7 +62,7 @@ const Uprofile = () => {
     ]
 
     useEffect(() => {
-       
+
         const { govId, aadhar, pan, passport } = documents
         if (govId && aadhar && pan && passport !== null) setShowUploadButton(true)
         else setShowUploadButton(false)
@@ -70,8 +72,12 @@ const Uprofile = () => {
     //selected input storing to partiular state key
     const handleUploadChange = (e) => {
 
+
         let file = e.target.files[0];
         let name = e.target.name;
+
+        const type = file?.name?.split('.')
+        if (type[type.length - 1] !== "pdf") return useme("invalid format kindly choose pdf format", 'warning')
 
         setDocuments((prevDocuments) => ({
             ...prevDocuments,
@@ -99,11 +105,12 @@ const Uprofile = () => {
             method: 'post',
             url: USER_SRV_BASE_URL + 'upload',
             data: formdata,
-            token: false,
+            token: true,
             to: 'user'
         }
         let response = await dispatch(fetchData(apiDetails))
-        console.log('response of the document upload', response)
+        console.log('response after uploding document',response)
+       setDocumentsFromDb(response?.payload?.data?.documents)
     }
 
 
@@ -178,6 +185,7 @@ const Uprofile = () => {
         }
         const response = await dispatch(fetchData(obj))
         setUserCred(response?.payload?.data?.response)
+        setDocumentsFromDb(response?.payload?.data?.response?.documents)
 
     }
     useEffect(() => {
@@ -210,8 +218,8 @@ const Uprofile = () => {
             const { [name]: _, ...rest } = prev;
             return rest
         });
-        setDocuments((prev)=>({
-            ...prev,[name]:null
+        setDocuments((prev) => ({
+            ...prev, [name]: null
         }))
         const input = document.getElementById(name);
         input.value = ''; // Resetting the value to empty string
@@ -276,32 +284,67 @@ const Uprofile = () => {
                     <motion.div {...commonMotion} className="w-1/2 m-2 shadow-2xl  shadow-stone-950 bg-secondory rounded-2xl p-7 ">
 
                         <div className="h-full w-full  flex flex-col  " >
-                            {documentLabels?.map((val, index) => (
-                                <span key={index}>
-                                    <label htmlFor="">{val.label}</label>
 
-                                    <div onClick={() => document.getElementById(val.name).click()}  >
-                                        {uploadedDocuments[val?.name] ? (
-                                            <div className="flex gap-5 my-3 text-gray-400  " onClick={e => e.stopPropagation()} >
+                            {documentsFromDb?.length > 0 ? (
+                                documentsFromDb.map((value,index) => (
 
-                                                <p className="border px-3 rounded-xl">{uploadedDocuments[val?.name]}</p>
-                                                <IoMdCloseCircle className="text-2xl" onClick={e => removeUpload(val.name)} />
+                                    <span key={index}>
+                                      
+                                       
+                                     {Object.keys(value).map((key)=>(
+                                        // console.log('inside vallues key',value[key])
+
+                                        <div  >
+
+                                            <div className="flex gap-5 my-3 text-gray-400  "  >
+
+                                            <a href={value[key]} target="_blank" className="border px-3 rounded-xl" rel="noopener noreferrer">View {key}</a>
+                                              
                                             </div>
-                                        ) : <IoCloudUploadSharp className="w-10 h-10 cursor-pointer duration-500 " />
-                                        }
+                                            <hr className="border-b border-gray-500 w-2/3" />
+                                        </div>
+                                        
+                                     ))}
+                                        
+                                        {/* <hr className="border-b border-gray-500 w-2/3" /> */}
 
-                                        <input type="file" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
-                                    </div>
-                                    <hr className="border-b border-gray-500 w-2/3" />
+                                    </span>
 
-                                </span>
+                                ))
 
 
 
-                            ))}
+                            ) : (
+
+                                documentLabels?.map((val, index) => (
+                                    <span key={index}>
+                                        <label htmlFor="">{val.label}</label>
+
+                                        <div onClick={() => document.getElementById(val.name).click()}  >
+                                            {uploadedDocuments[val?.name] ? (
+                                                <div className="flex gap-5 my-3 text-gray-400  " onClick={e => e.stopPropagation()} >
+
+                                                    <p className="border px-3 rounded-xl">{uploadedDocuments[val?.name]}</p>
+                                                    <IoMdCloseCircle className="text-2xl cursor-pointer" onClick={e => removeUpload(val.name)} />
+                                                </div>
+                                            ) : <IoCloudUploadSharp className="w-10 h-10 cursor-pointer duration-500 " />
+                                            }
+
+                                            <input type="file" accept=".pdf" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
+                                        </div>
+                                        <hr className="border-b border-gray-500 w-2/3" />
+
+                                    </span>
+
+
+
+                                ))
+
+                            )}
+
                             {showUploadButton ?
                                 <div className="flex justify-end" >
-                                    <button className="border p-1 px-3 rounded-2xl" onClick={handleUpload} >upload</button>
+                                    <button className="border p-1 px-3 rounded-2xl hover:bg-button " onClick={handleUpload}  >upload</button>
                                 </div> : ''
 
                             }
