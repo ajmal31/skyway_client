@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react"
-import { ADMIN_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../data/const"
+import {  VENTURE_SRV_BASE_URL } from "../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../redux/api/api"
 import { useSelector } from "react-redux"
 import { changeVentureStatus } from "../../redux/slices/ventureSlices"
 import ventureSlices from "../../redux/slices/ventureSlices"
 import { ImBlocked } from "react-icons/im";
+import { Link } from "react-router-dom"
 
 const VenturesTable = () => {
 
     const ventureStatus=useSelector((state=ventureSlices)=>state.ventureSlices.pending)
-    console.log('ventureStatus from redux',ventureStatus)
+
     const dispatch = useDispatch()
     const [ventures, setVentures] = useState([])
     // const [ventureStatus,setVentureStatus]=useState(null)
@@ -26,7 +27,7 @@ const VenturesTable = () => {
         }
 
         const response = await dispatch(fetchData(obj))
-        console.log('response in venture tables ', response)
+      
         // setVentureStatus(response?.payload?.data?.response?.admin_allowed)
         setVentures(response?.payload?.data?.response)
 
@@ -43,10 +44,8 @@ const VenturesTable = () => {
             to: 'admin'
         }
         const response = await dispatch(fetchData(obj))
-        console.log('afte changing venture status')
-        console.log(response)
         if (response?.payload?.data) {
-            console.log('going to update redux venture status')
+           
             
             return dispatch(changeVentureStatus())
 
@@ -73,8 +72,10 @@ const VenturesTable = () => {
 
     return (
 
-        <div className="font-Outfit w-full p-5  ">
+        <div className="font-Outfit w-full h-full p-5  ">
+        
             <table className="w-full  ">
+               
                 <thead className="bg-admin-primary border-b-4 ">
 
                     <tr>
@@ -100,8 +101,9 @@ const VenturesTable = () => {
 
                             <td className="p-3 ">{value?.admin_allowed}</td>
                             <div>
+                            <Link to={"/admin/ventureDetails" } ><button className="border border-black rounded-2xl shadow-2xl px-2 ml-2"   ><td className="p-1" >View</td></button></Link>
                             {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id,"allowed")} > <td className="p-2">Allow</td></button> : ''}
-                            {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-2 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:<ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" />}
+                            {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-1 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:<ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" />}
                             </div>
                         </tr>
 

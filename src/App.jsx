@@ -38,6 +38,7 @@ import UsersList from "./pages/admin/usersList/UsersList"
 import AdminHome from "./pages/admin/home/Dasboard"
 import ListVentures from "./pages/admin/venturesList/ListVentures"  
 import Dashboard from "./components/admin/dashboard/Dashboard"    
+import AventureDetails from "./pages/admin/ventureDetails/ventureDetails"
 
 
 // Chat Related Imports
@@ -95,7 +96,7 @@ function App() {
          <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken?<Chat roll={'venture'}/>:<Navigate to={'/venture/login'} />}/>
-      
+        
          
    
         {/* Admin Routes */}
@@ -103,6 +104,7 @@ function App() {
         <Route path="/admin/users" element={adminToken?<UsersList/>:<Navigate to={'/admin/login'}/>}/>
         <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'} />}/>
         <Route path="/admin/ventures" element={adminToken?<ListVentures/>:<Navigate to={'/admin/login'} />}/>
+        <Route  path="/admin/ventureDetails" element={adminToken?<AventureDetails/>:<Navigate to={'/admin/login'} />} />
 
 
         {/* chat Routes for users */}
