@@ -46,7 +46,7 @@ const Sidebar = () => {
       </div>
       <ul className="pt-2 text-gray-500  flex flex-col cursor-pointer  " >
 
-        {sidebarItems.map((val, index) =>
+        {sidebarItems?.map((val, index) =>
 
           <Link to={val.path} >
 

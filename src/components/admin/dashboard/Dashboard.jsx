@@ -9,17 +9,17 @@ const Dashboard = () => {
     const userDiv = {
         initial: { translateY: -50, opacity: 0 },
         animate: { translateY: 0, opacity: 1 },
-        transition: { duration: 0.8, ease: "easeInOut" }
+        transition: { duration: 0.3, ease: "easeInOut" }
     }
     const ventureDiv = {
         initial: { translateY: -50, opacity: 0 },
         animate: { translateY: 0, opacity: 1 },
-        transition: { duration: 1.2, ease: "easeInOut" }
+        transition: { duration: 0.6, ease: "easeInOut" }
     }
     const paymentDiv = {
         initial: { translateY: -50, opacity: 0 },
         animate: { translateY: 0, opacity: 1 },
-        transition: { duration: 1.6, ease: "easeInOut" }
+        transition: { duration: 0.9, ease: "easeInOut" }
     }
     const opacity = {
         initial: { opacity: 0 },

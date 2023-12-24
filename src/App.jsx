@@ -104,7 +104,7 @@ function App() {
         <Route path="/admin/users" element={adminToken?<UsersList/>:<Navigate to={'/admin/login'}/>}/>
         <Route path="/admin/" element={adminToken?<AdminHome/>:<Navigate to={'/admin/login'} />}/>
         <Route path="/admin/ventures" element={adminToken?<ListVentures/>:<Navigate to={'/admin/login'} />}/>
-        <Route  path="/admin/ventureDetails" element={adminToken?<AventureDetails/>:<Navigate to={'/admin/login'} />} />
+        <Route  path="/admin/ventureDetails/:ventureId" element={adminToken?<AventureDetails/>:<Navigate to={'/admin/login'} />} />
 
 
         {/* chat Routes for users */}
