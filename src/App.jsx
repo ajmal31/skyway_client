@@ -2,7 +2,7 @@
 //import pages here
 
 //React Related imports
-import React,{useState,useEffect} from "react"
+import React,{useState,useEffect, Suspense,lazy} from "react"
 import { BrowserRouter as Router ,Routes,Route,useLocation,Navigate } from "react-router-dom"
 import cookie from "js-cookie"
 import {useDispatch} from "react-redux"
@@ -19,6 +19,7 @@ import Profile from "./pages/user/profile/Profile"
 import VentureList from "./pages/user/ventures/ventureList"
 import VentureDetails from "./pages/user/ventureDetails/VentureDetails"
 import { userLogout } from "./redux/slices/UserSlice"
+
 
 
 
@@ -42,7 +43,7 @@ import AventureDetails from "./pages/admin/ventureDetails/ventureDetails"
 
 
 // Chat Related Imports
-import Chat from "./pages/chat/Chat"
+const Chat=lazy(()=>import('../src/pages/chat/Chat'))
 
 
 function App() {
@@ -86,7 +87,7 @@ function App() {
         <Route path='/userProfile' element={userToken&&userId?<Profile/>:<Navigate to={'/userLogin'} />}/>
         <Route path="/ventureList" element={<VentureList/>}/>
         <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
-        <Route path="/chats" element={userToken&&userId?<Chat/>:<Navigate to={'/userlogin'}/>} />
+        <Route path="/chats" element={userToken&&userId?  <Suspense ><Chat/></Suspense> :<Navigate to={'/userlogin'}/>} />
         {/* <Route path="/otp" element={<Otp/>}/> */}
 
 
@@ -95,7 +96,7 @@ function App() {
          <Route path="/venture/login" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
          <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
-         <Route path="/venture/chats" element={ventureId&&ventureToken?<Chat roll={'venture'}/>:<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense><Chat roll={'venture'}/></Suspense> :<Navigate to={'/venture/login'} />}/>
         
          
    

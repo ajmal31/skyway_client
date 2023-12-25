@@ -58,10 +58,6 @@ const UsersTable = (prop) => {
         if (selectedPage <= Math.ceil(users.length / count) && selectedPage > 0 && selectedPage !== page)
             setPage(selectedPage)
     }
-    const goChat=()=>{
-      navigate('/venture/chat')
-        
-    }
 
     return (
         // bg-admin-primary border-b-4

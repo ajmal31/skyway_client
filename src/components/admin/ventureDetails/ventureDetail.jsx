@@ -11,14 +11,14 @@ const VentureDetail = ({ vid }) => {
     const [allowedUsers, setAllowedUsers] = useState(0)
     const [pendingUsers, setPendingUsers] = useState(0)
     const [rejectedUsers, setRejectedUsers] = useState(0)
-    const [allUsers,setAllUsers]=useState(0)
+    const [allUsers, setAllUsers] = useState(0)
 
 
     const getVentureData = async () => {
 
         const apiDetails = {
             method: 'get',
-            url: VENTURE_SRV_BASE_URL + `getOneVenture/${vid}`,
+            url: VENTURE_SRV_BASE_URL + `getOneVenture/admin/${vid}`,
             data: null,
             token: true,
             to: "admin"
@@ -35,27 +35,27 @@ const VentureDetail = ({ vid }) => {
             token: true,
             to: 'admin'
         }
- 
+
         const response = await dispatch(fetchData(apiDetails))
-        const count=response?.payload?.data
-        switch(status){
-         case "completed":
-            setCompletedUsers(count)
-            break
-         case "allowed":
-            setAllowedUsers(count)
-            break
-         case "pending":
-            setPendingUsers(count)
-            break;
-         case "rejected":
-           setRejectedUsers(count)         
+        const count = response?.payload?.data
+        switch (status) {
+            case "completed":
+                setCompletedUsers(count)
+                break
+            case "allowed":
+                setAllowedUsers(count)
+                break
+            case "pending":
+                setPendingUsers(count)
+                break;
+            case "rejected":
+                setRejectedUsers(count)
 
         }
-        
+
     }
-    const getAllusers=async()=>{
-       
+    const getAllusers = async () => {
+
         const apiDetails = {
             method: 'get',
             url: USER_SRV_BASE_URL + `venture/all/users/count/${vid}`,
@@ -64,7 +64,7 @@ const VentureDetail = ({ vid }) => {
             to: 'admin'
         }
         const response = await dispatch(fetchData(apiDetails))
-        const count=response?.payload?.data
+        const count = response?.payload?.data
         setAllUsers(count)
 
     }
@@ -77,7 +77,7 @@ const VentureDetail = ({ vid }) => {
         getVentureRelatedUserUsers("allowed")
         getVentureRelatedUserUsers("pending")
         getVentureRelatedUserUsers("rejected")
-        
+
 
     }, [])
 
@@ -122,20 +122,12 @@ const VentureDetail = ({ vid }) => {
         },
         {
             title: 'insurance',
-            link: ventureDetails?.insurance_img
+            link: ventureDetails?.insurance_file_link
         },
         {
             title: 'license',
-            link: ventureDetails?.license_img
-        },
-        {
-            title: `Register Number: ${ventureDetails?.register_number}`,
-            link: "#",
-        },
-        {
-            title: `License Number : ${ventureDetails?.license_number}`,
-            link: "#",
-        },
+            link: ventureDetails?.license_file_link
+        }
 
 
 
@@ -157,12 +149,18 @@ const VentureDetail = ({ vid }) => {
                     <div className="h-full w-full flex-col space-y-3 ">
                         {documentLabels?.map((val, index) => (
                             <div>
-                                <a href={val?.link} target="_blank" className="border-2 hover:bg-gray-500 rounded-2xl   px-5" >{val?.title}</a>
+                                <a href={val?.link} target="_blank" rel="noopener noreferrer" className="border-2 hover:bg-gray-500 rounded-2xl   px-5" >{val?.title}</a>
                             </div>
 
 
                         ))}
+                        <div className="flex">
 
+                            <a href="" className="border-2 hover:bg-gray-500 rounded-2xl mr-1 px-5" >License Number {ventureDetails?.license_number}</a>
+                            <a href="" className="border-2 hover:bg-gray-500 rounded-2xl   px-5" >Register Number {ventureDetails?.register_number}</a>
+
+
+                        </div>
 
 
                     </div>

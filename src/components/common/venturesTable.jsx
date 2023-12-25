@@ -103,7 +103,9 @@ const VenturesTable = () => {
                             <div>
                             <Link to={`/admin/ventureDetails/${value._id}` } ><button className="border border-black rounded-2xl shadow-2xl px-2 ml-2"   ><td className="p-1" >View</td></button></Link>
                             {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id,"allowed")} > <td className="p-2">Allow</td></button> : ''}
-                            {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-1 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:<ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" />}
+                            {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-1 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:''}
+                            {value?.admin_allowed==="rejected"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" /></button>:'' }
+                            
                             </div>
                         </tr>
 
@@ -122,7 +124,7 @@ const VenturesTable = () => {
                     <span className="p-1 border" >
                         <button onClick={e => handlePagination(page - 1)} >Prev</button>
                     </span>
-                    {[...Array(Math.ceil(ventures?.length / count))]?.Map((_, index) => (
+                    {[...Array(Math.ceil(ventures?.length / count))]?.map((_, index) => (
 
 
 

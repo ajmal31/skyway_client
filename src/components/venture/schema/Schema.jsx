@@ -17,7 +17,7 @@ const basicSchema=yup.object().shape({
     .required('phone number is required')
     .positive('please enter a valid number'),
     phone_two:yup.
-    number('name must bea number')
+    number('name must be a number')
     .required('phone number required')
     .positive('please enter a valid number'),
     official_email:yup
@@ -47,10 +47,10 @@ const basicSchema=yup.object().shape({
     .string().required('license number is required '),
     social_media: yup
     .string().required('social media refrence  is required '),
-    insurance_img: yup
-    .mixed().required('insurance file is required '),
-    license_img: yup
-    .mixed().required('license file is required '),
+    insurance_file_link: yup
+    .mixed().required('insurance file link is required '),
+    license_file_link: yup
+    .mixed().required('license file  link is required '),
     password_one: yup
     .string().required('password one  is required ')
     .min(5).max(20),

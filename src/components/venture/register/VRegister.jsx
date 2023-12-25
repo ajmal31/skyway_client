@@ -5,12 +5,12 @@ import { fetchData } from "../../../redux/api/api"
 import { VENTURE_SRV_BASE_URL } from "../../../data/const"
 import { useme } from "../../../hooks/toast"
 import { ToastContainer } from "react-toastify"
-import { Link,useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 const VRegister = () => {
 
-   const navigate=useNavigate()
+    const navigate = useNavigate()
     const disapatch = useDispatch()
     const { handleBlur, handleChange, values, errors, touched, handleSubmit } = useFormik({
 
@@ -31,8 +31,8 @@ const VRegister = () => {
             register_number: "",
             license_number: "",
             social_media: "",
-            insurance_img: "",
-            license_img: "",
+            insurance_file_link: "",
+            license_file_link: "",
             password_one: "",
             confirm_password_one: "",
             password_two: "",
@@ -42,7 +42,7 @@ const VRegister = () => {
 
         onSubmit: async (values) => {
             const error = 'error'
-
+          console.log('helo')
             const { password_one, confirm_password_one, password_two, confirm_password_two } = values
             if (password_one !== confirm_password_one) return useme('password one and confirm password is not matching', error)
             if (password_two !== confirm_password_two) return useme('password two and confirm password is not matching', error)
@@ -55,19 +55,19 @@ const VRegister = () => {
             }
 
             const response = await disapatch(fetchData(obj))
-            const {success}=response?.payload?.data
-           if(success){
-            console.log('ventuer register success')
-            useme(success,"success")
-            return navigate('/venture/login')
+            const { success } = response?.payload?.data
+            if (success) {
+                console.log('ventuer register success')
+                useme(success, "success")
+                return navigate('/venture/login')
 
-           }
+            }
             console.log('after geting response from ventur registeration', response)
-            if(response?.payload?.data?.error) return useme(response?.payload?.data?.error,"error")
-    
+            if (response?.payload?.data?.error) return useme(response?.payload?.data?.error, "error")
+
             const { msg } = response?.payload?.data?.errors[0]
             msg && useme(msg, error)
-            
+
 
 
         }
@@ -282,7 +282,7 @@ const VRegister = () => {
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Registration Number
                                     <input
-                                        type="number"
+                                        type="number"           
 
                                         name="register_number"
                                         onChange={handleChange}
@@ -330,34 +330,34 @@ const VRegister = () => {
                             </div>
                             {/* uploads */}
                             <div className=" flex ">
-                                <div className=" mr-1 flex flex-col h-3/6 w-1/2">upload your insurance
+                                <div className=" mr-1 flex flex-col h-3/6 w-1/2">Insurance file Link (make sure is it accessible)
                                     <input
-                                        type="file"
+                                        type="text"
 
-                                        name="insurance_img"
+                                        name="insurance_file_link"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
-                                        value={values?.insurance_img}
+                                        value={values?.insurance_file_link}
 
                                         className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.insurance_img && errors.insurance_img && (
-                                        <div className="text-red-400">{errors.insurance_img}</div>
+                                    {touched.insurance_file_link && errors.insurance_file_link && (
+                                        <div className="text-red-400">{errors.insurance_file_link}</div>
                                     )}
                                 </div>
-                                <div className="  flex flex-col h-3/6 w-1/2">upload your License
+                                <div className="  flex flex-col h-3/6 w-1/2">License File Link (make sure is it accessible)
                                     <input
-                                        type="file"
+                                        type="text"
 
-                                        name="license_img"
+                                        name="license_file_link"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
 
-                                        value={values?.license_img}
+                                        value={values?.license_file_link}
 
                                         className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
-                                    {touched.license_img && errors.license_img && (
-                                        <div className="text-red-400">{errors.license_img}</div>
+                                    {touched.license_file_link && errors.license_file_link && (
+                                        <div className="text-red-400">{errors.license_file_link}</div>
                                     )}
                                 </div>
 
@@ -434,24 +434,24 @@ const VRegister = () => {
                                 <input type="checkbox" className=" m-1 bg-gray-300 rounded" />
                                 <p>Agree term and conditions</p>
                             </div>
-                           
+
                             <div className="h-3/6 w-1/2 mb-2 flex justify-start ">
                                 <button className="bg-sec-button p-2 px-10 rounded-xl" type="submit">submit</button>
-                               
+
                             </div>
-                        
+
                             <div className="h-3/6 w-1/2 flex justify-start ">
-                                
+
                                 <Link to={'/venture/login'} >Already Have an Account</Link>
                             </div>
                             <br />
 
                         </div>
-                        
+
 
 
                     </div>
-                    
+
 
                 </div>
 
