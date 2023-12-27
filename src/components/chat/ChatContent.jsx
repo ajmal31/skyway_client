@@ -24,7 +24,9 @@ const ChatContent = ({ roll }) => {
     const dispatch = useDispatch();
     //for storing chat messages
     const [chat, setChat] = useState([]);
-
+    let [chatId, setChatId] = useState()
+    const [isTyping, setIsTyping] = useState(false)
+    
     //storing Input message
     const [message, setMessage] = useState('');
     const [header, setHeader] = useState({})
@@ -35,18 +37,26 @@ const ChatContent = ({ roll }) => {
         if (scrollDownRef.current) {
             scrollDownRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [chat]);
+    }, [chat, isTyping]);
+
+
+    //typing evene listener
+    socket.on('typing', () => {
+
+        console.log(`typing event listner in client ${roll} side`)
+    })
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('enter useEffect')
+
             if (data?.oppsitePersonData != null) {
-                console.log('invoked get chat')
+
                 let response = await getChat();
-                console.log('response of the get chat function', response)
+
                 if (response) {
-                    console.log('emit join room event')
+                  
                     socket.emit("joinRoom", response);
+                    setChatId(response)
 
                 }
 
@@ -59,7 +69,6 @@ const ChatContent = ({ roll }) => {
 
     //taking chat details and storing messages to chat state
     async function getChat() {
-        console.log('call reached')
         const apiDetails_chat = {
             method: 'post',
             url: CHAT_SRV_BASE_URL + 'getChat/' + roll,
@@ -69,7 +78,7 @@ const ChatContent = ({ roll }) => {
         };
 
         const response_chat = await dispatch(fetchData(apiDetails_chat));
-        console.log('response of the getchat inside function', response_chat)
+
         if (!response_chat?.payload?.data || response_chat?.payload?.data?.message.length < 1) setChat([])
         else {
             let messages = Array?.from(response_chat?.payload?.data?.message && response_chat?.payload?.data?.message);
@@ -79,7 +88,7 @@ const ChatContent = ({ roll }) => {
 
 
         //return chat id (Game Changer😍)
-        console.log('chat id', response_chat?.payload?.chat?._id)
+
         return response_chat?.payload?.data?._id
     };
 
@@ -88,13 +97,29 @@ const ChatContent = ({ roll }) => {
 
     })
 
+    let typingTimeout;
+
+    const handleOnchange = (e) => {
+
+        setMessage(e.target.value)
+        socket.emit("typing", chatId)
+
+        clearTimeout(typingTimeout)
+        typingTimeout = setTimeout(() => {
+            setIsTyping(false)
+        }, 1000)
+
+        setIsTyping(true)
+
+    }
 
     //Handling message
     const handleMessage = () => {
         const payload = {
             senderId: roll === "venture" ? ventureId : userId,
             receiverId: data?.oppsitePersonData?._id,
-            content: message
+            content: message,
+            updatedAt:new Date()
         };
         setChat([...chat, payload])
         socket.emit('message', payload)
@@ -117,16 +142,16 @@ const ChatContent = ({ roll }) => {
                         </div>
                     </div>
                     <div className="w-10/12  h-full">
-                        <div>
+                        <div className="" >
                             <p className="font-semibold mt-3">{roll === "venture" ? data.oppsitePersonData.username : data.oppsitePersonData.ventureName}</p>
                             <p className="">Last seen 12.30 pm</p>
                         </div>
                     </div>
                 </div>
                 <hr className="border-gray-500" />
-                <div className="max-w-screen-md mx-auto h-3/5    mt-10">
+                <div className="max-w-screen-md mx-auto h-3/5  mt-10">
                     <div className="flex flex-col mb-2 px-1 overflow-auto   max-h-72 items-start"  >
-                        {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll === "venture" ? ventureId : userId} />)}
+                        {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll === "venture" ? ventureId : userId} typing={isTyping && index == chat.length - 1} />)}
                         <div ref={scrollDownRef} ></div>
                     </div>
                 </div>
@@ -139,7 +164,7 @@ const ChatContent = ({ roll }) => {
                                 type="text"
                                 className="w-11/12 p-3 rounded-xl bg-transparent border border-gray-500"
                                 value={message}
-                                onChange={(e) => setMessage(e.target.value)}
+                                onChange={handleOnchange}
                                 placeholder="enter your message"
                             />
                             <button className="w-1/12 bg-button rounded-full flex items-center justify-center p-3" onClick={handleMessage}><IoSend /></button>
