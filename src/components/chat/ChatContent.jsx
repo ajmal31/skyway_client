@@ -9,6 +9,7 @@ import { ChatMessage } from "./ChatMessage";
 import EmptyChat from "./EmptyChat";
 import "../../../src/scroll.css"
 import { IoSend } from "react-icons/io5";
+import { changeCount } from "../../redux/slices/chatSlice";
 
 //socket port spectification
 const socket = io(CHAT_SRV_SOCKET_URL);
@@ -26,7 +27,7 @@ const ChatContent = ({ roll }) => {
     const [chat, setChat] = useState([]);
     let [chatId, setChatId] = useState()
     const [isTyping, setIsTyping] = useState(false)
-    
+
     //storing Input message
     const [message, setMessage] = useState('');
     const [header, setHeader] = useState({})
@@ -54,7 +55,7 @@ const ChatContent = ({ roll }) => {
                 let response = await getChat();
 
                 if (response) {
-                  
+
                     socket.emit("joinRoom", response);
                     setChatId(response)
 
@@ -72,7 +73,12 @@ const ChatContent = ({ roll }) => {
         const apiDetails_chat = {
             method: 'post',
             url: CHAT_SRV_BASE_URL + 'getChat/' + roll,
-            data: { receiverId: data?.oppsitePersonData?._id, roll: roll },
+            data:
+            {
+                ventureId: roll === "venture" ? ventureId : data?.oppsitePersonData?._id,
+                userId: roll === "user" ? userId : data?.oppsitePersonData?._id,
+                roll: roll
+            },
             token: true,
             to: roll
         };
@@ -93,49 +99,61 @@ const ChatContent = ({ roll }) => {
     };
 
     socket.on('received', (data) => {
-        setChat([...chat, data])
+        console.log('message received', roll)
+        
+        if (chatId === data?.chatId) {
+            console.log('change current state because it pefect match chat')
+            setChat([...chat, data?.content])
+
+        } 
+        return dispatch(changeCount(Math.random() * 1 * 10))
+
 
     })
 
     let typingTimeout;
 
+    //typing event handle function
     const handleOnchange = (e) => {
 
         setMessage(e.target.value)
-        socket.emit("typing", chatId)
+        // socket.emit("typing", chatId)
 
-        clearTimeout(typingTimeout)
-        typingTimeout = setTimeout(() => {
-            setIsTyping(false)
-        }, 1000)
+        // clearTimeout(typingTimeout)
+        // typingTimeout = setTimeout(() => {
+        //     setIsTyping(false)
+        // }, 1000)
 
-        setIsTyping(true)
+        // setIsTyping(true)
 
     }
 
     //Handling message
     const handleMessage = () => {
-        const payload = {
+        let payload = {
             senderId: roll === "venture" ? ventureId : userId,
             receiverId: data?.oppsitePersonData?._id,
             content: message,
-            updatedAt:new Date()
+            updatedAt: new Date()
         };
+        let receiver = roll === "venture" ? "userUnReadMessages" : "ventureUnReadMessages"
         setChat([...chat, payload])
+        payload = { ...payload, receiver }
+
         socket.emit('message', payload)
         setMessage('');
-
+        dispatch(changeCount(Math.random() * 1 * 10))
 
 
     };
 
 
-    if (!data.oppsitePersonData) return <EmptyChat />
+    if (!data.oppsitePersonData) return <EmptyChat  />
 
     return (
-        <div className="bg-secondory h-full w-3/5 p-10 text-gray-300 rounded-xl">
+        <div className="bg-secondory h-full w-3/5 px-8 pb-8 pt-2 text-gray-300 rounded-xl">
             <div className="w-full h-full ">
-                <div className="h-1/6 w-full pt-2 flex bg-secondory">
+                <div className="h-1/6 w-full  flex bg-secondory">
                     <div className="w-2/12 flex flex-wrap justify-center items-center">
                         <div className="h-full w-4/5 rounded-full">
                             <img src="/temp/venture-contact-dp.png" className="h-full w-full" alt="Venture_Contact_Image" />

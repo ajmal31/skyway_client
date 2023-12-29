@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { CHAT_SRV_BASE_URL } from '../../../data/const';
+import { fetchData } from '../../../redux/api/api';
+import cookie from "js-cookie"
 
 
 
@@ -8,6 +11,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, username } = useSelector((state) => state.UserSlice);
   const naviagte = useNavigate();
+  const dispatch = useDispatch()
+  const userId = cookie.get('userId')
+  const userToken = useSelector((state = UserSlice) => state.UserSlice.token)
+  const [unReadChats,setUnReadChats]=useState(0)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -36,17 +43,40 @@ const Navbar = () => {
   const renderMenuItem = (item, index) => (
     <span
       key={index}
-      className="mr-8 cursor-pointer ml-2 inline-block transition duration-300 hover:text-gray-300 "
-      style={{ borderBottom: '2px solid transparent' }}
-      onMouseOver={(e) => (e.target.style.borderBottomColor = 'gray')}
-      onMouseOut={(e) => (e.target.style.borderBottomColor = 'transparent')}
+      className="mr-8 cursor-pointer ml-2 flex "
+
       onClick={() => handleNavigation(item.route)}
     >
-      {item.label}
+
+      <p className='duration-300 hover:text-gray-300  inline-block transition' onMouseOver={(e) => (e.target.style.borderBottomColor = 'gray')}
+        onMouseOut={(e) => (e.target.style.borderBottomColor = 'transparent')} style={{ borderBottom: '2px solid transparent' }}
+      > {item.label} {item.label === "Chats" &&unReadChats!==0 ? unReadChats : ''} </p>
+
     </span>
   );
 
+  const unReadChatCount = async () => {
+    const apiDetails = {
+      method: 'post',
+      url: CHAT_SRV_BASE_URL + "take/unRead/chat/count/user",
+      data: { field: "userUnReadMessages",userId },
+      token: true,
+      to: "user"
 
+    }
+    const response = await dispatch(fetchData(apiDetails))
+    console.log('count of unread chats in navabr',response)
+    setUnReadChats(response?.payload?.data)
+  }
+
+  //take all user unreaded message count
+  useEffect(() => {
+
+   
+    if (userId && userToken)
+      unReadChatCount()
+
+  }, [])
   const renderMobileMenu = (item, index) => (
     <div
       key={index}
@@ -64,7 +94,7 @@ const Navbar = () => {
           {/* <svg xmlns="https://imgs.search.brave.com/3hjKUAltmBDIqxstJSPE0_CeM3jJTUUtt1nFHSyucOY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzU5LzYzLzQ4/LzM2MF9GXzE1OTYz/NDg0MF9GYTJIUGI4/SVRyYnI1Z2RkWTJl/S2xvbVZmc251MWd4/Ni5qcGc" className="w-10 h-10 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg> */}
-          <img src="../../../assets/Application-logo/skyway-logo-final.png"  alt="logo" />
+          <img src="../../../assets/Application-logo/skyway-logo-final.png" alt="logo" />
           <span className="ml-3 text-2xl text-gray-100 font-medium antialiased">Skyway</span>
         </Link>
         <nav className="hidden md:ml-auto md:flex   flex-wrap items-center justify-center text-base tracking-wide">

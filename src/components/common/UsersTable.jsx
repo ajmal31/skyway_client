@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
 import { fetchData } from "../../redux/api/api"
-import { ADMIN_SRV_BASE_URL, USER_SRV_BASE_URL } from "../../data/const"
+import { VENTURE_SRV_BASE_URL, USER_SRV_BASE_URL,CHAT_SRV_BASE_URL } from "../../data/const"
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
+import cookie from "js-cookie"
 
 const UsersTable = (prop) => {
-    const { roll="admin", api } = prop?.content
+    const { roll = "admin", api } = prop?.content
 
 
     const dispatch = useDispatch()
     const [users, setUsers] = useState([])
     const [ventureId, setVentureId] = useState('')
-    const navigate=useNavigate()
+    let vid=cookie.get("ventureId")
+    const navigate = useNavigate()
 
     //api call destination
     const getData = async () => {
@@ -42,13 +44,65 @@ const UsersTable = (prop) => {
             token: true,
             to: 'venture'
         }
+        
         const response = await dispatch(fetchData(apiDetails))
-        console.log('after change user status from venture ', response.payload.data)
+
+
         if (response.payload.data) {
             getData()
         }
 
     }
+
+
+    const createChat=async(uid)=>{
+        //chat service api details
+        const api_one = {
+            method: 'post',
+            url: CHAT_SRV_BASE_URL + 'createChat/venture',
+            data: { ventureId: vid, userId: uid },
+            token: true,
+            to: 'venture'
+        }
+        //venture service api details
+        const api_two = {
+            method: 'post',
+            url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat/venture',
+            data: { vid: vid },
+            token: true,
+            to: 'venture'
+        }
+        //User service api details
+        const api_three = {
+            method: 'post',
+            url: USER_SRV_BASE_URL + 'getUserUpdateChat/venture',
+            data: { userId: uid },
+            token: true,
+            to: 'venture'
+        }
+        //creating chat
+        let chatCreated = await dispatch(fetchData(api_one))
+        //take data from venture Hear receiver id represing the 
+        //venture( hear will be only boolen while RabbitMQ make
+        // request so handle it using that boolean)👆
+
+        //This api call taken venture details based on the id and 
+        //update to chat service👇
+        let ventureData = await dispatch(fetchData(api_two))
+
+        //This api call take user details based ont he id and 
+        //update to chat service👇
+        let userData = await dispatch(fetchData(api_three))
+        console.log('response ',chatCreated)
+        console.log('response ',ventureData)
+        console.log('response ',userData)
+
+        navigate('/venture/chats')
+
+
+
+    }
+
     const buttonStyle = "border border-gray-300 px-4 py-1 mt-2 rounded-xl hover:bg-button  "
 
     //pagination
@@ -96,9 +150,9 @@ const UsersTable = (prop) => {
                                 //button desgin venture side
                                 // console.log(ventureId)
                                 value?.ventures?.[value?.ventures?.findIndex(venture => venture.ventureId === ventureId)].status == "pending" ?
-                                <Link onClick={e => handleAllow(value?._id)} >
-                                    <button className={buttonStyle} >Allow</button>
-                                </Link> : <Link to={'/venture/chats'} ><button className={buttonStyle} >Make a chat</button></Link>:''
+                                    <Link onClick={e => handleAllow(value?._id)} >
+                                        <button className={buttonStyle} >Allow</button>
+                                    </Link> : <button className={buttonStyle}  onClick={e=>createChat(value?._id)} >Make a chat</button> : ''
 
                             }
                         </tr>

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     oppsitePersonData:null,
-    chatId:null
+    chatId:null,
+    count:0
 }
 
 const chatSlice=createSlice({
@@ -11,18 +12,20 @@ const chatSlice=createSlice({
     reducers:{
 
         selectedUser:(state,action)=>{
-            console.log('data of the selected user or venture',action.payload)
-            const {senderId,receiverId}=action.payload
            
+            const {senderId,receiverId}=action.payload
+            state.oppsitePersonData=action.payload          
 
-            state.oppsitePersonData=action.payload
+        },
+        changeCount:(state,action)=>{
 
-            console.log('current chat slice oppsotie person data',state.oppsitePersonData)
-
+            console.log('chaning count in redux')
+            state.count=action.payload
+            console.log('in redux what the status',state.count)
         }
         
     }
 
 })
-export const {selectedUser,chatId}=chatSlice.actions
+export const {selectedUser,changeCount}=chatSlice.actions
 export default chatSlice.reducer

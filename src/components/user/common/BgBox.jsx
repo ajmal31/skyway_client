@@ -5,7 +5,6 @@ import Feedback from "./Feedback"
 import Modal from "./Modal"
 import { useEffect, useState } from "react"
 import { useme } from "../../../hooks/toast"
-import { ToastContainer } from "react-toastify"
 import { VENTURE_SRV_BASE_URL, USER_SRV_BASE_URL, CHAT_SRV_BASE_URL } from "../../../data/const"
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
@@ -50,15 +49,15 @@ const BgBox = ({ id }) => {
       //chat service api details
       const apiDetails = {
         method: 'post',
-        url: CHAT_SRV_BASE_URL + 'createChat',
-        data: { receiverId: vid, senderId: userId },
+        url: CHAT_SRV_BASE_URL + 'createChat/user',
+        data: { ventureId: vid, userId: userId},
         token: true,
         to: 'user'
       }
       //venture service api details
       const apiDetails_two = {
         method: 'post',
-        url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat',
+        url: VENTURE_SRV_BASE_URL + 'getVentureUpdateChat/user',
         data: { vid: vid },
         token: true,
         to: 'user'
@@ -66,7 +65,7 @@ const BgBox = ({ id }) => {
       //User service api details
       const apiDetails_three = {
         method: 'post',
-        url: USER_SRV_BASE_URL + 'getUserUpdateChat',
+        url: USER_SRV_BASE_URL + 'getUserUpdateChat/user',
         data: { userId: userId },
         token: true,
         to: 'user'
@@ -129,7 +128,6 @@ const BgBox = ({ id }) => {
       <Graph />
       <p className="text-4xl text-center my-8 font-Outfit">Point Out Your Valuable Words About us</p>
       <Feedback />
-      <ToastContainer />
 
     </div>
   )
