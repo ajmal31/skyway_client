@@ -4,7 +4,7 @@ import { fetchData } from "../../redux/api/api";
 import { useEffect, useState, useRef } from "react";
 import { CHAT_SRV_SOCKET_URL, CHAT_SRV_BASE_URL } from "../../data/const";
 import cookie from "js-cookie";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { ChatMessage } from "./ChatMessage";
 import EmptyChat from "./EmptyChat";
 import "../../../src/scroll.css"
@@ -12,9 +12,9 @@ import { IoSend } from "react-icons/io5";
 import { changeCount } from "../../redux/slices/chatSlice";
 
 //socket port spectification
-const socket = io(CHAT_SRV_SOCKET_URL);
+// const socket = io(CHAT_SRV_SOCKET_URL);
 
-const ChatContent = ({ roll }) => {
+const ChatContent = ({ roll,socket }) => {
 
     //taking userId from cookie
     const userId = cookie.get('userId');
@@ -99,14 +99,20 @@ const ChatContent = ({ roll }) => {
     };
 
     socket.on('received', (data) => {
-        console.log('message received', roll)
+
         
         if (chatId === data?.chatId) {
-            console.log('change current state because it pefect match chat')
             setChat([...chat, data?.content])
 
         } 
         return dispatch(changeCount(Math.random() * 1 * 10))
+
+
+    })
+    socket.on('notification', (data) => {
+        console.log('notification event  in chat content', data)
+        
+
 
 
     })

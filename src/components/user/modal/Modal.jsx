@@ -146,7 +146,7 @@ const Modal = ({ visible, onClose, phoneNumber, verifySuccess }) => {
                 to: 'user'
             }
             const response = await dispatch(fetchData(apiDetails))
-            handleVisible()
+            return handleVisible()
 
 
 

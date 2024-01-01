@@ -19,9 +19,7 @@ const chatSlice=createSlice({
         },
         changeCount:(state,action)=>{
 
-            console.log('chaning count in redux')
             state.count=action.payload
-            console.log('in redux what the status',state.count)
         }
         
     }

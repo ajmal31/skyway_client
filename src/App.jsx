@@ -46,6 +46,7 @@ import AventureDetails from "./pages/admin/ventureDetails/ventureDetails"
 const Chat=lazy(()=>import('../src/pages/chat/Chat'))
 
 
+
 function App() {
 
       const dispatch=useDispatch()
@@ -73,7 +74,7 @@ function App() {
       },[])
 
       
-
+      
 
  return(
  
@@ -87,7 +88,7 @@ function App() {
         <Route path='/userProfile' element={userToken&&userId?<Profile/>:<Navigate to={'/userLogin'} />}/>
         <Route path="/ventureList" element={<VentureList/>}/>
         <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
-        <Route path="/chats" element={userToken&&userId?  <Suspense ><Chat/></Suspense> :<Navigate to={'/userlogin'}/>} />
+        <Route path="/chats" element={userToken&&userId? <Suspense ><Chat/></Suspense> :<Navigate to={'/userlogin'}/>} />
         {/* <Route path="/otp" element={<Otp/>}/> */}
 
 
@@ -96,7 +97,7 @@ function App() {
          <Route path="/venture/login" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
          <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
-         <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense><Chat roll={'venture'}/></Suspense> :<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
         
          
    

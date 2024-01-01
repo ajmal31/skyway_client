@@ -9,6 +9,7 @@ import { VENTURE_SRV_BASE_URL, USER_SRV_BASE_URL, CHAT_SRV_BASE_URL } from "../.
 import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
 import { useNavigate } from "react-router-dom"
+import {motion} from "framer-motion"
 const BgBox = ({ id }) => {
 
   const dispatch = useDispatch()
@@ -107,11 +108,22 @@ const BgBox = ({ id }) => {
 
   }
 
+  const [shouldShimmer, setShouldShimmer] = useState(false);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShouldShimmer(prev => !prev);
+    }, 500); // Adjust this duration as per your preference
+
+    return () => clearInterval(interval);
+  }, []);
   return (
 
     <div className=" bg-primary text-gray-300 h-full w-full mt-10 rounded-3xl " >
-      <button className="border p-2 hover:bg-button rounded-xl font-Outfit  " onClick={e => setVisible(true)} >Let's connect With us</button>
+      <motion.button             
+       animate={{ scale: shouldShimmer ? 1.05 : 1 }}
+       transition={{ duration: 0.25 }} // Adjust the duration if needed
+    className="border p-2 hover:bg-button rounded-xl font-Outfit  " onClick={e => setVisible(true)} >Let's connect With us</motion.button>
       {/* PASS TO MODAL VENTURE ID */}
       <Modal visible={visible} onClose={handleOnClose} connectUser={handleRequest} id={venutureData?._id} />
 

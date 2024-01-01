@@ -5,21 +5,19 @@ import { useEffect, useState } from "react"
 import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL,CHAT_SRV_SOCKET_URL } from "../../data/const"
 import { fetchData } from "../../redux/api/api"
 import cookie from "js-cookie"
+import { changeCount } from "../../redux/slices/chatSlice";
 
-const Contact = ({ chats, roll }) => {
+const Contact = ({ chats, roll,socket }) => {
 
     const dispatch = useDispatch()
     const arr = chats
     let uid = cookie.get('userId')
     let vid = cookie.get('ventureId')
     let data = useSelector((state) => state.chatSlice)
-    let [count,setCount]=useState('')
-    let [showNotification,setShowNotification]=useState(true)
     const [allChats, setAllChats] = useState([])
     const oppositePersonData = async (data) => {
 
         dispatch(selectedUser(data))
-        setShowNotification(false)
         //seen message so shoul be update unREad messages to zero
         let ventureId = roll === "venture" ? vid : data?._id
         let userId = roll === "user" ? uid : data?._id
@@ -40,7 +38,22 @@ const Contact = ({ chats, roll }) => {
 
     }
 
-   
+    socket.on('received', (data) => {
+        console.log('received event sidebar',data)
+        // dispatch(changeCount(Math.random()*1*10))
+       
+
+
+    })
+
+    socket.on('notification', (data) => {
+        console.log('notification event in side bar',data)
+        getAllChats()
+        // dispatch(changeCount(Math.random()*1*10))
+       
+
+
+    })
 
     async function getAllChats() {
 
@@ -77,7 +90,7 @@ const Contact = ({ chats, roll }) => {
 
                                 <p className=" font-semibold mt-2 " >{roll === "venture" ? val?.data[0]?.data?.username : val?.data[0]?.data?.ventureName}</p>
                                
-                                {roll==="user"&&val?.participants[0].userUnReadMessages!==0&&showNotification || roll==="venture"&&val?.participants[0].ventureUnReadMessages!==0&&showNotification ?  <p className= 'mr-2  rounded-full w-5 h-5 flex justify-center items-center mt-2  bg-button ' >{roll==="user"?val?.participants[0].userUnReadMessages:val?.participants[0].ventureUnReadMessages}</p>:''}
+                                {roll==="user"&&val?.participants[0].userUnReadMessages!==0 || roll==="venture"&&val?.participants[0].ventureUnReadMessages!==0?  <p className= 'mr-2  rounded-full w-5 h-5 flex justify-center items-center mt-2  bg-button ' >{roll==="user"?val?.participants[0].userUnReadMessages:val?.participants[0].ventureUnReadMessages}</p>:''}
                             </div>
 
 

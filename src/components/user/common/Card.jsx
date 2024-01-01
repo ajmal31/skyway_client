@@ -1,8 +1,6 @@
 import {motion} from "framer-motion"
 const Card=(prop)=>{
 
-    console.log('card prop',prop)
-
     return(
 
         <div >

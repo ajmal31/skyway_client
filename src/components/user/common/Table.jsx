@@ -7,6 +7,7 @@ import { Link, Navigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import UserSlice from "../../../redux/slices/UserSlice"
 import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 const Table = ({ api }) => {
 
     const navigate = useNavigate()
@@ -23,7 +24,7 @@ const Table = ({ api }) => {
             url: api.url,
             data: api.data,
             token: api.token,
-            
+
 
 
         }
@@ -40,7 +41,7 @@ const Table = ({ api }) => {
     }, []);
 
     //Venture connecting Request
-    
+
 
 
     //pagination section
@@ -72,7 +73,7 @@ const Table = ({ api }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {ventureList?.length>0&&ventureList?.slice(page * 5 - 5, page * 5)?.map((value, index) => (
+                    {ventureList?.length > 0 && ventureList?.slice(page * 5 - 5, page * 5)?.map((value, index) => (
 
                         <tr key={index} >
 
@@ -98,7 +99,14 @@ const Table = ({ api }) => {
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
                                 <p className="text-gray-300 whitespace-no-wrap">
                                     {/* <Link to={handleRequest}>make request for a call</Link> */}
-                                   <Link to={`/ventureDetails/${value?._id}`} > <button   >Know More</button></Link>
+                                    
+                                    <Link to={`/ventureDetails/${value?._id}`} > <motion.button
+
+                                        whileHover={{ scale: 1.1, boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)" }}
+                                        whileTap={{ scale: 0.9 }}
+                                        className="border p-2 rounded-2xl hover:bg-button"
+
+                                    >Know More</motion.button></Link>
 
                                 </p>
                             </td>
@@ -117,12 +125,12 @@ const Table = ({ api }) => {
             <span  >
                 <button onClick={e => handlePagination(page - 1)}>Prev &nbsp; </button>
             </span>
-          
+
             {/* Pagination ui */}
             {
                 //create Array the size of the array is 5 devided of the main array and destructure 
                 //here and map take it the index
-                [...Array(Math?.ceil(ventureList&&ventureList?.length / 5))].map((val, index) => (
+                [...Array(Math?.ceil(ventureList && ventureList?.length / 5))].map((val, index) => (
 
                     <span className="bg-secondory content-center  ">
 
