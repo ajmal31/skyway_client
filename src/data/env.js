@@ -7,6 +7,7 @@ export default{
     storageBucket:import.meta.env.VITE_REACT_APP_STORAGE_BUCKET,
     messagingSenderId:import.meta.env.VITE_REACT_APP_MESSAGING_SENDER_ID,
     appId:import.meta.env.VITE_REACT_APP_APP_ID,
-    measurementId:import.meta.env.VITE_REACT_APP_MEASUREMENT
+    measurementId:import.meta.env.VITE_REACT_APP_MEASUREMENT,
+    GOOGLE_CLIENT_ID:import.meta.env.VITE_REACT_APP_GOOGLE_CLIENT_ID
 
 }
