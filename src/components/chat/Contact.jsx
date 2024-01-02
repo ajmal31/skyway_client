@@ -2,12 +2,12 @@ import Dp from "./Dp"
 import { useDispatch, useSelector } from "react-redux"
 import { selectedUser } from "../../redux/slices/chatSlice"
 import { useEffect, useState } from "react"
-import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL,CHAT_SRV_SOCKET_URL } from "../../data/const"
+import { CHAT_SRV_BASE_URL, USER_SRV_BASE_URL, CHAT_SRV_SOCKET_URL } from "../../data/const"
 import { fetchData } from "../../redux/api/api"
 import cookie from "js-cookie"
 import { changeCount } from "../../redux/slices/chatSlice";
 
-const Contact = ({ chats, roll,socket }) => {
+const Contact = ({ chats, roll, socket }) => {
 
     const dispatch = useDispatch()
     const arr = chats
@@ -38,31 +38,21 @@ const Contact = ({ chats, roll,socket }) => {
 
     }
 
-    socket.on('received', (data) => {
-        console.log('received event sidebar',data)
-        // dispatch(changeCount(Math.random()*1*10))
-       
+        socket.on('notification', (data) => {
+            console.log('notification event in side bar', data)
+            getAllChats()
+           
+        })
 
-
-    })
-
-    socket.on('notification', (data) => {
-        console.log('notification event in side bar',data)
-        getAllChats()
-        // dispatch(changeCount(Math.random()*1*10))
-       
-
-
-    })
 
     async function getAllChats() {
 
- 
+
 
         const apiDetails = {
             method: "post",
             url: CHAT_SRV_BASE_URL + `all/chats/${roll}/${roll === "venture" ? vid : uid}`,
-            data: {field:roll==="user"?"userId":"ventureId"},
+            data: { field: roll === "user" ? "userId" : "ventureId" },
             token: true,
             to: roll
         }
@@ -83,19 +73,19 @@ const Contact = ({ chats, roll,socket }) => {
                 return (
 
                     <div className=" flex gap-5 hover:bg-button cursor-pointer rounded-xl p-1 " key={index} onClick={e => oppositePersonData(val?.data[0]?.data)} >
-                     
+
                         <Dp h={"h-16"} w={"w-2/12"} />
                         <div className=" w-full" >
                             <div className="flex justify-between" >
 
                                 <p className=" font-semibold mt-2 " >{roll === "venture" ? val?.data[0]?.data?.username : val?.data[0]?.data?.ventureName}</p>
-                               
-                                {roll==="user"&&val?.participants[0].userUnReadMessages!==0 || roll==="venture"&&val?.participants[0].ventureUnReadMessages!==0?  <p className= 'mr-2  rounded-full w-5 h-5 flex justify-center items-center mt-2  bg-button ' >{roll==="user"?val?.participants[0].userUnReadMessages:val?.participants[0].ventureUnReadMessages}</p>:''}
+
+                                {roll === "user" && val?.participants[0].userUnReadMessages !== 0 || roll === "venture" && val?.participants[0].ventureUnReadMessages !== 0 ? <p className='mr-2  rounded-full w-5 h-5 flex justify-center items-center mt-2  bg-button ' >{roll === "user" ? val?.participants[0].userUnReadMessages : val?.participants[0].ventureUnReadMessages}</p> : ''}
                             </div>
 
 
                             <div className="flex justify-between  pr-2">
-                                
+
                                 <p className=" w-9/12  " >{val?.last_message[0]?.content ?? "Let's start a chat ?"}</p>
 
 
@@ -109,9 +99,9 @@ const Contact = ({ chats, roll,socket }) => {
 
                                             // Convert to 12-hour format
                                             hours = hours % 12 || 12;
-                                             
-                                             if(hours&&minutes&&period)
-                                             return `${hours}.${minutes} ${period}`;
+
+                                            if (hours && minutes && period)
+                                                return `${hours}.${minutes} ${period}`;
                                             else return ''
 
                                         }

@@ -4,17 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CHAT_SRV_BASE_URL } from '../../../data/const';
 import { fetchData } from '../../../redux/api/api';
 import cookie from "js-cookie"
+import { useSocket } from '../../../hooks/useSocket';
 
 
 
 const Navbar = () => {
+  const socket = useSocket()
   const [isOpen, setIsOpen] = useState(false);
   const { token, username } = useSelector((state) => state.UserSlice);
   const naviagte = useNavigate();
   const dispatch = useDispatch()
   const userId = cookie.get('userId')
   const userToken = useSelector((state = UserSlice) => state.UserSlice.token)
-  const [unReadChats,setUnReadChats]=useState(0)
+  const [unReadChats, setUnReadChats] = useState(0)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -50,7 +52,7 @@ const Navbar = () => {
 
       <p className='duration-300 hover:text-gray-300  inline-block transition' onMouseOver={(e) => (e.target.style.borderBottomColor = 'gray')}
         onMouseOut={(e) => (e.target.style.borderBottomColor = 'transparent')} style={{ borderBottom: '2px solid transparent' }}
-      > {item.label} {item.label === "Chats" &&unReadChats!==0 ? unReadChats : ''} </p>
+      > {item.label} {item.label === "Chats" && unReadChats !== 0 ? unReadChats : ''} </p>
 
     </span>
   );
@@ -59,20 +61,25 @@ const Navbar = () => {
     const apiDetails = {
       method: 'post',
       url: CHAT_SRV_BASE_URL + "take/unRead/chat/count/user",
-      data: { field: "userUnReadMessages",userId },
+      data: { field: "userUnReadMessages", userId },
       token: true,
       to: "user"
 
     }
     const response = await dispatch(fetchData(apiDetails))
-    console.log('count of unread chats in navabr',response)
+    console.log('count of unread chats in navabr', response)
     setUnReadChats(response?.payload?.data)
   }
+  
+  socket&& socket.on('notification',()=>{
+    unReadChatCount()
+  })
+
 
   //take all user unreaded message count
   useEffect(() => {
 
-   
+
     if (userId && userToken)
       unReadChatCount()
 

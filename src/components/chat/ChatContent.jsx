@@ -98,24 +98,17 @@ const ChatContent = ({ roll,socket }) => {
         return response_chat?.payload?.data?._id
     };
 
-    socket.on('received', (data) => {
+        socket.on('received', (data) => {
 
         
-        if (chatId === data?.chatId) {
-            setChat([...chat, data?.content])
-
-        } 
-        return dispatch(changeCount(Math.random() * 1 * 10))
-
-
-    })
-    socket.on('notification', (data) => {
-        console.log('notification event  in chat content', data)
-        
-
-
-
-    })
+            if (chatId === data?.chatId) {
+                setChat([...chat, data?.content])
+    
+            } 
+            return dispatch(changeCount(Math.random() * 1 * 10))
+    
+    
+        })
 
     let typingTimeout;
 
