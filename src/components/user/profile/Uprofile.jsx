@@ -18,6 +18,7 @@ const Uprofile = () => {
     const [showUploadButton, setShowUploadButton] = useState(false)
     const [uploadedDocuments, setUploadedDocuments] = useState({});
     const [documentsFromDb, setDocumentsFromDb] = useState([])
+    const [buttonLoading, setButtonLoading] = useState(false)
     const [documents, setDocuments] = useState({
         govId: null,
         aadhar: null,
@@ -95,6 +96,7 @@ const Uprofile = () => {
 
     const handleUpload = async () => {
 
+        setButtonLoading(true)
         const formdata = new FormData
         for (const key in documents) {
             if (documents[key] instanceof File) {
@@ -109,7 +111,13 @@ const Uprofile = () => {
             to: 'user'
         }
         let response = await dispatch(fetchData(apiDetails))
-       setDocumentsFromDb(response?.payload?.data?.documents)
+        if(response){
+            setDocumentsFromDb(response?.payload?.data?.documents)
+            setButtonLoading(false)
+            showUploadButton(false)
+
+        }
+        
     }
 
 
@@ -285,26 +293,26 @@ const Uprofile = () => {
                         <div className="h-full w-full  flex flex-col  " >
 
                             {documentsFromDb?.length > 0 ? (
-                                documentsFromDb.map((value,index) => (
+                                documentsFromDb.map((value, index) => (
 
                                     <span key={index}>
-                                      
-                                       
-                                     {Object.keys(value).map((key)=>(
-                                        // console.log('inside vallues key',value[key])
 
-                                        <div  >
 
-                                            <div className="flex gap-5 my-3 text-gray-400  "  >
+                                        {Object.keys(value).map((key) => (
+                                            // console.log('inside vallues key',value[key])
 
-                                            <a href={value[key]} target="_blank" className="border px-3 rounded-xl" rel="noopener noreferrer">View {key}</a>
-                                              
+                                            <div  >
+
+                                                <div className="flex gap-5 my-3 text-gray-400  "  >
+
+                                                    <a href={value[key]} target="_blank" className="border px-3 rounded-xl" rel="noopener noreferrer">View {key}</a>
+
+                                                </div>
+                                                <hr className="border-b border-gray-500 w-2/3" />
                                             </div>
-                                            <hr className="border-b border-gray-500 w-2/3" />
-                                        </div>
-                                        
-                                     ))}
-                                        
+
+                                        ))}
+
                                         {/* <hr className="border-b border-gray-500 w-2/3" /> */}
 
                                     </span>
@@ -343,8 +351,16 @@ const Uprofile = () => {
 
                             {showUploadButton ?
                                 <div className="flex justify-end" >
-                                    <button className="border p-1 px-3 rounded-2xl hover:bg-button " onClick={handleUpload}  >upload</button>
-                                </div> : ''
+                                    <button className="border p-1  px-5 rounded-2xl hover:bg-button " onClick={handleUpload}  > {buttonLoading?<l-ring-2
+                                        size="25"
+                                        stroke="5"
+                                        stroke-length="0.25"
+                                        bg-opacity="0.1"
+                                        speed="0.8"
+                                        color="white"
+                                    ></l-ring-2>:"upload"}</button>
+                                </div> 
+                                : '' 
 
                             }
 
