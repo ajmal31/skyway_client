@@ -109,7 +109,6 @@ const Uprofile = () => {
             to: 'user'
         }
         let response = await dispatch(fetchData(apiDetails))
-        console.log('response after uploding document',response)
        setDocumentsFromDb(response?.payload?.data?.documents)
     }
 

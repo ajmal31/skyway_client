@@ -136,7 +136,7 @@ const ChatContent = ({ roll,socket }) => {
             updatedAt: new Date()
         };
         let receiver = roll === "venture" ? "userUnReadMessages" : "ventureUnReadMessages"
-        setChat([...chat, payload])
+        // setChat([...chat, payload])
         payload = { ...payload, receiver }
 
         socket.emit('message', payload)

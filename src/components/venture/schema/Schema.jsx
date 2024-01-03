@@ -5,7 +5,8 @@ const basicSchema=yup.object().shape({
     
     firstName: yup.
     string('must be a string')
-    .required('First Name is required'),
+    .required('First Name is required')
+    .transform((value)=>value.trim()),
     lastName:yup
     .string('name must be string')
     .required('last name is required'),

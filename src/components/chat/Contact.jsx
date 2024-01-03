@@ -43,11 +43,14 @@ const Contact = ({ chats, roll, socket }) => {
             getAllChats()
            
         })
+        socket.on("received",(data)=>{
+            console.log("received event in side bar")
+        })
 
 
     async function getAllChats() {
 
-
+      console.log("called while sending message in sidebar contact")
 
         const apiDetails = {
             method: "post",
@@ -58,6 +61,7 @@ const Contact = ({ chats, roll, socket }) => {
         }
 
         const response = await dispatch(fetchData(apiDetails))
+        console.log("response of the all chats",response)
         setAllChats(response?.payload?.data?.response)
 
     }
@@ -72,10 +76,10 @@ const Contact = ({ chats, roll, socket }) => {
 
                 return (
 
-                    <div className=" flex gap-5 hover:bg-button cursor-pointer rounded-xl p-1 " key={index} onClick={e => oppositePersonData(val?.data[0]?.data)} >
+                    <div className="  flex gap-5 hover:bg-button cursor-pointer rounded-xl p-1 " key={index} onClick={e => oppositePersonData(val?.data[0]?.data)} >
 
                         <Dp h={"h-16"} w={"w-2/12"} />
-                        <div className=" w-full" >
+                        <div className="   w-10/12 " >
                             <div className="flex justify-between" >
 
                                 <p className=" font-semibold mt-2 " >{roll === "venture" ? val?.data[0]?.data?.username : val?.data[0]?.data?.ventureName}</p>
@@ -84,9 +88,9 @@ const Contact = ({ chats, roll, socket }) => {
                             </div>
 
 
-                            <div className="flex justify-between  pr-2">
+                            <div  className="flex justify-between  pr-2">
 
-                                <p className=" w-9/12  " >{val?.last_message[0]?.content ?? "Let's start a chat ?"}</p>
+                                <p className="  w-9/12 overflow-hidden whitespace-nowrap overflow-ellipsis " >{val?.last_message[0]?.content ?? "Let's start a chat ?"}</p>
 
 
                                 <p className=" w-3/12 flex justify-end ">
