@@ -101,7 +101,7 @@ function App() {
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/users" element={ventureId&&ventureToken ? <Users/>:<VentureLogin/>}/>
-         <Route path="/venture/userDetails" element={ventureId&&ventureToken ? <UserDetails/>:<VentureLogin/>}/>
+         <Route path="/venture/userDetails/:userId" element={ventureId&&ventureToken ? <UserDetails/>:<VentureLogin/>}/>
         
          
    

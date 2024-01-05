@@ -1,7 +1,48 @@
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
 import { MdDownloadForOffline } from "react-icons/md";
+import { useParams } from "react-router-dom"
+import { USER_SRV_BASE_URL } from "../../../data/const";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../../redux/api/api";
+import Cookies from "js-cookie";
+import diffrenceInDays from "date-fns/differenceInDays"
+import differenceInHours from "date-fns/differenceInHours"
+import differenceInMinutes from "date-fns/differenceInMinutes"
+
 const ShowingUserDetails = () => {
 
+    const { userId } = useParams()
+    const dispatch = useDispatch()
+    const [userData, setUserData] = useState(null)
+    let ventureId = Cookies.get("ventureId")
+    const [userStatus, setUserStatus] = useState('')
+
+    const getUserData = async () => {
+
+        const apiDetails = {
+            method: 'get',
+            url: USER_SRV_BASE_URL + `/get/one/user/${userId}`,
+            data: null,
+            token: true,
+            to: 'venture'
+        }
+        let response = await dispatch(fetchData(apiDetails))
+
+        response = response.payload.data.response
+        console.log('respose', response)
+        setUserData(response)
+
+    }
+
+    useEffect(() => {
+        getUserData()
+
+
+    }, [])
+
+
+    console.log('user status', userData)
     const div1 = {
         initial: { translateY: -100 },
         animate: { translateY: 0 },
@@ -29,40 +70,83 @@ const ShowingUserDetails = () => {
     const style = {
         className: "border w-4/12 flex flex-col rounded-2xl bg-admin-secondory shadow-xl hover:bg-gray-400 duration-500 items-center "
     }
-    const documentlabels = [
-        { title: "GovId", Link: "#" },
-        { title: "Adhar", Link: "#" },
-        { title: "Pancard", Link: "#" },
-        { title: "Passport", Link: "#" }
+    var documentlabels = []
+    if (userData !== null) {
+        documentlabels = [
+            { title: "GovId", Link: userData.documents[0]?.govId },
+            { title: "Adhar", Link: userData.documents[0]?.aadhar },
+            { title: "Pancard", Link: userData.documents[0]?.pancard },
+            { title: "Passport", Link: userData.documents[0]?.passport }
+        ]
+
+    }
+
+    const credentialLabels = [
+        { title: userData?.username, value: '#' },
+        { title: userData?.email, value: '#' },
+        { title: userData?.phone, value: '#' },
+        { title: userData?.region + " (region)", value: '#' },
+        { title: userData?.destination + " (dest)", value: '#' }
     ]
+
+    const handleStartService = async () => {
+
+        const api_details = {
+            method: "post",
+            url: USER_SRV_BASE_URL + "/venture/service/start",
+            data: { ventureId: ventureId, userId: userData?._id },
+            token: true,
+            to: 'venture'
+        }
+        const response = await dispatch(fetchData(api_details))
+
+    }
 
     return (
         <div className="flex gap-4 h-full w-full text-gray-400 font-Outfit " >
 
 
 
-            <div className="w-1/2 h-1/2  rounded-2xl bg-primary shadow-2xl hover:border-b-2 p-2 border-gray-500 ">
+            <div className="w-1/2 h-1/2  rounded-2xl bg-primary shadow-2xl hover:border-b-2  border-gray-500 ">
 
 
-                <div className="h-full w-full flex-col space-y-3 ">
+                <div className="h-full w-full flex-col  ">
 
 
-                    <div className=" w-full h-full flex  flex-col mt-2 items-center  " >
+                    <div className="  w-full h-full flex  flex-col justify-center  items-center  " >
 
-                        <p className="font-semibold" >AJMAL DOCUMENTS</p>
-                        <div className="border-l-2 border-gray-300 rounded-lg pt-5 pl-1 h-5/6 w-5/6 " >
-                            {documentlabels?.map((val, index) => (
-                                <div className="mt-2" >
-                                    <div className=" w-1/2 flex justify-between items-center" >
-                                        
-                                        <a href={val.Link} target="_blank" >{val.title}</a>
-                                        <MdDownloadForOffline className="cursor-pointer" />
+                        {/* <p className="font-semibold  " >AJMAL DOCUMENTS</p> */}
+                        <div className=" border-gray-300 flex rounded-lg  pl-1 h-5/6 w-5/6 " >
+                            <div className="w-1/2 h-full">
+                                {userData?.documents[0] ? documentlabels?.map((val, index) => (
+                                    <div className="mt-2 " >
+                                        <div className=" w-full flex justify-between  items-center" >
+
+                                            <a href={val.Link} target="_blank" className="cursor-pointer" >{val.title}</a>
+                                            {/* <MdDownloadForOffline className="cursor-pointer" /> */}
+                                        </div>
+
+                                        <hr className="w-full rounded-full " />
                                     </div>
 
-                                    <hr className="w-1/2 rounded-full " />
-                                </div>
+                                )) : <h1>Document not found</h1>}
+                            </div>
+                            <div className="border-l  w-1/2 h-full">
 
-                            ))}
+                                {credentialLabels?.map((val, index) => (
+                                    <div className="mt-2 " >
+                                        <div className=" w-full flex justify-between overflow-hidden pl-1 items-center" >
+
+                                            <a href={val.Link} target="_blank " >{val.title}</a>
+
+                                        </div>
+
+                                        <hr className="w-full rounded-full " />
+                                    </div>
+
+                                ))}
+
+                            </div>
 
 
                         </div>
@@ -99,16 +183,16 @@ const ShowingUserDetails = () => {
                             <div className="  flex flex-col justify-evenly w-full h-full">
 
                                 <div className="  w-full h-1/2 flex  items-center justify-center ">
-                                    <button className="" >pending</button>
+                                    {console.log("helo")}
+                                    <button className="" >{userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.status}</button>
                                 </div>
-                                <div className=" w-full h-1/2 flex  ">
+                                <div className=" w-full h-1/2 flex  justify-center gap-2 items-center ">
 
-                                    <div className="flex justify-center items-center w-1/2 " >
-                                        <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button " >Allow</button>
-                                    </div>
-                                    <div className=" flex justify-center items-center w-1/2 " >
-                                        <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button" >Reject</button>
-                                    </div>
+
+                                    {userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)].status !== "allowed" ? <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button " >Allow</button> : ''}
+
+                                    <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button" >Reject</button>
+
                                 </div>
 
 
@@ -117,12 +201,24 @@ const ShowingUserDetails = () => {
                         </div>
                         <div className=" border-l w-1/2 "  >
 
-                           <div className=" flex justify-center pt-2 h-1/5 " >
-                            <p className="text-2xl uppercase">service status</p>
-                           </div>
-                           <div className=" flex justify-center items-center h-2/5 pt-2" >
-                            <button className="border px-2 rounded-2xl" >start ajmal service</button>
-                           </div>
+                            <div className=" flex justify-center pt-2 h-1/5 " >
+                                <p className="text-2xl uppercase">service status</p>
+                            </div>
+                            <div className=" flex justify-center items-center h-2/5 pt-2" >
+                                {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_start_by ?
+                                    <p>{(() => {
+
+                                        let serviceStarted = new Date(userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_start_by)
+                                        console.log(serviceStarted)
+                                        let currentDate = new Date()
+                                        let difference = currentDate - serviceStarted
+                                        // Convert difference to days, hours, and minutes
+                                        let daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24));
+                                       return `Day ${daysDifference+1} only ${30-daysDifference-1} Days Left`
+
+                                    })()}</p> :
+                                    <button className="border px-2 rounded-2xl" onClick={handleStartService} >start {userData?.username} service</button>}
+                            </div>
 
                         </div>
 

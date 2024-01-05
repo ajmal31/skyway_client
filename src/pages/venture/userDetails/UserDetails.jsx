@@ -1,7 +1,9 @@
-import Sidebar from "../../../components/venture/sidebar/sidebar"
+import Sidebar from "../../../components/venture/sidebar/Sidebar"
 import ShowingUserDetails from "../../../components/venture/userDetails/userDetails"
+
 const UserDetails=()=>{
 
+    
     return(
         <div className="h-screen w-screen p-8 flex  gap-8 bg-primary"  >
 

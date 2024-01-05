@@ -77,11 +77,11 @@ const LoginContent = () => {
         const response = await dispatch(fetchData(obj))
         
 
-        const { authToken, message,username } = response.payload.data
+        const { authToken, message,username,userId } = response.payload.data
 
         if (!authToken) useme(message,'error')
         else {
-            
+            cookie.set("userId",userId)
             useme(message, 'success')
             dispatch(userLogin(response.payload.data))
             navigate('/')

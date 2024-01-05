@@ -143,7 +143,7 @@ const UsersTable = (prop) => {
                             <td className="p-3">{roll === 'venture' ? value?.email : value?.email}</td>
                             <td className="p-3">{roll === 'venture' ? value?.phone : value?.phone}</td>
                             {/* <td className="p-3">{ventures}</td> */}
-                            <td className="p-3 "><Link to={'/venture/userDetails'} ><button className="border p-1 rounded-xl px-2 hover:bg-button">show profile</button></Link></td>
+                            <td className="p-3 "><Link to={`/venture/userDetails/${value._id}`} ><button className="border p-1 rounded-xl px-2 hover:bg-button">show profile</button></Link></td>
 
 
                             {roll === "venture" ?
