@@ -15,7 +15,7 @@ const ListVentures = () => {
   return (
 
 
-    <div className="h-screen w-screen p-8 flex  gap-8 bg-primary"  >
+    <div className="h-screen w-screen p-5 flex  gap-8 bg-primary"  >
 
 
 

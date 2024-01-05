@@ -126,7 +126,7 @@ const UsersTable = (prop) => {
                         <th className="p-3 text-left">Email</th>
                         <th className="p-3 text-left">Phone number</th>
                         {/* <th className="p-3 text-left">status</th> */}
-                        <th className="p-3 text-left">Document Status</th>
+                        <th className="p-3 text-left">Profile</th>
                         {roll == "venture" ? (<th className="p-3 text-left">Actions</th>) : ''}
                     </tr>
 
@@ -143,7 +143,7 @@ const UsersTable = (prop) => {
                             <td className="p-3">{roll === 'venture' ? value?.email : value?.email}</td>
                             <td className="p-3">{roll === 'venture' ? value?.phone : value?.phone}</td>
                             {/* <td className="p-3">{ventures}</td> */}
-                            <td className="p-3 ">not found</td>
+                            <td className="p-3 "><Link to={'/venture/userDetails'} ><button className="border p-1 rounded-xl px-2 hover:bg-button">show profile</button></Link></td>
 
 
                             {roll === "venture" ?

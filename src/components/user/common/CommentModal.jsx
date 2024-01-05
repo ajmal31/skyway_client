@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import "../../../scroll.css"
 const CommentModal = ({ show, onClose, allComments }) => {
     if (!show) return null
 
@@ -11,11 +12,11 @@ const CommentModal = ({ show, onClose, allComments }) => {
                 <div className="h-full w-full overflow-y-auto">
 
                     {/* Container for the cards with fixed height */}
-                    <div className="grid grid-cols-5  overflow-y h-full w-full gap-4"  >
+                    <div className="grid grid-cols-5  h-full w-full gap-4"  >
 
                         {/* Map over the first 10 elements of the array and generate the card elements */}
-                        {allComments?.slice(0, 10).map((item, index) => (
-                            <motion.div initial={{ scale: 1 }} key={index} whileHover={{ scale: 1.1 }} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center pt-3 px-1  flex-col shadow-2xl shadow-black " onClick={e => e.stopPropagation()}>
+                        {allComments?.map((item, index) => (
+                            <motion.div initial={{ scale: 1 }} key={index} whileHover={{ scale: 1.1 }} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center pt-3 px-1  flex-col shadow-2xl shadow-black h-full" onClick={e => e.stopPropagation()}>
 
                                 <div className="w-full h-2/6  flex justify-center " >
                                     <div className=" w-1/2  h-full rounded-full overflow-hidden " >

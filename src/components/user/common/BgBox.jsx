@@ -14,7 +14,7 @@ const BgBox = ({ id }) => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [venutureData, setVentureData] = useState({})
+  const [ventureData, setVentureData] = useState({})
   //taking particular venture details
   const getOneVenture = async () => {
 
@@ -117,6 +117,7 @@ const BgBox = ({ id }) => {
 
     return () => clearInterval(interval);
   }, []);
+  console.log('vnture details ',ventureData)
   return (
 
     <div className=" bg-primary text-gray-300 h-full w-full mt-10 rounded-3xl " >
@@ -125,17 +126,17 @@ const BgBox = ({ id }) => {
        transition={{ duration: 0.25 }} // Adjust the duration if needed
     className="border p-2 hover:bg-button rounded-xl font-Outfit  " onClick={e => setVisible(true)} >Let's connect With us</motion.button>
       {/* PASS TO MODAL VENTURE ID */}
-      <Modal visible={visible} onClose={handleOnClose} connectUser={handleRequest} id={venutureData?._id} />
+      <Modal visible={visible} onClose={handleOnClose} connectUser={handleRequest} id={ventureData?._id} />
 
 
       <p className="text-4xl font-Outfit my-6">About us</p>
-      <About content={venutureData?.description} />
+      <About content={ventureData?.description} />
 
       <p className="text-4xl my-8 text-center font-Outfit">Our Main Destinations</p>
       <Card />
 
       <p className="text-4xl text-center my-8 font-Outfit">Our Trusts</p>
-      <Card certificates={true} />
+      <Card certificates={true} insurance={ventureData?.insurance_file_link} license={ventureData?.license_file_link} />
       <p className="text-4xl text-center my-8 font-Outfit">Customer Feedback About the Abc Company</p>
       <Graph />
       <p className="text-4xl text-center my-8 font-Outfit">Point Out Your Valuable Words About us</p>

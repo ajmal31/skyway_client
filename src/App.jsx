@@ -30,6 +30,8 @@ import VentureLogin from "./pages/venture/Login/VentureLogin"
 import VentureDashbord from "./pages/venture/dashbord/VentureDashbord"
 import ventureSlices from "./redux/slices/ventureSlices"
 import { ventureLogout } from "./redux/slices/ventureSlices"
+import Users from "./pages/venture/users/Users"
+import UserDetails from "./pages/venture/userDetails/UserDetails"
 
 
 //Admin Related imports
@@ -98,6 +100,8 @@ function App() {
          <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/users" element={ventureId&&ventureToken ? <Users/>:<VentureLogin/>}/>
+         <Route path="/venture/userDetails" element={ventureId&&ventureToken ? <UserDetails/>:<VentureLogin/>}/>
         
          
    
