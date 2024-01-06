@@ -11,14 +11,17 @@ import { motion } from "framer-motion"
 import { IoCloudUploadSharp } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 import { Link } from "react-router-dom"
+import ConnectedVentureTable from "./ConnectedVenturesTable"
 const Uprofile = () => {
 
-    const [userCred, setUserCred] = useState({})
+    const [userCred, setUserCred] = useState(null)
     const [edit, setEdit] = useState(false)
     const [showUploadButton, setShowUploadButton] = useState(false)
     const [uploadedDocuments, setUploadedDocuments] = useState({});
     const [documentsFromDb, setDocumentsFromDb] = useState([])
     const [buttonLoading, setButtonLoading] = useState(false)
+    const [connectedVentures, setConnectedVentures] = useState(null)
+    const [manipulatedData,setManipulatedData]=useState(null)
     const [documents, setDocuments] = useState({
         govId: null,
         aadhar: null,
@@ -111,13 +114,13 @@ const Uprofile = () => {
             to: 'user'
         }
         let response = await dispatch(fetchData(apiDetails))
-        if(response){
+        if (response) {
             setDocumentsFromDb(response?.payload?.data?.documents)
             setButtonLoading(false)
             showUploadButton(false)
 
         }
-        
+
     }
 
 
@@ -193,11 +196,28 @@ const Uprofile = () => {
         const response = await dispatch(fetchData(obj))
         setUserCred(response?.payload?.data?.response)
         setDocumentsFromDb(response?.payload?.data?.response?.documents)
+        console.log('user details', response.payload.data.response)
+
+    }
+    const getConnectedVentures = async () => {
+
+        const apiDetails = {
+            method: 'get',
+            url: USER_SRV_BASE_URL + '/get/all/connected/Ventures',
+            data: null,
+            token: true,
+            to: 'user'
+        }
+        const response = await dispatch(fetchData(apiDetails))
+        console.log('helo response', response)
+        setConnectedVentures(response?.payload?.data?.response)
+
 
     }
     useEffect(() => {
 
         getUserDetails()
+        getConnectedVentures()
 
     }, [])
 
@@ -232,21 +252,42 @@ const Uprofile = () => {
         input.value = ''; // Resetting the value to empty string
         input.value = null; // Resetting the value to null
     }
+
+    var result = []
+    if (userCred && connectedVentures) {
+        console.log('user', userCred)
+        console.log('venture', connectedVentures)
+        
+        for (const key of userCred.ventures) {
+
+            let m = connectedVentures.find(item => item.data._id === key.ventureId)
+            console.log('mmm', m?.data.ventureName)
+            if (m?.data) {
+
+                result.push({ ventureName: m?.data.ventureName, ventureId: key?.ventureId, user_status: key?.status, service_started_by: key?.service_start_by,service_complete_by:key?.service_complete_by })
+            }
+
+
+        }
+
+
+    }
+
     return (
 
-        <div className="bg-primary w-screen  h-screen">
+        <div className="bg-primary w-screen  ">
 
             <Navbar />
 
             <Modal visible={visible} onClose={handlVisible} phoneNumber={userCred?.phone} verifySuccess={verifySuccess} />
 
 
-            <div className=" w-full flex px-16 pt-10 flex-col text-gray-200 font-Outfit ">
+            <div className=" w-full flex px-16 pt-10 flex-col  text-gray-200 font-Outfit ">
 
 
-                <div className=" flex   " >
+                <div className=" flex mb-14  mt-14" >
 
-                    <motion.div {...commonMotion} className="w-1/2 m-2 bg-secondory flex rounded-2xl">
+                    <motion.div {...commonMotion} className="w-1/2 m-2  bg-secondory flex rounded-2xl">
 
 
                         <div className="  w-1/3 border-gray-500 border-r mr-3 flex justify-center  ">profile photo</div>
@@ -351,16 +392,16 @@ const Uprofile = () => {
 
                             {showUploadButton ?
                                 <div className="flex justify-end" >
-                                    <button className="border p-1  px-5 rounded-2xl hover:bg-button " onClick={handleUpload}  > {buttonLoading?<l-ring-2
+                                    <button className="border p-1  px-5 rounded-2xl hover:bg-button " onClick={handleUpload}  > {buttonLoading ? <l-ring-2
                                         size="25"
                                         stroke="5"
                                         stroke-length="0.25"
                                         bg-opacity="0.1"
                                         speed="0.8"
                                         color="white"
-                                    ></l-ring-2>:"upload"}</button>
-                                </div> 
-                                : '' 
+                                    ></l-ring-2> : "upload"}</button>
+                                </div>
+                                : ''
 
                             }
 
@@ -370,7 +411,10 @@ const Uprofile = () => {
 
 
                     </motion.div>
+
                 </div>
+                <ConnectedVentureTable data={result} />
+
             </div>
 
 

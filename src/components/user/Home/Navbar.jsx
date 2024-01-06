@@ -95,7 +95,7 @@ const Navbar = () => {
   );
 
   return (
-    <header className="w-full bg-primary text-gray-100 font-Outfit px-10 shadow-sm">
+    <header className="w-full bg-primary text-gray-100 font-Outfit px-10 shadow-sm fixed ">
       <div className="container mx-auto flex justify-between items-center py-7 px-5">
         <Link to="/" className="flex flex-shrink-0 title-font font-medium items-center text-gray-900 md:mb-0">
           {/* <svg xmlns="https://imgs.search.brave.com/3hjKUAltmBDIqxstJSPE0_CeM3jJTUUtt1nFHSyucOY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzU5LzYzLzQ4/LzM2MF9GXzE1OTYz/NDg0MF9GYTJIUGI4/SVRyYnI1Z2RkWTJl/S2xvbVZmc251MWd4/Ni5qcGc" className="w-10 h-10 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -97,7 +97,7 @@ function App() {
          {/* venture Routes */}
          <Route path="/venture/register" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureRegister/>}/>
          <Route path="/venture/login" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
-         <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed"?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
+         <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed" && ventureToken&&ventureId?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/users" element={ventureId&&ventureToken ? <Users/>:<VentureLogin/>}/>

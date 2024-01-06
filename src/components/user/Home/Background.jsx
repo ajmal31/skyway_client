@@ -41,12 +41,12 @@ const Background = () => {
       <Navbar />
 
 
-      <div className="flex flex-col justify-center items-center px-16 mb-0 bg-primary">
+      <div className="flex flex-col justify-center items-center px-16 mb-0  bg-primary">
 
 
         <div className=" w-full   ">
           {/* home page first screeen  */}
-          <div className="h-screen"  >
+          <div className="h-screen  mt-14 "  >
             <div className="flex flex-row  h-5/6 font-Outfit " >
 
               {/* first half */}

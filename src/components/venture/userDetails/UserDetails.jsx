@@ -89,18 +89,22 @@ const ShowingUserDetails = () => {
         { title: userData?.destination + " (dest)", value: '#' }
     ]
 
-    const handleStartService = async () => {
-
+    const handleStartService = async (action) => {
+            console.log('call reached')
         const api_details = {
             method: "post",
-            url: USER_SRV_BASE_URL + "/venture/service/start",
+            url: USER_SRV_BASE_URL + `/venture/service/${action}`,
             data: { ventureId: ventureId, userId: userData?._id },
             token: true,
             to: 'venture'
         }
         const response = await dispatch(fetchData(api_details))
+        console.log('respone after click',response.payload)
+        setUserData(response.payload.data)
 
     }
+
+   
 
     return (
         <div className="flex gap-4 h-full w-full text-gray-400 font-Outfit " >
@@ -199,28 +203,34 @@ const ShowingUserDetails = () => {
                             </div>
 
                         </div>
-                        <div className=" border-l w-1/2 "  >
+                        <div className=" border-l w-1/2 flex flex-col  items-center "  >
 
                             <div className=" flex justify-center pt-2 h-1/5 " >
                                 <p className="text-2xl uppercase">service status</p>
                             </div>
-                            <div className=" flex justify-center items-center h-2/5 pt-2" >
+                            <div className=" flex justify-center  items-center h-2/5 pt-2" >
+                                {}
                                 {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_start_by ?
                                     <p>{(() => {
 
                                         let serviceStarted = new Date(userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_start_by)
-                                        console.log(serviceStarted)
+                                        console.log("date",serviceStarted)
                                         let currentDate = new Date()
                                         let difference = currentDate - serviceStarted
                                         // Convert difference to days, hours, and minutes
                                         let daysDifference = Math.floor(difference / (1000 * 60 * 60 * 24));
+                                        console.log("diffrennce",difference)
                                        return `Day ${daysDifference+1} only ${30-daysDifference-1} Days Left`
 
                                     })()}</p> :
-                                    <button className="border px-2 rounded-2xl" onClick={handleStartService} >start {userData?.username} service</button>}
+                                    <button className="border px-2 rounded-2xl" onClick={e=>handleStartService("start")} >start {userData?.username} service</button>}
+
+                                  
                             </div>
+                            {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_complete_by? <p>Waiting in the payment</p> :  <button className=" border px-2 py-1 rounded-xl hover:bg-button transition duration-300 "  onClick={e=>handleStartService("completed")} >completed</button>  }                        
 
                         </div>
+                        
 
                     </div>
 
