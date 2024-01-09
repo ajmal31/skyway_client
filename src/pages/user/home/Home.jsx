@@ -17,10 +17,9 @@ const Home=()=>{
 
         <div>
 
-            {/* <YourComponent/> */}
+
             <Background/>
-            {/* <h1>iam home </h1>
-            <button onClick={handleClick}  type="submit">logout</button> */}
+           
         </div>
     )
 }

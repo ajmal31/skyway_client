@@ -23,6 +23,7 @@ const CommentModal = ({ show, onClose, allComments }) => {
                                         <img src="user-avatar.jpg" className="w-full  h-auto object-cover" alt="user-profile" />
                                     </div>
                                 </div>
+                                <p className="text-center">{item?.userId?.username}</p>
                                 <div className="w-full h-4/6 p-2" >
 
                                     <div className=" w-full h-full flex overflow-hidden  text-gray-300 " >

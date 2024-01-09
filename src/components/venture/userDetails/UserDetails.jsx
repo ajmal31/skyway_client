@@ -42,7 +42,6 @@ const ShowingUserDetails = () => {
     }, [])
 
 
-    console.log('user status', userData)
     const div1 = {
         initial: { translateY: -100 },
         animate: { translateY: 0 },
@@ -72,6 +71,7 @@ const ShowingUserDetails = () => {
     }
     var documentlabels = []
     if (userData !== null) {
+        console.log('user data after checking wether null or not',userData)
         documentlabels = [
             { title: "GovId", Link: userData.documents[0]?.govId },
             { title: "Adhar", Link: userData.documents[0]?.aadhar },
@@ -90,7 +90,7 @@ const ShowingUserDetails = () => {
     ]
 
     const handleStartService = async (action) => {
-            console.log('call reached')
+          
         const api_details = {
             method: "post",
             url: USER_SRV_BASE_URL + `/venture/service/${action}`,
@@ -99,11 +99,25 @@ const ShowingUserDetails = () => {
             to: 'venture'
         }
         const response = await dispatch(fetchData(api_details))
-        console.log('respone after click',response.payload)
+        console.log('response ',response)
         setUserData(response.payload.data)
 
     }
 
+    const handleStatus=async(status)=>{
+
+        const apiDetails = {
+            method: 'post',
+            url: USER_SRV_BASE_URL + '/changeUserStatus',
+            data: { userId: userId, status: status },
+            token: true,
+            to: 'venture'
+        }
+        const response=await dispatch(fetchData(apiDetails))
+        console.log('after clicking reject',response)
+        setUserData(response?.payload?.data)
+
+    }
    
 
     return (
@@ -193,9 +207,9 @@ const ShowingUserDetails = () => {
                                 <div className=" w-full h-1/2 flex  justify-center gap-2 items-center ">
 
 
-                                    {userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)].status !== "allowed" ? <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button " >Allow</button> : ''}
+                                    {userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)].status !== "allowed" ? <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button  " onClick={()=>handleStatus("allowed")} >Allow</button> : ''}
 
-                                    <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button" >Reject</button>
+                                    <button className="border rounded-2xl h-2/5 flex justify-center items-center py-3 px-3 hover:bg-button" onClick={()=>handleStatus('rejected')} >Reject</button>
 
                                 </div>
 
@@ -227,7 +241,7 @@ const ShowingUserDetails = () => {
 
                                   
                             </div>
-                            {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_complete_by? <p>Waiting in the payment</p> :  <button className=" border px-2 py-1 rounded-xl hover:bg-button transition duration-300 "  onClick={e=>handleStartService("completed")} >completed</button>  }                        
+                            {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_complete_by? <p>Waiting for payment</p> :  <button className=" border px-2 py-1 rounded-xl hover:bg-button transition duration-300 "  onClick={e=>handleStartService("completed")} >completed</button>  }                        
 
                         </div>
                         

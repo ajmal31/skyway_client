@@ -12,6 +12,7 @@ import { IoCloudUploadSharp } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
 import { Link } from "react-router-dom"
 import ConnectedVentureTable from "./ConnectedVenturesTable"
+
 const Uprofile = () => {
 
     const [userCred, setUserCred] = useState(null)

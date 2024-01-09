@@ -7,13 +7,14 @@ import { useDispatch } from "react-redux";
 import { USER_SRV_BASE_URL } from "../../../data/const";
 import { fetchData } from "../../../redux/api/api";
 import CommentModal from "../common/CommentModal";
+import Feedback from "../common/Feedback";
 
 const Background = () => {
 
   const dispatch = useDispatch()
   const [allComments, setAllComments] = useState([])
-  const [show,setShow]=useState(false)
-  let handleShow=()=>setShow(false)
+  const [show, setShow] = useState(false)
+  let handleShow = () => setShow(false)
 
   const getAllComments = async () => {
 
@@ -25,7 +26,7 @@ const Background = () => {
       to: 'user'
     }
     const response = await dispatch(fetchData(apiDetails))
-    console.log('all comments',response)
+    console.log('all comments', response)
     setAllComments(response?.payload?.data)
 
   }
@@ -34,7 +35,9 @@ const Background = () => {
     getAllComments()
   }, [])
 
-  console.log('state',allComments)
+  const comment_url=USER_SRV_BASE_URL+`create/comment`
+
+  const commentUpdated=()=>getAllComments()
 
   return (
     <div className="bg-primary">
@@ -94,8 +97,8 @@ const Background = () => {
             <h1 className="text-gray-300 text-center font-Outfit text-5xl font-bold " >Top ventures</h1>
           </div>
 
-          
-           <Card />
+
+          <Card />
 
           {/* Home page second screeen */}
           <div className="h-screen mt-24   " >
@@ -144,7 +147,7 @@ const Background = () => {
             </div>
           </div>
 
-         
+
 
           {/* Home page Third screen */}
           <div className="" >
@@ -163,47 +166,52 @@ const Background = () => {
 
               </div  >
 
-            
 
-              <div className="flex h-screen flex-col items-center text-white m-10  ">
-               <CommentModal show={show} onClose={handleShow} allComments={allComments} />
-                <div className=" flex flex-row w-5/6 h-3/6 border-red-500 text-white font-Outfit" >
-                 
-                  {allComments?.slice(0,4).map((val) => (
-                    
-                    <motion.div initial={{ scale: 1 }} key={val._id} whileHover={{ scale: 1.1 }} className="flex-1  m-3 rounded-xl bg-secondory flex justify-center pt-3 px-1  flex-col shadow-2xl shadow-black ">
-                     {console.log('helo')}
-                      <div className="w-full h-2/6  flex justify-center border-red-500" >
-                        <div className=" border-yellow-500 w-1/2  h-full rounded-full overflow-hidden " >
+
+              <div className="flex  flex-col items-center text-gray-300 m-14  ">
+                <CommentModal show={show} onClose={handleShow} allComments={allComments} />
+                <div className=" flex flex-row w-5/6 h-3/6  text-white font-Outfit" >
+
+                  {allComments?.slice(0, 4).map((val) => (
+
+                    <motion.div initial={{ scale: 1 }} key={val._id} whileHover={{ scale: 1.1 }} className="flex-1  m-3 py-14  rounded-xl bg-secondory flex justify-center pt-3 px-1 h-full flex-col shadow-2xl shadow-black ">
+
+                      <div className="w-full h-2/6  flex justify-center " >
+
+                        <div className=" w-1/2  h-full rounded-full overflow-hidden " >
                           <img src="user-avatar.jpg" className="w-full  h-auto object-cover" alt="user-profile" />
                         </div>
+
                       </div>
-                      <div className="w-full h-4/6 p-2" >
+                      {/* <div className="border">helo</div> */}
+                      <p className="text-center">{val?.userId?.username}</p>
+                      <div className="w-full h-4/6 pt-2 px-2" >
 
-                        <div className=" w-full h-full flex overflow-hidden  text-gray-300 " >
+                        <div className=" w-full h-full  flex overflow-hidden  text-gray-300 " >
 
-                          <p>{val.content}</p>
+                          <p className=" h-[90px]  text-overflow-ellipsis w-[200px] " >{val.content}</p>
                         </div>
                       </div>
 
-                    </motion.div>
+                    </motion.div> 
 
-                   ))} 
-                  
-                </div>
-                <div className="w-5/6 h-1/6  flex  " >
-                 <div className="w-6/12" ></div>
-                 <div className="w-6/12 flex justify-end items-start " >
+                  ))}
 
-                 {allComments?.length >4 ?<button className="border p-2 px-7 rounded-full mr-4 hover:bg-button" onClick={e=>setShow(true)} >More</button>:''}
-                 </div>
-                   
                 </div>
-                
+                <div className="w-5/6 h-1/12  flex   " >
+                  <div className="w-6/12" ></div>
+                  <div className="w-6/12 flex justify-end items-start " >
+
+                    {allComments?.length > 4 ? <button className="border p-2 px-7 rounded-full mr-4 hover:bg-button" onClick={e => setShow(true)} >More</button> : ''}
+                  </div>
+
+                </div>
+               
+
               </div>
-              
+              <Feedback comment_url={comment_url} commentUpdated={commentUpdated} />
             </div>
-                
+
           </div>
         </div>
 

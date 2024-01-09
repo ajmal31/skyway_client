@@ -42,7 +42,6 @@ const VRegister = () => {
 
         onSubmit: async (values) => {
             const error = 'error'
-          console.log('helo')
             const { password_one, confirm_password_one, password_two, confirm_password_two } = values
             if (password_one !== confirm_password_one) return useme('password one and confirm password is not matching', error)
             if (password_two !== confirm_password_two) return useme('password two and confirm password is not matching', error)
@@ -57,7 +56,6 @@ const VRegister = () => {
             const response = await disapatch(fetchData(obj))
             const { success } = response?.payload?.data
             if (success) {
-                console.log('ventuer register success')
                 useme(success, "success")
                 return navigate('/venture/login')
 

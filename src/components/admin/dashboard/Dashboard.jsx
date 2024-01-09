@@ -1,6 +1,18 @@
 import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
 import { HiMiniUsers } from "react-icons/hi2";
+import { USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../../data/const";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../../redux/api/api";
 const Dashboard = () => {
+
+    const [totalUsers,setTotalUsers]=useState()
+    const [totalVentures,setTotalVentures]=useState()
+    const [rejectedVenturesCount,setRejectedVenturesCount]=useState()
+    const [pendingVenturesCount,setPendingVenturesCount]=useState()
+    const [allowedVenturesCount,setAllowedVenturesCount]=useState()
+
+    const dispatch=useDispatch()
 
     const Hover = {
         initial: { scale: 1 },
@@ -28,9 +40,56 @@ const Dashboard = () => {
 
     }
 
+   
+    const fetchDataFromServer = async (baseURL, endpoint, method, data) => {
+        const apiDetails = {
+            method: method,
+            url: baseURL + endpoint,
+            data: data,
+            token: true,
+            to: 'admin'
+        };
+        const response = await dispatch(fetchData(apiDetails));
+        return response?.payload?.data;
+    }
+    const getUsersTotal = async () => {
+        const totalUsers = await fetchDataFromServer(USER_SRV_BASE_URL, 'users/count', 'get', null);
+        setTotalUsers(totalUsers);
+    }
+    const getVenturesTotal = async () => {
+        const totalVentures = await fetchDataFromServer(VENTURE_SRV_BASE_URL, 'ventures/count', 'get', null);
+        setTotalVentures(totalVentures);
+    }
+    const countVenturesByStatus = async (status) => {
+        const totalVentures = await fetchDataFromServer(VENTURE_SRV_BASE_URL, '/venture/count/by/status', 'post', { status });
+       return totalVentures
+    }
+    const rejectedVentures = async () => {
+        let response=await countVenturesByStatus("rejected");
+        console.log('response rejected',response)
+        setRejectedVenturesCount(response)
+    }
+    const pendingVentures = async () => {
+        let response=await countVenturesByStatus("pending");
+        console.log('response pending',response)
+        setPendingVenturesCount(response)
+    }
+    const allowedVentures = async () => {
+       let response= await countVenturesByStatus("allowed");  // Assuming you have a status called "allowed"
+       console.log('response allowed',response)
+       setAllowedVenturesCount(response)
+    }
 
+   
+    useEffect(()=>{
+       getUsersTotal()
+       getVenturesTotal()
+       rejectedVentures()
+       pendingVentures()
+       allowedVentures()
+       
 
-
+    },[])
     return (
         <div className="bg-admin-secondory shadow-2xl p-10   font-Outfit w-10/12 rounded-2xl" >
 
@@ -51,36 +110,40 @@ const Dashboard = () => {
                                 <HiMiniUsers className="text-6xl text-gray-600 " />
                             </div>
                             <div className="w-2/3 flex justify-center items-center text-1xl font-bold  h-1/2" >
-                                <p className="text-gray-700" >7687 M</p>
+                                <p className="text-gray-700" >{totalUsers}</p>
                             </div>
                         </div>
                         {/* <p className="font-bold text-gray-600 uppercase text-1xl duration-300 hover:border-b hover:border-gray-600 hover:pb-1">Total Users</p> */}
 
                     </motion.div>
-                    <motion.div {...ventureDiv} className=" bg-admin-primary cursor-pointer rounded-3xl shadow-lg w-5/12 hover:bg-gray-200 duration-500 flex flex-col hover:border-b-4 items-center p-4 font-Outfit font-semibold justify-between border-blue-600 ">
+                    <motion.div {...ventureDiv} className=" bg-admin-primary cursor-pointer rounded-3xl shadow-lg w-6/12 hover:bg-gray-200 duration-500 flex flex-col hover:border-b-4 items-center p-4 font-Outfit font-semibold justify-between border-blue-600 ">
                         <div className="w-full h-1/3 " >
                             <p className="text-1xl ml-5 text-gray-700 ">VENTURES</p>
                         </div>
-                        <div className="w-full h-1/3  flex  items-end " >
+                        <div className="w-full h-1/3 gap-2 flex  pl-1  items-end " >
 
                             <p className="w-4/12 flex justify-center text-gray-400 " >TOTAL</p>
                             <p className="w-4/12 flex justify-center text-gray-400 " >PENDING</p>
                             <p className="w-4/12 flex justify-center text-gray-400 " >REJECTED</p>
+                            <p className="w-4/12 flex justify-center text-gray-400 " >ALLOWED</p>
                             
                         </div>
-                        <div className="flex w-full h-2/3 mt-3 ">
-                            <div className="border-r-2 border-gray-400 flex justify-center items-center w-4/12 h-1/2  "  >
-                                <p className="text-1xl" >1300</p>
+                        <div className="flex  w-full h-2/3 mt-3 ">
+                            <div className="border-r-2 border-gray-400 flex justify-center items-center w-3/12 h-1/2  "  >
+                                <p className="text-1xl" >{totalVentures}</p>
                             </div>
-                            <div className="border-r-2 flex justify-center items-center border-gray-400 w-4/12 h-1/2 " >
-                            <p className="text-1xl" >200</p>
+                            <div className="border-r-2 flex justify-center items-center border-gray-400 w-3/12 h-1/2 " >
+                            <p className="text-1xl" >{pendingVenturesCount}</p>
                             </div>
-                            <div className=" justify-center flex items-center w-4/12 h-1/2 " >
-                            <p className="text-1xl" >100</p>
+                            <div className="border-r-2  border-gray-400 justify-center flex items-center w-3/12 h-1/2 " >
+                            <p className="text-1xl" >{rejectedVenturesCount}</p>
+                            </div>
+                            <div className=" justify-center flex items-center w-3/12 h-1/2 " >
+                            <p className="text-1xl" >{allowedVenturesCount}</p>
                             </div>
                         </div>
                     </motion.div>
-                    <motion.div  {...paymentDiv} className=" bg-admin-primary cursor-pointer hover:scroll-m-1.5  shadow-lg rounded-3xl w-5/12 hover:bg-gray-200 duration-500 hover:border-b-4 border-blue-600 font-semibold justify-between font-Outfit flex items-center flex-col p-4 ">
+                    <motion.div  {...paymentDiv} className=" bg-admin-primary cursor-pointer hover:scroll-m-1.5  shadow-lg rounded-3xl w-4/12 hover:bg-gray-200 duration-500 hover:border-b-4 border-blue-600 font-semibold justify-between font-Outfit flex items-center flex-col p-4 ">
 
                     <div className="w-full h-1/3 " >
                             <p className="text-1xl ml-5 text-gray-700 ">PAYMENTS</p>

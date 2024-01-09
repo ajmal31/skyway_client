@@ -84,7 +84,7 @@ function App() {
   
   <Routes>
        {/* User Routes */}
-        <Route  path="/userLogin" element={userToken&&userId? <h1>sorry you are logged in</h1>: <UserLogin/>} />
+        <Route  path="/userLogin" element={userToken&&userId?<Navigate to={'/'} /> : <UserLogin/>} />
         <Route path="/userRegister" element={<UserRegister/>}/>
         <Route path='/' element={(<Home/>)}/>
         <Route path='/userProfile' element={userToken&&userId?<Profile/>:<Navigate to={'/userLogin'} />}/>

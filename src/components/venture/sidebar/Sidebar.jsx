@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { TbUsers } from "react-icons/tb";
 import { useState } from "react";
@@ -9,9 +9,13 @@ import { RiLogoutCircleRFill } from "react-icons/ri";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { IoMdChatbubbles } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
+import { ventureLogout } from "../../../redux/slices/ventureSlices";
+import { useDispatch } from "react-redux";
 const Sidebar = () => {
 
   const [open, setOpen] = useState(true)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const sidebarItems = [
     { title: "Profile", path: "/venture/profile", icon: <CgProfile /> },
     { title: "Dashboard", path: "/venture/dashboard", icon: <MdSpaceDashboard /> },
@@ -23,7 +27,15 @@ const Sidebar = () => {
     { title: "Logout", path: "/admin/Logout", icon: <RiLogoutCircleRFill /> },
 
   ]
+  const handleClik=(path)=>{
+   
+    if(path==="/admin/Logout"){
+       dispatch(ventureLogout())
+    }else navigate(path)
 
+  }
+
+  
   return (
 
     <div className={`${open ? " w-full" : "w-20"} bg-secondory not-sm:w-20 shadow-2xl h-full rounded-2xl pt-8 duration-500 text-gray-300  p-5 relative font-Outfit `} >
@@ -49,16 +61,16 @@ const Sidebar = () => {
 
         {sidebarItems?.map((val, index) =>
 
-          <Link to={val.path} >
+          // <Link to={val.path} >
 
-            <li className="hover:bg-button p-3 rounded-2xl flex duration-100 " key={index} >
+            <li className="hover:bg-button p-3 rounded-2xl flex duration-100 "  onClick={()=>handleClik(val.path)} key={index} >
 
               <span className="mt-1 mr-2" >{val?.icon}</span>
               {open && <span className="md:flex hidden  " >{val.title}</span>}
 
             </li>
 
-          </Link>
+          // </Link>
         )}
 
       </ul>
