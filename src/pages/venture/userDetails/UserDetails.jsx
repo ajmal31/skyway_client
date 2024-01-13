@@ -1,4 +1,4 @@
-import Sidebar from "../../../components/venture/sidebar/Sidebar"
+import Sidebar from "../../../components/venture/sidebar/sidebar"
 import ShowingUserDetails from "../../../components/venture/userDetails/userDetails"
 
 const UserDetails=()=>{

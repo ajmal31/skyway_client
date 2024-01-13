@@ -4,7 +4,7 @@ return(
    
     <div className="p-14">
 
-        <div className="bg-green-400 h-screen w-full"></div>
+        <div className=" h-screen w-full"></div>
 
     </div>
 )

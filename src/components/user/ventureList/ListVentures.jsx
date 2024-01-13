@@ -1,15 +1,9 @@
 import Sidebar from "../common/Sidebar"
 import Table from "../common/Table"
-import { VENTURE_SRV_BASE_URL } from "../../../data/const"
-const ListVentures = () => {
 
-  const obj={
-    method:'post',
-    url:VENTURE_SRV_BASE_URL+'getAllVentures',
-    data:{type:'allowed'},
-    token:false,
-    
-}
+const ListVentures = ({obj,boolean}) => {
+
+console.log("is it true",boolean)
 
 
   return (
@@ -27,7 +21,7 @@ const ListVentures = () => {
       <div className="h-full w-10/12 rounded-2xl flex justify-center  shadow-2xl shadow-black p-8   bg-secondory">
 
 
-        <Table api={obj} />
+        <Table api={obj} boolean={boolean}  />
 
       </div>
     </div>

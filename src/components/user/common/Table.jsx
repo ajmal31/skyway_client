@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import UserSlice from "../../../redux/slices/UserSlice"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
-const Table = ({ api }) => {
+const Table = ({ api,boolean }) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
@@ -29,7 +29,10 @@ const Table = ({ api }) => {
 
         }
         const response = await dispatch(fetchData(obj))
-        setVentureList([...response?.payload?.data?.response].reverse())
+        console.log("ventures from venture service",response)
+        if(!boolean)setVentureList([...response?.payload?.data?.response].reverse())
+        else setVentureList([...response?.payload?.data].reverse())
+        
 
 
 

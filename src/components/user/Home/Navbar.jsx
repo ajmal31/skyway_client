@@ -67,7 +67,6 @@ const Navbar = () => {
 
     }
     const response = await dispatch(fetchData(apiDetails))
-    console.log('count of unread chats in navabr', response)
     setUnReadChats(response?.payload?.data)
   }
   
@@ -101,7 +100,7 @@ const Navbar = () => {
           {/* <svg xmlns="https://imgs.search.brave.com/3hjKUAltmBDIqxstJSPE0_CeM3jJTUUtt1nFHSyucOY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAxLzU5LzYzLzQ4/LzM2MF9GXzE1OTYz/NDg0MF9GYTJIUGI4/SVRyYnI1Z2RkWTJl/S2xvbVZmc251MWd4/Ni5qcGc" className="w-10 h-10 text-white p-2 bg-gradient-to-br from-pink-500 to-yellow-500 rounded-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg> */}
-          <img src="../../../assets/Application-logo/skyway-logo-final.png" alt="logo" />
+          <img src="/logos/skyway-logo-2.png" className='h-[50px] w-[70px]' alt="logo" />
           <span className="ml-3 text-2xl text-gray-100 font-medium antialiased">Skyway</span>
         </Link>
         <nav className="hidden md:ml-auto md:flex   flex-wrap items-center justify-center text-base tracking-wide">

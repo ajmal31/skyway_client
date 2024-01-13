@@ -87,7 +87,7 @@ const VloginContent = () => {
 
                         }}
 
-                        src="" alt="cover image" />
+                        src="/login-cover-image.png" alt="cover image" />
                 </div>
 
             </div>

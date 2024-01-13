@@ -4,18 +4,39 @@ import Navbar from "./Navbar";
 import { easeInOut, motion } from 'framer-motion'
 import Card from "../common/Card";
 import { useDispatch } from "react-redux";
-import { USER_SRV_BASE_URL } from "../../../data/const";
+import { USER_SRV_BASE_URL, VENTURE_SRV_BASE_URL } from "../../../data/const";
 import { fetchData } from "../../../redux/api/api";
 import CommentModal from "../common/CommentModal";
 import Feedback from "../common/Feedback";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Background = () => {
+
+
+
+  const [showCountries, setShowCountries] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [arr, setArr] = useState([])
+  const navigate=useNavigate()
+
+  const handleInputChange = () => {
+    setShowCountries(true);
+  };
+  const handleCountrySelect = (country) => {
+    setSelectedCountry(country);
+    console.log("selected country", country)
+    setShowCountries(false);
+    navigate(`ventureList/${country}`)
+
+
+  };
 
   const dispatch = useDispatch()
   const [allComments, setAllComments] = useState([])
   const [show, setShow] = useState(false)
   let handleShow = () => setShow(false)
 
+  //taking all comments
   const getAllComments = async () => {
 
     const apiDetails = {
@@ -30,15 +51,42 @@ const Background = () => {
     setAllComments(response?.payload?.data)
 
   }
+  const getAllContries = async () => {
+
+    try {
+
+      const apiDetails = {
+        method: "get",
+        url: VENTURE_SRV_BASE_URL + "get/all/contries",
+        data: null,
+        token: false,
+        to: 'user'
+
+      }
+      const response = await dispatch(fetchData(apiDetails))
+      console.log("all contries",response)
+      let countries=response?.payload?.data?.response?.countries
+      setArr(countries)
+    } catch (error) {
+      console.log('error occured while taking contries', error)
+    }
+
+
+  }
   useEffect(() => {
 
     getAllComments()
+    getAllContries()
   }, [])
 
-  const comment_url=USER_SRV_BASE_URL+`create/comment`
 
-  const commentUpdated=()=>getAllComments()
 
+
+  const comment_url = USER_SRV_BASE_URL + `create/comment`
+
+  const commentUpdated = () => getAllComments()
+
+  console.log("all contries state", arr)
   return (
     <div className="bg-primary">
       <Navbar />
@@ -57,14 +105,38 @@ const Background = () => {
 
                 {/* Text section */}
 
-                <div className=" h-full flex items-center  pb-14   ">
-                  <div className="flex flex-col">
+                <div className=" h-full flex items-center  text-gray-300 pb-14   ">
+                  <div className="flex flex-col  ">
                     <div className="text-gray-300 font-bold leading-tight font-Outfit tracking-wider text-4xl">
                       Discover <br /> Opportunities to Transform  Your <br /> Career and Achieve <br /> Success
                     </div>
                     <p className="text-gray-300 font-Outfit  text-base mt-3">Empowering dreams and connecting individuals <br />with trusted visa ✈</p>                    <div className="mt-3">
-                      <button className="text-gray-300 font-Outfit border-transparent shadow-2xl shadow-purple-950 hover:bg-transparent hover:border-white hover:border-y mr-5 rounded-3xl bg-sec-button px-6 pr-16 py-2.5">More&nbsp;</button>
-                      <button className="text-gray-300 font-Outfit shadow-2xl shadow-purple-950 hover:border-transparent hover:bg-sec-button rounded-3xl border px-6 pr-14 py-2.5">About us</button>
+                      {/* <button className="text-gray-300 font-Outfit border-transparent shadow-2xl shadow-purple-950 hover:bg-transparent hover:border-white hover:border-y mr-5 rounded-3xl bg-sec-button px-6 pr-16 py-2.5">More&nbsp;</button>
+                      <button className="text-gray-300 font-Outfit shadow-2xl shadow-purple-950 hover:border-transparent hover:bg-sec-button rounded-3xl border px-6 pr-14 py-2.5">About us</button> */}
+                      {/* <input type="text" className="p-2 w-1/2 rounded-3xl bg-transparent border hover:bg-button text-gray-300" placeholder="&#128270; choose you're destination" /> */}
+                      <input
+                        type="text"
+                        className="p-2 w-1/2 rounded-3xl bg-transparent border hover:bg-button text-gray-300"
+                        placeholder="&#128270; Choose your destination  "
+                        onClick={handleInputChange}
+                        value={selectedCountry}
+                      />
+                      {showCountries && (
+                        <div className=" rounded-xl mt-3 p-2 bg-secondory h-[250px] overflow-y-auto ">
+                          {arr.map((country, index) => (
+
+                            <div
+
+                              key={index}
+                              onClick={() => handleCountrySelect(country)}
+                              className="cursor-pointer hover:bg-gray-500 p-1 rounded-lg"
+                            >
+
+                              {country}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -193,7 +265,7 @@ const Background = () => {
                         </div>
                       </div>
 
-                    </motion.div> 
+                    </motion.div>
 
                   ))}
 
@@ -206,7 +278,7 @@ const Background = () => {
                   </div>
 
                 </div>
-               
+
 
               </div>
               <Feedback comment_url={comment_url} commentUpdated={commentUpdated} />

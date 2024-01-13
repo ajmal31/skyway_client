@@ -25,6 +25,7 @@ const VRegister = () => {
             venture_category: "",
             description: "",
             expertise_contries: "",
+            industry_experience:"",
             min_max_service_amount: "",
             official_portfolio: "",
             website_link: "",
@@ -217,7 +218,7 @@ const VRegister = () => {
                                 )}
                             </div>
 
-                            <div className=" m-1 flex flex-col h-3/6 w-2/2">Expertise Country
+                            {/* <div className=" m-1 flex flex-col h-3/6 w-2/2">Expertise Country
                                 <input
                                     type="text"
 
@@ -231,6 +232,42 @@ const VRegister = () => {
                                 {touched.expertise_contries && errors.expertise_contries && (
                                     <div className="text-red-400">{errors.expertise_contries}</div>
                                 )}
+                            </div> */}
+                            <div className=" m-1 flex h-3/6  w-full">
+
+                                <div className="flex flex-col w-2/3 m-1 ">
+                                    <p> Expertise Country</p>
+                                    <input
+                                        type="text"
+                                        placeholder="eg:- india , germany"
+                                        name="expertise_contries"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+
+                                        value={values?.expertise_contries}
+
+                                        className="p-1 bg-transparent border border-gray-600  outline-none rounded" />
+                                    {touched.expertise_contries && errors.expertise_contries && (
+                                        <div className="text-red-400">{errors.expertise_contries}</div>
+                                    )}
+                                </div>
+                                <div className="flex flex-col w-1/3 m-1 ">
+                                    <p>Industry Experience</p>
+                                    <input
+                                        type="number"
+                                        placeholder="eg: 7"
+                                        name="industry_experience"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+
+                                        value={values?.industry_experience}
+
+                                        className="p-1 bg-transparent border border-gray-600 outline-none rounded" />
+                                    {touched.industry_experience && errors.industry_experience && (
+                                        <div className="text-red-400">{errors.industry_experience}</div>
+                                    )}
+                                </div>
+
                             </div>
                             {/* text area found */}
                             <div className=" m-1 flex flex-col h-3/6 w-2/2">Minimum to Maximum Price of your service (optional)
@@ -280,7 +317,7 @@ const VRegister = () => {
                             <div className=" flex">
                                 <div className=" m-1 flex flex-col h-3/6 w-1/2">Registration Number
                                     <input
-                                        type="number"           
+                                        type="number"
 
                                         name="register_number"
                                         onChange={handleChange}

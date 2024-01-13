@@ -16,7 +16,7 @@ const basicSchema = yup.object().shape({
         .required('last name is required'),
     ventureName: yup
         .string('name must be string')
-        .matches(/^[a-zA-Z]+$/, "only alphabets are Allowed")
+        .matches(/^[a-zA-Z ]+$/, "only alphabets are Allowed")
         .required('venture name is required'),
     phone_one: yup
         .number()
@@ -37,17 +37,20 @@ const basicSchema = yup.object().shape({
     venture_category: yup
         .string('name must be string')
         .trim()
-        .matches(/^[a-zA-Z]+$/, "only alphabets are Allowed")
+        .matches(/^[a-zA-Z ,.]+$/, "only alphabets are Allowed")
         .required('venture category is required'),
     description: yup
         .string('name must be string')
-        .matches(/^[a-zA-Z]+$/, "only alphabets are Allowed")
+        // .matches(/^[a-zA-Z]+$/, "only alphabets are Allowed")
         .required('description is required')
         .min(1350).max(1430),
     expertise_contries: yup
         .string('name must be string')
-        .matches(/^[a-zA-Z]+$/, "only alphabets are Allowed")
+        .matches(/^[a-zA-Z ,]+$/, "avoid un necessary expressions")
         .required('contry is  is required'),
+    industry_experience: yup
+        .number()
+        .required("Required field"),
     min_max_service_amount: yup
         .string()
         .trim(),

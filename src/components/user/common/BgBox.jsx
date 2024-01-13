@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux"
 import { fetchData } from "../../../redux/api/api"
 import { useNavigate } from "react-router-dom"
 import {motion} from "framer-motion"
+import { IoIosChatboxes } from "react-icons/io";
 const BgBox = ({ id }) => {
 
   const dispatch = useDispatch()
@@ -124,7 +125,9 @@ const BgBox = ({ id }) => {
       <motion.button             
        animate={{ scale: shouldShimmer ? 1.05 : 1 }}
        transition={{ duration: 0.25 }} // Adjust the duration if needed
-    className="border p-2 hover:bg-button rounded-xl font-Outfit  " onClick={e => setVisible(true)} >Let's connect With us</motion.button>
+    className="border p-2 hover:bg-button rounded-xl font-Outfit  " onClick={e => setVisible(true)} >
+      <p className="flex text-green-500 ">  <IoIosChatboxes className="mt-2"  /> &nbsp;connect with us</p>
+    </motion.button>
       {/* PASS TO MODAL VENTURE ID */}
       <Modal visible={visible} onClose={handleOnClose} connectUser={handleRequest} id={ventureData?._id} />
 

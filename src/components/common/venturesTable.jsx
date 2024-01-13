@@ -80,8 +80,8 @@ const VenturesTable = () => {
 
                     <tr>
                         <th className="p-3 text-left">ventures</th>
-                        <th className="p-3 text-left">Revenue</th>
-                        <th className="p-3 text-left">pending Amount</th>
+                        {/* <th className="p-3 text-left">Revenue</th>
+                        <th className="p-3 text-left">pending Amount</th> */}
                         {/* <th className="p-3 text-left">status</th> */}
                         <th className="p-3 text-left">Status</th>
                         <th className="p-3 text-center">Actions</th>
@@ -96,17 +96,19 @@ const VenturesTable = () => {
                         <tr className="bg-admin-primary  ">
                             {console.log('maping value', value)}
                             <td className="p-3 ">{value?.ventureName}</td>
-                            <td className="p-3">50000</td>
-                            <td className="p-3">20000</td>
+                            {/* <td className="p-3">50000</td>
+                            <td className="p-3">20000</td> */}
 
                             <td className="p-3 ">{value?.admin_allowed}</td>
-                            <div>
+                            <td className="flex justify-center" >
+                            <div >
                             <Link to={`/admin/ventureDetails/${value._id}` } ><button className="border border-black rounded-2xl shadow-2xl px-2 ml-2"   ><td className="p-1" >View</td></button></Link>
                             {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id,"allowed")} > <td className="p-2">Allow</td></button> : ''}
                             {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-1 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:''}
                             {value?.admin_allowed==="rejected"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" /></button>:'' }
                             
                             </div>
+                            </td>
                         </tr>
 
 

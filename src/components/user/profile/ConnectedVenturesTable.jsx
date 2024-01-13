@@ -3,6 +3,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import { PAYMENT_SRV_BASE_URL } from "../../../data/const";
 import { useDispatch } from "react-redux";
 import { fetchData } from "../../../redux/api/api";
+import env from "../../../data/env";
 const ConnectedVentureTable = ({ data }) => {
 
 
@@ -23,15 +24,16 @@ const ConnectedVentureTable = ({ data }) => {
     ]
 
 
-   const makePayment=async()=>{
+   const makePayment=async(ventureName,vid)=>{
 
-    const stripe = await loadStripe('pk_test_51OWkDdSA5K986loxjeATAlNSQRqk0Zj2r3VckkUyAhl2ORLDpgJwlnti8hzCmjoV2L9NkHLjZSntqNQlx96wZcpf00f2qM0oJR');
+console.log('venturename',ventureName,vid)
+    const stripe = await loadStripe(env.STRIPE_SECRET_ID);
 
     const apidetails={
 
         method:'post',
         url:PAYMENT_SRV_BASE_URL+"payment-intent",
-        data:{name:"service"},
+        data:{ventureName:ventureName,vid:vid},
         token:true,
         to:"user"
     }
@@ -41,10 +43,11 @@ const ConnectedVentureTable = ({ data }) => {
 
     const result=await stripe.redirectToCheckout({
         sessionId:response.payload.data.sessionId
-    })
-    if(result.error){
-        console.log('error occured while intgrationg stripe',result.error.message)
-    }
+    })  
+    console.log('result finally',result)
+    // if(result.error){
+    //     console.log('error occured while intgrationg stripe',result.error.message)
+    // }
    
 
    }
@@ -82,7 +85,7 @@ const ConnectedVentureTable = ({ data }) => {
                             <td className="p-3  text-center ">{val?.user_status}</td>
                             <td className="p-3  text-center ">{val?.service_started_by ?"started" : "Not started"}</td>
                             <td className="p-3  text-center  "><Link to={"/chats"} className=" px-3 py-1 hover:bg-button transition duration-300 rounded-xl" >Make a chat</Link></td>
-                           <td className=" p-3 flex justify-center">{val?.service_complete_by ? <button className="flex justify-center border px-3 rounded-2xl transition hover:bg-button duration-300 " onClick={makePayment} >Pay Now</button> : <p className="flex justify-center">Not completed</p>}</td> 
+                           <td className=" p-3 flex justify-center">{val?.service_complete_by ? <button className="flex justify-center border px-3 rounded-2xl transition hover:bg-button duration-300 " onClick={()=>makePayment(val.ventureName,val.ventureId)} >Pay Now</button> : <p className="flex justify-center">Not completed</p>}</td> 
 
 
                         </tr>

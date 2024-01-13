@@ -91,6 +91,7 @@ function App() {
         <Route path="/ventureList" element={<VentureList/>}/>
         <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
         <Route path="/chats" element={userToken&&userId? <Suspense ><Chat/></Suspense> :<Navigate to={'/userlogin'}/>} />
+        <Route path="/ventureList/:country" element={<VentureList/>}/>
         {/* <Route path="/otp" element={<Otp/>}/> */}
 
 
