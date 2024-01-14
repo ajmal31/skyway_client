@@ -2,11 +2,12 @@ import { useEffect } from "react"
 import BgBox from "../../../components/user/common/BgBox"
 import Modal from "../../../components/user/common/Modal"
 import { useParams } from "react-router-dom"
+import Navbar from "../../../components/user/Home/Navbar"
 
 
 const VentureDetails = (prop) => {
 
-    const{id}=useParams()
+    const { id } = useParams()
 
 
 
@@ -14,12 +15,17 @@ const VentureDetails = (prop) => {
 
     return (
 
-        <div className="bg-primary   full flex justify-center items-center w-screen" >
-          
-            <div className=" h-full  w-5/6">
-           
-            <BgBox id={id} />
-            
+        <div className="bg-primary flex flex-row  justify-center  w-screen " >
+
+
+            {/* <div className="border flex flex-col" >
+                <Navbar />
+            </div> */}
+
+            <div className="h-full  flex justify-center  items-center w-5/6">
+
+                <BgBox id={id} />
+
 
             </div>
 

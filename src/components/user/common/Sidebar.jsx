@@ -2,14 +2,12 @@ import { Link, useNavigate } from "react-router-dom"
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { TbUsers } from "react-icons/tb";
 import { useState } from "react";
-import { MdSpaceDashboard } from "react-icons/md";
-import { FaGoogleWallet } from "react-icons/fa6";
-import { VscFeedback } from "react-icons/vsc";
-import { RiLogoutCircleRFill } from "react-icons/ri";
-import { GiTakeMyMoney } from "react-icons/gi";
+import { FcAbout } from "react-icons/fc";
 import { IoMdChatbubbles } from "react-icons/io";
+import { MdContactSupport } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { ventureLogout } from "../../../redux/slices/ventureSlices";
+import { IoMdHome } from "react-icons/io";
 import { useDispatch } from "react-redux";
 const Sidebar = () => {
 
@@ -20,9 +18,9 @@ const Sidebar = () => {
         { title: "Profile", path: "/userProfile", icon: <CgProfile /> },
         { title: "Companies", path: "/ventureList", icon: <TbUsers /> },
         { title: "chats", path: "/chats", icon: <IoMdChatbubbles /> },
-        { title: "About", path: "/about", icon: <IoMdChatbubbles /> },
-        { title: "contact", path: "/contact", icon: <IoMdChatbubbles /> },
-        { title: "Home", path: "/", icon: <IoMdChatbubbles /> },
+        { title: "About", path: "/about", icon:<FcAbout  /> },
+        { title: "contact", path: "/contact", icon: <MdContactSupport /> },
+        { title: "Home", path: "/", icon: <IoMdHome /> },
         
 
     ]
@@ -45,7 +43,7 @@ const Sidebar = () => {
             <div className="flex   rounded-2xl transition duration-500   cursor-pointer  ">
 
                
-               {open &&  <img src="/logos/skyway-logo-2.png"  className="w-2/3 ml-1 " alt="" /> }
+               {open && <Link to={'/'} > <img src="/logos/skyway-logo-2.png"  className="w-2/3 ml-1 " alt="" /></Link> }
 
                
 
