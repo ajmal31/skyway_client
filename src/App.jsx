@@ -19,6 +19,8 @@ import Profile from "./pages/user/profile/Profile"
 import VentureList from "./pages/user/ventures/ventureList"
 import VentureDetails from "./pages/user/ventureDetails/VentureDetails"
 import { userLogout } from "./redux/slices/UserSlice"
+import About from "./pages/user/About/About"
+import Contact from "./pages/user/contact/contact"
 
 
 
@@ -92,6 +94,8 @@ function App() {
         <Route path="/ventureDetails/:id" element={<VentureDetails/>}/>
         <Route path="/chats" element={userToken&&userId? <Suspense ><Chat/></Suspense> :<Navigate to={'/userlogin'}/>} />
         <Route path="/ventureList/:country" element={<VentureList/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/contact" element={<Contact/>}/>
         {/* <Route path="/otp" element={<Otp/>}/> */}
 
 

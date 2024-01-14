@@ -88,7 +88,7 @@ const Background = () => {
 
   console.log("all contries state", arr)
   return (
-    <div className="bg-primary">
+    <div className="bg-primary  ">
       <Navbar />
 
 

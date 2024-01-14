@@ -150,8 +150,8 @@ const ChatContent = ({ roll,socket }) => {
     if (!data.oppsitePersonData) return <EmptyChat  />
 
     return (
-        <div className="bg-secondory h-full w-3/5 px-8 pb-8 pt-2 text-gray-300 rounded-xl">
-            <div className="w-full h-full ">
+        <div className="bg-secondory h-full w-3/5 px-8  pb-14 pt-2 text-gray-300 rounded-xl">
+            <div className="w-full h-full  ">
                 <div className="h-1/6 w-full  flex bg-secondory">
                     <div className="w-2/12 flex flex-wrap justify-center items-center">
                         <div className="h-full w-4/5 rounded-full">
@@ -166,20 +166,22 @@ const ChatContent = ({ roll,socket }) => {
                     </div>
                 </div>
                 <hr className="border-gray-500" />
-                <div className="max-w-screen-md mx-auto h-3/5  mt-10">
-                    <div className="flex flex-col mb-2 px-1 overflow-auto   max-h-72 items-start"  >
+                <div className="max-w-screen-md mx-auto h-4/5 ">
+                    <div className="flex flex-col mb-2 px-1 overflow-auto  mt-1 max-h-full items-start"  >
                         {chat?.map((val, index) => <ChatMessage key={index} val={val} user={roll === "venture" ? ventureId : userId} typing={isTyping && index == chat.length - 1} />)}
                         <div ref={scrollDownRef} ></div>
                     </div>
                 </div>
 
 
-                <div className="h-1/6 w-full flex   ">
+                <div className="h-1/12 w-full flex  ">
                     <div className="flex w-full items-end justify-end  ">
                         <div className="w-full flex gap-2  ">
                             <input
+                                
+                                
                                 type="text"
-                                className="w-11/12 p-3 rounded-xl bg-transparent border border-gray-500"
+                                className="w-11/12 p-3  rounded-xl bg-transparent border border-gray-500 break-words"
                                 value={message}
                                 onChange={handleOnchange}
                                 placeholder="enter your message"

@@ -34,8 +34,6 @@ const Table = ({ api,boolean }) => {
         else setVentureList([...response?.payload?.data].reverse())
         
 
-
-
     }
 
     useEffect(() => {
@@ -56,7 +54,7 @@ const Table = ({ api,boolean }) => {
     }
 
     return (
-        <div className=" h-full w-full text-gray-500">
+        <div className=" h-full w-full font-Outfit text-gray-500">
 
             <table className="min-w-full leading-normal   ">
                 <thead>
@@ -95,8 +93,9 @@ const Table = ({ api,boolean }) => {
                                 </div>
                             </td>
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
-                                <p className="text-gray-300 whitespace-no-wrap">
-                                    {value?.expertise_contries}
+                                <p className="text-gray-300 whitespace-no-wrap uppercase">
+                                    {console.log("destination ",value.expertise_contries.map((val)=>val))}
+                                    {value?.expertise_contries.map((val)=>` ${val}, `)}
                                 </p>
                             </td>
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>

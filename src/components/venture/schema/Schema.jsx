@@ -46,6 +46,7 @@ const basicSchema = yup.object().shape({
         .min(1350).max(1430),
     expertise_contries: yup
         .string('name must be string')
+        .trim()
         .matches(/^[a-zA-Z ,]+$/, "avoid un necessary expressions")
         .required('contry is  is required'),
     industry_experience: yup
