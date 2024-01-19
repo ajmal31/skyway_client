@@ -96,7 +96,7 @@ const Dashboard = () => {
             <div className="  rounded-2xl w-full h-full " >
 
 
-                <div className="  w-full h-2/6 flex gap-3  justify-between ">
+                <div className="  w-full h-2/6 flex gap-3   ">
 
                     <motion.div {...userDiv} className=" bg-admin-primary cursor-pointer flex flex-col p-3 shadow-lg hover:bg-gray-200 duration-500 hover:border-b-4 border-blue-600 rounded-3xl w-3/12">
                         <div className=" " >
@@ -143,7 +143,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </motion.div>
-                    <motion.div  {...paymentDiv} className=" bg-admin-primary cursor-pointer hover:scroll-m-1.5  shadow-lg rounded-3xl w-4/12 hover:bg-gray-200 duration-500 hover:border-b-4 border-blue-600 font-semibold justify-between font-Outfit flex items-center flex-col p-4 ">
+                    {/* <motion.div  {...paymentDiv} className=" bg-admin-primary cursor-pointer hover:scroll-m-1.5  shadow-lg rounded-3xl w-4/12 hover:bg-gray-200 duration-500 hover:border-b-4 border-blue-600 font-semibold justify-between font-Outfit flex items-center flex-col p-4 ">
 
                     <div className="w-full h-1/3 " >
                             <p className="text-1xl ml-5 text-gray-700 ">PAYMENTS</p>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                             
                         </div>
 
-                    </motion.div>
+                    </motion.div> */}
 
                 </div>
                 <div></div>

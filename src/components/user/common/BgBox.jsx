@@ -160,7 +160,7 @@ const BgBox = ({ id }) => {
       <Modal visible={visible} onClose={handleOnClose} connectUser={handleRequest} id={ventureData?._id} />
 
 
-      <p className="text-4xl font-Outfit my-6"><a href={ventureData.website_link} target="_blank" rel="noopener noreferrer" >About us</a></p>
+      <p className="text-4xl font-Outfit my-6"><a href={ventureData?.website_link} target="_blank" rel="noopener noreferrer" >About us</a></p>
       <About content={ventureData?.description} />
 
       <p className="text-4xl my-8 text-center font-Outfit">Our Main Destinations</p>
@@ -172,7 +172,7 @@ const BgBox = ({ id }) => {
       {/* <Graph /> */}
       <Comment allComments={allComments} comments={"venture"} />
       <p className="text-4xl text-center my-8 font-Outfit">Point Out Your Valuable Words About us</p>
-      <Feedback comment_url={comment_url} data={data} commentUpdated={commentUpdated} />
+      <Feedback comment_url={comment_url} data={data} commentUpdated={commentUpdated} roll={"venture"} />
 
     </div>
 

@@ -1,11 +1,10 @@
+import VentureProfile from "../../../components/venture/profile/Profile"
 import Sidebar from "../../../components/venture/sidebar/sidebar"
-import ShowingUserDetails from "../../../components/venture/userDetails/userDetails"
+const Profile=()=>{
 
-const UserDetails=()=>{
 
-    
     return(
-        <div className="h-screen w-screen p-8 flex  gap-8 bg-primary  "  >
+        <div className="h-screen w-screen p-8 flex  gap-8 bg-primary"  >
 
         {/* <h1 className="text-white ">Dahsbord of the venture</h1> */}
         
@@ -18,14 +17,12 @@ const UserDetails=()=>{
         
                      {/* <h1 className="text-white font-Outfit text-xl">USERS</h1> */}
                        
-                         <ShowingUserDetails/>
+                         <VentureProfile/>
                           
                     </div>
                 </div>
     )
 
-
-
 }
 
-export default UserDetails
+export default Profile

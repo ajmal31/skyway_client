@@ -5,7 +5,7 @@ const CommentModal = ({ show, onClose, allComments,comments }) => {
 
     const handleClose = () => onClose()
     return (
-        <div className="h-full w-full fixed  top-0 left-0 flex justify-center items-center backdrop-blur-sm backdrop-brightness-50 " onClick={handleClose} >
+        <div className="h-full w-full fixed  top-0 left-0 flex justify-center items-center z-50 backdrop-blur-sm backdrop-brightness-50 " onClick={handleClose} >
             <div className="h-5/6 w-5/6  flex justify-center items-center">
 
                 {/* Modal content */}

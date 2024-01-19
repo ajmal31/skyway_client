@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { useState } from "react"
 import CommentModal from "./CommentModal"
+import StartRating from "react-stars"
 const Comment=({allComments,comments})=>{
 
     const [show, setShow] = useState(false)
@@ -14,7 +15,7 @@ const Comment=({allComments,comments})=>{
 
           {allComments?.slice(0, 4).map((val) => (
 
-            <motion.div initial={{ scale: 1 }} key={val._id} whileHover={{ scale: 1.1 }} className="flex-1  m-3 py-14  rounded-xl bg-secondory flex justify-center pt-3 px-1 h-full w-[200px] flex-col shadow-2xl shadow-black ">
+            <motion.div initial={{ scale: 1 }} key={val._id} whileHover={{ scale: 1.1 }} className={`flex-1  m-3 py-5  rounded-xl bg-secondory flex justify-center pt-3 px-1 h-full w-[200px] flex-col shadow-2xl shadow-black `}>
 
               <div className="w-full h-2/6  flex justify-center " >
 
@@ -25,12 +26,16 @@ const Comment=({allComments,comments})=>{
               </div>
              
               <p className="text-center">{comments==="venture"?val.userName:val?.userId?.username}</p>
-              <div className="w-full h-4/6 pt-2 px-2" >
+              <div className="w-full h-4/6 pt-2 px-2  " >
 
-                <div className=" w-full h-full  flex overflow-hidden  text-gray-300 " >
+                <div className=" w-full h-full  flex  overflow-hidden break-words  text-gray-300 " >
 
                   <p className=" h-[90px]  text-overflow-ellipsis w-[200px] " >{val.content}</p>
-                </div>
+                  
+                
+                </div> 
+                <div>  {val?.rating ? <StartRating count={5} value={val?.rating} size={30} edit={false} />:null}</div>
+               
               </div>
 
             </motion.div>

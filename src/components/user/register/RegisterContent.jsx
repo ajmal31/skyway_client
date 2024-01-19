@@ -17,7 +17,7 @@ const RegisterContent = () => {
         phone: '',
         region: '',
         destination: '',
-        date_of_birth: '',
+        profile: '',
         password: ''
     });
 
@@ -35,28 +35,45 @@ const RegisterContent = () => {
         else if (regionLen < 2) useme('Please enter a valid region', error);
         else if (destLen < 2) useme('Please enter a valid destination', error);
         else {
+
+            // const formData = new FormData();
+            // formData.append('username', register.username);
+            // formData.append('email', register.email);
+            // formData.append('phone', register.phone);
+            // formData.append('region', register.region);
+            // formData.append('destination', register.destination);
+            // formData.append('password', register.password);
+            // formData.append('profile', register.profile);
             const obj = {
                 method: 'post',
                 url: USER_SRV_BASE_URL + 'register',
                 data: register,
                 token: false,
-                
+
             };
+            // const obj = {
+            //     method: 'post',
+            //     url: USER_SRV_BASE_URL + 'register',
+            //     data: formData,
+            //     token: false,
+
+            // };
 
 
             const res = await dispatch(fetchData(obj));
 
-        
+
             const { message } = res.payload.data;
             if (message === 'email already used' || 'phone number already used') useme(message, error);
             const { response } = res.payload.data;
-        
+
             if (response) {
                 useme('User registered successfully', success);
                 navigate('/userlogin');
             }
         }
     };
+    console.log("details", register)
 
     return (
         <div className="grid grid-cols-2 h-4/5 mt-5 bg-secondary ">
@@ -76,11 +93,13 @@ const RegisterContent = () => {
                     />
                 </div>
             </div>
- 
+
             <div className="h-2/2 w-4/8 text-black flex justify-end">
-                 <div className="w-3/4 m-2 flex flex-col">
-                   
-                 <form action="" onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+
+                <div className="w-3/4 m-2 flex flex-col ">
+
+                    <form action="" onSubmit={handleRegister} className="flex flex-col justify-center">
+
                         <motion.input
                             type="text" required
                             value={register.username}
@@ -130,16 +149,16 @@ const RegisterContent = () => {
                             initial={{ scale: 1 }}
                             whileHover={{ scale: 1.1 }}
                         />
-                        <motion.input
-                            type="date"
-                            value={register.date_of_birth}
-                            onChange={(e) => SetRegister({ ...register, date_of_birth: e.target.value })}
+                        {/* <motion.input
+                            type="file"
+                            value={register.profile}
+                            onChange={(e) => SetRegister({ ...register, profile: e.target.value })}
                             className="mb-2 rounded-lg text-sm p-2 bg-gray-200 outline-none border"
-                            placeholder="Date of birth"
+                            placeholder="profile"
                             initial={{ scale: 1 }}
                             whileHover={{ scale: 1.1 }}
                             style={{ width: '97%' }}
-                        />
+                        /> */}
                         <motion.input
                             type="password"
                             required
@@ -163,9 +182,9 @@ const RegisterContent = () => {
                         <div className="flex justify-end text-sm mt-1 mr-1 text-gray-400 font-thin">
                             <Link to="/userLogin"> already have an account?</Link>
                         </div>
-                       
-                        </form>
-                </div> 
+
+                    </form>
+                </div>
             </div>
 
         </div>

@@ -10,11 +10,12 @@ userAxiosInstance.interceptors.request.use(
             if(token){
     
                 config.headers['Authorization']=`bearer ${token}`
+                
                 // config.headers['Content-Type']='application/json'
                
                
             }else{
-                console.log('please be login')
+                
                 document.location.href="/userLogin"
             }
             return config

@@ -34,6 +34,7 @@ import ventureSlices from "./redux/slices/ventureSlices"
 import { ventureLogout } from "./redux/slices/ventureSlices"
 import Users from "./pages/venture/users/Users"
 import UserDetails from "./pages/venture/userDetails/UserDetails"
+import VentureProfile from "./pages/venture/profile/Profile"
 
 
 //Admin Related imports
@@ -107,6 +108,7 @@ function App() {
          <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/users" element={ventureId&&ventureToken ? <Users/>:<VentureLogin/>}/>
          <Route path="/venture/userDetails/:userId" element={ventureId&&ventureToken ? <UserDetails/>:<VentureLogin/>}/>
+         <Route path="/venture/profile" element={ventureId&&ventureToken ? <VentureProfile/>:<VentureLogin/>}/>
         
          
    
