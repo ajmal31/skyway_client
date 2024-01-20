@@ -8,6 +8,7 @@ import { useSelector } from "react-redux"
 import UserSlice from "../../../redux/slices/UserSlice"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
+import StartRating from "react-stars"
 const Table = ({ api,boolean }) => {
 
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ const Table = ({ api,boolean }) => {
     const [ventureList, setVentureList] = useState([]);
     const token = useSelector((state = UserSlice) => state.UserSlice.token)
     const [page, setPage] = useState(1)
+    const [avg_store,setAvg_store]=useState([])
 
     //getting All ventures
     const getAllventures = async () => {
@@ -29,9 +31,17 @@ const Table = ({ api,boolean }) => {
 
         }
         const response = await dispatch(fetchData(obj))
-        console.log("ventures from venture service",response)
-        if(!boolean)setVentureList([...response?.payload?.data?.response].reverse())
-        else setVentureList([...response?.payload?.data].reverse())
+        if(!boolean){
+            const {Allventures,avg_store}=response?.payload?.data?.response
+            setVentureList(Allventures)
+            setAvg_store(avg_store)
+
+        }
+        else {
+            let {Allventures,avg_store}=response.payload.data
+            setVentureList(Allventures)
+            setAvg_store(avg_store)
+        }
         
 
     }
@@ -75,9 +85,9 @@ const Table = ({ api,boolean }) => {
                 </thead>
                 <tbody>
                     {ventureList?.length > 0 && ventureList?.slice(page * 5 - 5, page * 5)?.map((value, index) => (
-
-                        <tr key={index} >
-
+                
+                         <tr key={index} >
+                              {console.log("each values",value?.rating_avg)}
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
@@ -114,7 +124,7 @@ const Table = ({ api,boolean }) => {
                             </td>
                             <td className={index === page * 5 - 1 ? ("px-5 py-5 text-sm bg-secondory ") : "px-5 py-5 text-sm bg-secondory border-b border-gray-500"}>
                                 <p className="text-gray-300 whitespace-no-wrap">
-                                    ⭐⭐🌟⭐⭐
+                                <StartRating count={5} value={avg_store[index]}  size={15} edit={false} />
                                 </p>
                             </td>
 

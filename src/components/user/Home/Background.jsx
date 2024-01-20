@@ -46,7 +46,6 @@ const Background = () => {
       to: 'user'
     }
     const response = await dispatch(fetchData(apiDetails))
-    console.log('all comments', response)
     setAllComments(response?.payload?.data)
 
   }
@@ -121,19 +120,19 @@ const Background = () => {
                         value={selectedCountry}
                       />
                       {showCountries && (
-                        <div className=" rounded-xl mt-3 p-2 bg-secondory h-[250px] overflow-y-auto ">
-                          {arr.map((country, index) => (
+                        <div className=" rounded-xl mt-3 p-2 bg-secondory z-50 h-[250px] w-2/3 overflow-y-auto ">
+                          {arr?.length!==0?arr?.map((country, index) => (
 
                             <div
 
                               key={index}
-                              onClick={() => handleCountrySelect(country)}
+                              onClick={() => handleCountrySelect(country??'')}
                               className="cursor-pointer hover:bg-gray-500 p-1 rounded-lg"
                             >
 
-                              {country}
+                              {country??''}
                             </div>
-                          ))}
+                          )):<h1>Not countries found</h1>}
                         </div>
                       )}
                     </div>
@@ -238,7 +237,7 @@ const Background = () => {
               </div  >
 
              
-              <Comment allComments={allComments} />
+              <Comment allComments={allComments??''} />
 
               <Feedback comment_url={comment_url} commentUpdated={commentUpdated} />
             </div>

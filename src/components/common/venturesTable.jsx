@@ -7,6 +7,7 @@ import { changeVentureStatus } from "../../redux/slices/ventureSlices"
 import ventureSlices from "../../redux/slices/ventureSlices"
 import { ImBlocked } from "react-icons/im";
 import { Link } from "react-router-dom"
+import StartRating from "react-stars"
 
 const VenturesTable = () => {
 
@@ -14,6 +15,7 @@ const VenturesTable = () => {
 
     const dispatch = useDispatch()
     const [ventures, setVentures] = useState([])
+    const [avg_store,setAvg_store]=useState([])
     // const [ventureStatus,setVentureStatus]=useState(null)
 
     const getData = async () => {
@@ -29,7 +31,11 @@ const VenturesTable = () => {
         const response = await dispatch(fetchData(obj))
       
         // setVentureStatus(response?.payload?.data?.response?.admin_allowed)
-        setVentures(response?.payload?.data?.response)
+        console.log("all ventures",response)
+        const {Allventures,avg_store}=response?.payload?.data?.response
+        setVentures(Allventures)
+        setAvg_store(avg_store)
+
 
     }
     //  should change token to true somehitng in backend while making true  solve it 
@@ -82,7 +88,7 @@ const VenturesTable = () => {
                         <th className="p-3 text-left">ventures</th>
                         {/* <th className="p-3 text-left">Revenue</th>
                         <th className="p-3 text-left">pending Amount</th> */}
-                        {/* <th className="p-3 text-left">status</th> */}
+                        <th className="p-3 text-left">Rating</th>
                         <th className="p-3 text-left">Status</th>
                         <th className="p-3 text-center">Actions</th>
                     </tr>
@@ -96,6 +102,7 @@ const VenturesTable = () => {
                         <tr className="bg-admin-primary  ">
                             {console.log('maping value', value)}
                             <td className="p-3 ">{value?.ventureName}</td>
+                            <td> <StartRating count={5} value={avg_store[index]} color2="blue"  size={15} edit={false} /></td>
                             {/* <td className="p-3">50000</td>
                             <td className="p-3">20000</td> */}
 

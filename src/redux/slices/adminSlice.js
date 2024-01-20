@@ -13,24 +13,17 @@ const adminSlice=createSlice({
     reducers:{
 
         adminLogin:(state,action)=>{
-
-
-            
+         
             const {email,token}=action.payload
             localStorage.setItem('adminToken',token)
             localStorage.setItem('admin_email',email)
-
             state.email=email
             state.token=token
-
-            
-
         },
         adminLogout:(state,action)=>{
             
             localStorage.removeItem('adminToken')
             localStorage.removeItem('admin_email')
-
             state.email=null
             state.token=null
         }

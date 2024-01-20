@@ -40,7 +40,7 @@ const Dashboard = () => {
 
     }
 
-   
+    //Dynamic function Fetch data from server
     const fetchDataFromServer = async (baseURL, endpoint, method, data) => {
         const apiDetails = {
             method: method,
@@ -52,35 +52,40 @@ const Dashboard = () => {
         const response = await dispatch(fetchData(apiDetails));
         return response?.payload?.data;
     }
+    //Get total users count
     const getUsersTotal = async () => {
         const totalUsers = await fetchDataFromServer(USER_SRV_BASE_URL, 'users/count', 'get', null);
         setTotalUsers(totalUsers);
     }
+    //Get total ventures count
     const getVenturesTotal = async () => {
         const totalVentures = await fetchDataFromServer(VENTURE_SRV_BASE_URL, 'ventures/count', 'get', null);
         setTotalVentures(totalVentures);
     }
+    //Dynamic function ; Taking ventures based on their status like "pending,rejected,allowed"
     const countVenturesByStatus = async (status) => {
         const totalVentures = await fetchDataFromServer(VENTURE_SRV_BASE_URL, '/venture/count/by/status', 'post', { status });
        return totalVentures
     }
+    //Get Rejected ventures count
     const rejectedVentures = async () => {
         let response=await countVenturesByStatus("rejected");
         console.log('response rejected',response)
         setRejectedVenturesCount(response)
     }
+    //Get pending Ventures count
     const pendingVentures = async () => {
         let response=await countVenturesByStatus("pending");
         console.log('response pending',response)
         setPendingVenturesCount(response)
     }
+    //Get allowed ventures count
     const allowedVentures = async () => {
        let response= await countVenturesByStatus("allowed");  // Assuming you have a status called "allowed"
-       console.log('response allowed',response)
        setAllowedVenturesCount(response)
     }
 
-   
+    
     useEffect(()=>{
        getUsersTotal()
        getVenturesTotal()

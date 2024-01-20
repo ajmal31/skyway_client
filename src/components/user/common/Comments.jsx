@@ -13,7 +13,7 @@ const Comment=({allComments,comments})=>{
         <CommentModal show={show} onClose={handleShow} allComments={allComments} comments={comments} />
         <div className={` flex flex-row  h-3/6 overflow-hidden   text-white  font-Outfit`} >
 
-          {allComments?.slice(0, 4).map((val) => (
+          { allComments?.length!==0 && allComments?.slice(0, 4).map((val) => (
 
             <motion.div initial={{ scale: 1 }} key={val._id} whileHover={{ scale: 1.1 }} className={`flex-1  m-3 py-5  rounded-xl bg-secondory flex justify-center pt-3 px-1 h-full w-[200px] flex-col shadow-2xl shadow-black `}>
 
@@ -25,12 +25,12 @@ const Comment=({allComments,comments})=>{
 
               </div>
              
-              <p className="text-center">{comments==="venture"?val.userName:val?.userId?.username}</p>
+              <p className="text-center">{comments==="venture"?val?.userName:val?.userId?.username}</p>
               <div className="w-full h-4/6 pt-2 px-2  " >
 
                 <div className=" w-full h-full  flex  overflow-hidden break-words  text-gray-300 " >
 
-                  <p className=" h-[90px]  text-overflow-ellipsis w-[200px] " >{val.content}</p>
+                  <p className=" h-[90px]  text-overflow-ellipsis w-[200px] " >{val?.content}</p>
                   
                 
                 </div> 

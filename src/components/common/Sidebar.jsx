@@ -8,9 +8,14 @@ import { FaGoogleWallet } from "react-icons/fa6";
 import { VscFeedback } from "react-icons/vsc";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import { GiTakeMyMoney } from "react-icons/gi";
+import { useDispatch } from "react-redux";
+import { adminLogout } from "../../redux/slices/adminSlice";
 const Sidebar = () => {
 
   const [open, setOpen] = useState(true)
+  const dispatch = useDispatch()
+  //Admin logout
+  const logOutAdmin = ()=>dispatch(adminLogout())
   const sidebarItems = [
 
     { title: "Dashboard", path: "/admin", icon: <MdSpaceDashboard /> },
@@ -19,7 +24,6 @@ const Sidebar = () => {
     { title: "Wallet", path: "/admin/wallet", icon: <FaGoogleWallet /> },
     { title: "History", path: "/admin/paymentHistory", icon: <GiTakeMyMoney /> },
     { title: "Feedback", path: "/admin/settings", icon: <VscFeedback /> },
-    { title: "Logout", path: "/admin/Logout", icon: <RiLogoutCircleRFill /> },
 
   ]
 
@@ -35,7 +39,7 @@ const Sidebar = () => {
         <MdSpaceDashboard className={`text-3xl ${!open && "rotate-360"}  `} />
 
         {
-            !open ? "" :
+          !open ? "" :
 
             <li className="list-none duration-500 ">
               Skyway
@@ -59,6 +63,12 @@ const Sidebar = () => {
 
           </Link>
         )}
+        <li className="hover:bg-admin-primary p-3 rounded-2xl flex duration-100 " onClick={logOutAdmin}  >
+
+          <span className="mt-1 mr-2" ><RiLogoutCircleRFill /></span>
+          {open && <span className="md:flex hidden  " >Logout</span>}
+
+        </li>
 
       </ul>
 

@@ -26,18 +26,18 @@ const Canvas = () => {
             token:false
 
         }
+        console.log("hei")
         const response=await dispatch(fetchData(apiData))
-        console.log('response after admin login ?',response)
         const {message,token,email}=response?.payload?.data
         if(message==='Admin login succesful'){
- 
-           
+         
+              
             useme(message,'success')
             dispatch(adminLogin(response.payload.data))  
             return navigate('/admin')
-        }
+        }else return useme(message,'error')
 
-        return useme(message,'error')
+        
 
 
     }
