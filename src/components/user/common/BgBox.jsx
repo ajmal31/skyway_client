@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { IoIosChatboxes } from "react-icons/io";
 import Comment from "./Comments"
+import Footer from "./Footer"
 
 const BgBox = ({ id }) => {
 
@@ -163,8 +164,8 @@ const BgBox = ({ id }) => {
       <p className="text-4xl font-Outfit my-6"><a href={ventureData?.website_link} target="_blank" rel="noopener noreferrer" >About us</a></p>
       <About content={ventureData?.description} />
 
-      <p className="text-4xl my-8 text-center font-Outfit">Our Main Destinations</p>
-      <Card />
+      {/* <p className="text-4xl my-8 text-center font-Outfit">Our Main Destinations</p>
+      <Card /> */}
 
       <p className="text-4xl text-center my-8 font-Outfit">Insurance & License</p>
       <Card certificates={true} insurance={ventureData?.insurance_file_link} license={ventureData?.license_file_link} />
@@ -173,6 +174,7 @@ const BgBox = ({ id }) => {
       <Comment allComments={allComments} comments={"venture"} />
       <p className="text-4xl text-center my-8 font-Outfit">Point Out Your Valuable Words About us</p>
       <Feedback comment_url={comment_url} data={data} commentUpdated={commentUpdated} roll={"venture"} />
+      <Footer/>
 
     </div>
 

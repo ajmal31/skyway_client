@@ -24,10 +24,14 @@ module.exports = {
       letterSpacing: {
         wider: '0.2em', // Increase the word spacing
         widest: '0.0em', // Further increase the word spacing
+      },
+      screens: {
+        'min': '500px',
       }
       
       
     },
+    
   },
   plugins: [],
   

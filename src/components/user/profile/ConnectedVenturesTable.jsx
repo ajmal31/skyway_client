@@ -54,7 +54,7 @@ console.log('venturename',ventureName,vid)
 
     return (
 
-        <div className="font-outfit  text-gray-400 mb-14 rounded-2xl bg-secondory  w-full">
+        <div className="font-outfit  text-gray-400 mb-14 rounded-2xl bg-secondory xl:w-[1110px] lg:w-[900px] md:w-full sm:w-[1000px] min-[200px]:w-[1000px] ">
     
     {data.length<=0?<h1 className="text-center p-5" >You're not connected any ventures </h1>:
 

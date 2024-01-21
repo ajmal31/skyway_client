@@ -11,6 +11,7 @@ import Feedback from "../common/Feedback";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import Comment from "../common/Comments";
+import Footer from "../common/Footer";
 const Background = () => {
 
 
@@ -46,9 +47,11 @@ const Background = () => {
       to: 'user'
     }
     const response = await dispatch(fetchData(apiDetails))
+    
     setAllComments(response?.payload?.data)
 
   }
+  console.log("all commnets",allComments)
   const getAllContries = async () => {
 
     try {
@@ -242,6 +245,9 @@ const Background = () => {
               <Feedback comment_url={comment_url} commentUpdated={commentUpdated} />
             </div>
 
+          </div>
+          <div className="text-gray-300" >
+         <Footer/>
           </div>
         </div>
 

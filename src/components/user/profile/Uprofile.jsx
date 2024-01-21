@@ -10,7 +10,8 @@ import Modal from "../modal/Modal"
 import { motion } from "framer-motion"
 import { IoCloudUploadSharp } from "react-icons/io5";
 import { IoMdCloseCircle } from "react-icons/io";
-import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import ConnectedVentureTable from "./ConnectedVenturesTable"
 
 const Uprofile = () => {
@@ -22,7 +23,7 @@ const Uprofile = () => {
     const [documentsFromDb, setDocumentsFromDb] = useState([])
     const [buttonLoading, setButtonLoading] = useState(false)
     const [connectedVentures, setConnectedVentures] = useState(null)
-    const [manipulatedData,setManipulatedData]=useState(null)
+    const [manipulatedData, setManipulatedData] = useState(null)
     const [documents, setDocuments] = useState({
         govId: null,
         aadhar: null,
@@ -30,7 +31,7 @@ const Uprofile = () => {
         passport: null
     })
 
-    //div animation configuration
+    //Div Animation Configuration
     const commonMotion = {
 
         initial: { translateY: -30, translateX: +20 },
@@ -38,6 +39,7 @@ const Uprofile = () => {
         transition: { duration: 0.8, ease: 'easeInOut' }
 
     }
+    //Document labels
     const documentLabels = [
         {
             label: "upload your Government id",
@@ -97,7 +99,7 @@ const Uprofile = () => {
 
     };
 
-
+    //Document Upload Handler
     const handleUpload = async () => {
 
         setButtonLoading(true)
@@ -118,13 +120,13 @@ const Uprofile = () => {
         if (response) {
             setDocumentsFromDb(response?.payload?.data?.documents)
             setButtonLoading(false)
-            showUploadButton(false)
+            setShowUploadButton(false)
 
         }
 
     }
 
-
+    //User Cred State Handler During the Updation
     const handUpdateUser = (e) => {
         let val = e.target.value
         let name = e.target.name
@@ -132,6 +134,7 @@ const Uprofile = () => {
         setUserCred({ ...userCred, [name]: val })
 
     }
+    //User Cred Update Handler
     const updateButton = async () => {
 
         let testNumber = userCred?.phone + "";
@@ -183,7 +186,7 @@ const Uprofile = () => {
     const Logout = () => {
         dispatch(userLogout())
     }
-
+    //Get User Details 
     const getUserDetails = async () => {
 
 
@@ -197,9 +200,10 @@ const Uprofile = () => {
         const response = await dispatch(fetchData(obj))
         setUserCred(response?.payload?.data?.response)
         setDocumentsFromDb(response?.payload?.data?.response?.documents)
-        console.log('user details', response.payload.data.response)
+       
 
     }
+    //Taking All Connected Ventures
     const getConnectedVentures = async () => {
 
         const apiDetails = {
@@ -215,6 +219,7 @@ const Uprofile = () => {
 
 
     }
+
     useEffect(() => {
 
         getUserDetails()
@@ -258,14 +263,14 @@ const Uprofile = () => {
     if (userCred && connectedVentures) {
         console.log('user', userCred)
         console.log('venture', connectedVentures)
-        
+
         for (const key of userCred.ventures) {
 
             let m = connectedVentures.find(item => item.data._id === key.ventureId)
             console.log('mmm', m?.data.ventureName)
             if (m?.data) {
 
-                result.push({ ventureName: m?.data.ventureName, ventureId: key?.ventureId, user_status: key?.status, service_started_by: key?.service_start_by,service_complete_by:key?.service_complete_by })
+                result.push({ ventureName: m?.data.ventureName, ventureId: key?.ventureId, user_status: key?.status, service_started_by: key?.service_start_by, service_complete_by: key?.service_complete_by })
             }
 
 
@@ -274,25 +279,67 @@ const Uprofile = () => {
 
     }
 
+    //Upload User Image Handler
+    const uploadUserImage=async(e)=>{
+
+        e.preventDefault()
+        let file=e.target.files[0]
+
+        let form=new FormData()
+
+        form.append("profile-image",file)
+        
+        const apiDetails={
+            method:"post",
+            url:USER_SRV_BASE_URL+"/upload/user/profile/image",
+            data:form,
+            token:true,
+            to:"user"
+        }
+        const response=await dispatch(fetchData(apiDetails))
+        getUserDetails()
+        
+    }
+ console.log("user cred",userCred)
     return (
 
-        <div className="bg-primary w-screen  ">
+        <div className="bg-primary w-[100%] overflow-hidden  ">
 
             <Navbar />
 
             <Modal visible={visible} onClose={handlVisible} phoneNumber={userCred?.phone} verifySuccess={verifySuccess} />
 
 
-            <div className=" w-full flex px-16 pt-10 flex-col  text-gray-200 font-Outfit ">
+            <div className=" w-full flex flex-col px-16 pt-10 justify-center items-center   text-gray-200 font-Outfit ">
 
 
-                <div className=" flex mb-14  mt-14" >
 
-                    <motion.div {...commonMotion} className="w-1/2 m-2  bg-secondory flex rounded-2xl">
+                <div className=" w-[100%] flex lg:flex-row xl:flex-row md:flex-col sm:flex-col min-[100px]:flex-col justify-evenly  mb-14  overflow-hidden mt-14 " >
+
+                    <motion.div {...commonMotion} className=" xl:w-[550px] lg:w-[450px] md:w-full sm:w-[500px] min-[100px]:w-[500px] bg-secondory shadow-2xl mt-3 shadow-stone-950 flex  rounded-2xl">
 
 
-                        <div className="  w-1/3 border-gray-500 border-r mr-3 flex justify-center  ">profile photo</div>
-                        <div className="flex-grow  rounded-2xl ">
+                        <div className=" xl:block md:block sm:block hidden w-1/3 border-gray-500 border-r mr-3 text-center p-4   ">
+                            <p>Profile photo</p>
+                            <div className="   lg:w-[100px] lg:h-[100px] xl:w-[150px] xl:h-[150px] 2xl:w-[150px] 2xl:h-[150px]  md:h-[120px] md:w-[120px]  rounded-full mt-2 overflow-hidden  " >
+
+                                <img src={ userCred?.profile_image?? "/user-avatar.jpg"} alt="user profile image" className="object-fill " contentEditable />
+
+
+                            </div>
+                            <div>
+                              
+                                <input type="file" name="profile-image" onChange={uploadUserImage} className="w-1/2" />
+                                <button type="submit">upload</button>
+                               
+                            </div>
+                            <div className=" flex justify-end pr-3 top-0 left-0  " >
+                                <FontAwesomeIcon icon={faEdit} className="text-white cursor-pointer  text-end" />
+                            </div>
+
+
+                        </div>
+                        <div className="flex-grow md:pl-4 sm:pl-4 min-[500px]:pl-4 rounded-2xl ">
                             {/* user details content */}
 
                             <label htmlFor="" className="text-gray-500 text-sm  ">Username</label><br />
@@ -330,9 +377,9 @@ const Uprofile = () => {
                         </div>
 
                     </motion.div>
-                    <motion.div {...commonMotion} className="w-1/2 m-2 shadow-2xl  shadow-stone-950 bg-secondory rounded-2xl p-7 ">
+                    <motion.div {...commonMotion} className="xl:w-[550px] lg:w-[450px] md:w-[690px] l ml-2  shadow-2xl sm:w-[500px] shadow-stone-950 mt-3 bg-secondory rounded-2xl  ">
 
-                        <div className="h-full w-full  flex flex-col  " >
+                        <div className="h-full w-full  flex flex-col mt-2 ml-5 " >
 
                             {documentsFromDb?.length > 0 ? (
                                 documentsFromDb.map((value, index) => (
@@ -340,7 +387,7 @@ const Uprofile = () => {
                                     <span key={index}>
 
 
-                                        {Object.keys(value).map((key) => (
+                                        {Object.keys(value).map((key,index) => (
                                             // console.log('inside vallues key',value[key])
 
                                             <div  >
@@ -350,7 +397,8 @@ const Uprofile = () => {
                                                     <a href={value[key]} target="_blank" className="border px-3 rounded-xl" rel="noopener noreferrer">View {key}</a>
 
                                                 </div>
-                                                <hr className="border-b border-gray-500 w-2/3" />
+                                            
+                                            {index!==4-1?<hr className="border-b border-gray-500 w-2/3" />:''}
                                             </div>
 
                                         ))}
@@ -366,12 +414,12 @@ const Uprofile = () => {
                             ) : (
 
                                 documentLabels?.map((val, index) => (
-                                    <span key={index}>
+                                    <span key={index} className="">
                                         <label htmlFor="">{val.label}</label>
 
-                                        <div onClick={() => document.getElementById(val.name).click()}  >
+                                        <div onClick={() => document.getElementById(val.name).click()} >
                                             {uploadedDocuments[val?.name] ? (
-                                                <div className="flex gap-5 my-3 text-gray-400  " onClick={e => e.stopPropagation()} >
+                                                <div className="flex gap-5 my-3 text-gray-400   " onClick={e => e.stopPropagation()} >
 
                                                     <p className="border px-3 rounded-xl">{uploadedDocuments[val?.name]}</p>
                                                     <IoMdCloseCircle className="text-2xl cursor-pointer" onClick={e => removeUpload(val.name)} />
@@ -379,7 +427,7 @@ const Uprofile = () => {
                                             ) : <IoCloudUploadSharp className="w-10 h-10 cursor-pointer duration-500 " />
                                             }
 
-                                            <input type="file" accept=".pdf" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
+                                            <input type="file" accept=".pdf" className="border" name={val.name} id={val.name} onChange={handleUploadChange} style={{ display: 'none' }} />
                                         </div>
                                         <hr className="border-b border-gray-500 w-2/3" />
 
@@ -392,7 +440,7 @@ const Uprofile = () => {
                             )}
 
                             {showUploadButton ?
-                                <div className="flex justify-end" >
+                                <div className="flex justify-end  mr-7 mb-3 " >
                                     <button className="border p-1  px-5 rounded-2xl hover:bg-button " onClick={handleUpload}  > {buttonLoading ? <l-ring-2
                                         size="25"
                                         stroke="5"
@@ -400,6 +448,7 @@ const Uprofile = () => {
                                         bg-opacity="0.1"
                                         speed="0.8"
                                         color="white"
+
                                     ></l-ring-2> : "upload"}</button>
                                 </div>
                                 : ''
