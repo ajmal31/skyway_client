@@ -1,10 +1,16 @@
 import { motion } from "framer-motion"
+import { Link, useNavigate } from "react-router-dom"
 const Card = (prop) => {
-
+    const { topVentures = [] } = prop
+    const navigate=useNavigate()
     const arr = ["MT Global  ", "Adidas", "Zanzat", "G Tech", "Edumpuss"]
     //     <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className="  overflow-hidden flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">
     //     helo
     //  </motion.div>
+    const handleTopVenture=(id)=>{
+        console.log(id)
+        navigate(`/ventureDetails/${id}`)
+    }
     return (
 
         <div className="h-1/2" >
@@ -22,15 +28,20 @@ const Card = (prop) => {
                     </motion.div>
                 </div>
             ) : (
+              
                 <div className="  w-full h-[70px] justify-between font-Outfit  flex  border text-gray-400 border-gray-500  overflow-hidden " >
-                    {arr.map((val) => (
-                        <div className="border-r border-gray-500 w-4/12  flex justify-center items-center cursor-pointer " >
-                            <div className="w-5/6 py-2 overflow-hidden text-ellipsis" > 
-                                <p className="text-3xl overflow-hidden text-ellipsis" >{val}</p>
+                    {topVentures?.map((val) => (
+                       
+                            <div onClick={e=>handleTopVenture(val._id)} className="border-r border-gray-500 w-4/12  flex justify-center items-center cursor-pointer " >
+                               
+                                <div className="w-5/6 h-3/6 overflow-hidden flex  text-ellipsis" >
+                                    <p className="text-3xl overflow-hidden text-ellipsis" >{val.ventureName}</p>
+                                </div>
+                                                  
+
+
                             </div>
-
-
-                        </div>
+                       
 
                     ))}
 

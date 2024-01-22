@@ -20,10 +20,15 @@ const Background = () => {
   const [selectedCountry, setSelectedCountry] = useState('');
   const [arr, setArr] = useState([])
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const [allComments, setAllComments] = useState([])
+  const [topVentures,setTopVentures]=useState([])
 
+  //Handle showing country List
   const handleInputChange = () => {
     setShowCountries(true);
   };
+  //Handle selected country
   const handleCountrySelect = (country) => {
     setSelectedCountry(country);
     setShowCountries(false);
@@ -31,9 +36,6 @@ const Background = () => {
 
 
   };
-
-  const dispatch = useDispatch()
-  const [allComments, setAllComments] = useState([])
 
 
   //taking all comments
@@ -51,7 +53,7 @@ const Background = () => {
     setAllComments(response?.payload?.data)
 
   }
-  console.log("all commnets",allComments)
+  //Taking all contry names
   const getAllContries = async () => {
 
     try {
@@ -74,10 +76,33 @@ const Background = () => {
 
 
   }
+  const getTopVentures=async()=>{
+
+    console.log("is it enter")
+    const apiDetails={
+      method:'post',
+      url:VENTURE_SRV_BASE_URL+"getAllVentures",
+      data:{type:"allowed"},
+      token:false,
+      to:'venture'
+    }
+    const response=await dispatch(fetchData(apiDetails))
+    const {Allventures}=response?.payload?.data?.response
+    // console.log("all venture oh home filter 5 items",Allventures)
+
+    let k=Allventures.slice(0,5)
+    console.log("filtered items",k)
+    setTopVentures(k)
+
+  }
+  
+   console.log("vnture state",topVentures)
+  //useEffect
   useEffect(() => {
 
     getAllComments()
     getAllContries()
+    getTopVentures()
   }, [])
 
 
@@ -171,7 +196,7 @@ const Background = () => {
           </div>
 
 
-          <Card />
+          <Card topVentures={topVentures} />
 
           {/* Home page second screeen */}
           <div className="h-screen mt-24   " >
