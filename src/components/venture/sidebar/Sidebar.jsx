@@ -16,13 +16,12 @@ const Sidebar = () => {
   const [open, setOpen] = useState(true)
   const dispatch=useDispatch()
   const navigate=useNavigate()
+  const ventureName=localStorage.getItem("ventureName")
   const sidebarItems = [
     { title: "Profile", path: "/venture/profile", icon: <CgProfile /> },
     { title: "Dashboard", path: "/venture/dashboard", icon: <MdSpaceDashboard /> },
     { title: "Users", path: "/venture/users", icon: <TbUsers /> },
     { title: "chats", path: "/venture/chats", icon: <IoMdChatbubbles /> },
-    { title: "Wallet", path: "/venture/wallet", icon: <FaGoogleWallet /> },
-    { title: "History", path: "/venture/paymentHistory", icon: <GiTakeMyMoney /> },
     { title: "Feedback", path: "/venture/feedbacks", icon: <VscFeedback /> },
     { title: "Logout", path: "/admin/Logout", icon: <RiLogoutCircleRFill /> },
 
@@ -51,7 +50,7 @@ const Sidebar = () => {
             !open ? "" :
 
             <li className="list-none duration-500 ">
-              venture -side
+             {ventureName}
             </li>
 
         }

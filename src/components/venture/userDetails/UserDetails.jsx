@@ -182,7 +182,7 @@ const ShowingUserDetails = () => {
 
                 </div>
             </div>
-            <div className="w-1/2 h-1/2  rounded-2xl font-Outfit bg-primary shadow-lg hover:border-b-2 p-2 border-gray-500 ">
+            <div className="w-1/4 h-1/2  rounded-2xl font-Outfit bg-primary shadow-lg hover:border-b-2 p-2 border-gray-500 ">
 
                 <div className="h-full w-full  " >
 
@@ -192,12 +192,12 @@ const ShowingUserDetails = () => {
                         <p className="font-semibold" >TOTAL USERS</p>
 
                     </div> */}
-                    <div className="  h-4/5 flex justify-evenly">
+                    <div className="  h-4/5 flex item justify-center">
 
                         <div className=" flex items-center flex-col  p-2 w-1/2 " >
 
 
-                            <p className="flex justify-center text-2xl uppercase   rounded-2xl hover:underline hover:underline-offset-8  duration-700 transition">user status</p>
+                            <p className=" w-[200px] text-2xl uppercase ">user status</p>
                             <div className="  flex flex-col justify-evenly w-full h-full">
 
                                 <div className="  w-full h-1/2 flex  items-center justify-center ">
@@ -217,7 +217,7 @@ const ShowingUserDetails = () => {
                             </div>
 
                         </div>
-                        <div className=" border-l w-1/2 flex flex-col  items-center "  >
+                        {/* <div className=" border-l w-1/2 flex flex-col  items-center "  >
 
                             <div className=" flex justify-center pt-2 h-1/5 " >
                                 <p className="text-2xl uppercase">service status</p>
@@ -243,7 +243,7 @@ const ShowingUserDetails = () => {
                             </div>
                             {userData !== null && userData?.ventures[userData?.ventures?.findIndex(venture => venture?.ventureId === ventureId)]?.service_complete_by? <p>Waiting for payment</p> :  <button className=" border px-2 py-1 rounded-xl hover:bg-button transition duration-300 "  onClick={e=>handleStartService("completed")} >completed</button>  }                        
 
-                        </div>
+                        </div> */}
                         
 
                     </div>

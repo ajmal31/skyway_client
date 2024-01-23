@@ -4,7 +4,7 @@ const About =()=>{
 
     return(
 
-        <div className="bg-primary  w-screen h-screen" >
+        <div className="bg-primary  w-[100%] h-[100%" >
             <Navbar/>
           <AboutCom/>
 

@@ -108,11 +108,11 @@ const VenturesTable = () => {
 
                             <td className="p-3 ">{value?.admin_allowed}</td>
                             <td className="flex justify-center" >
-                            <div >
+                            <div className=" flex justify-center items-center">
                             <Link to={`/admin/ventureDetails/${value._id}` } ><button className="border border-black rounded-2xl shadow-2xl px-2 ml-2"   ><td className="p-1" >View</td></button></Link>
                             {value?.admin_allowed === "pending" ? <button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" onClick={e => updateVentureStatus(value?._id,"allowed")} > <td className="p-2">Allow</td></button> : ''}
                             {value?.admin_allowed==="allowed"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <td className="p-1 text-right " onClick={e=>updateVentureStatus(value._id,"rejected")} >Reject</td></button>:''}
-                            {value?.admin_allowed==="rejected"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2" > <ImBlocked className="mt-2 text-red-700 flex ml-5 text-3xl" /></button>:'' }
+                            {value?.admin_allowed==="rejected"?<button className=" border border-black rounded-2xl shadow-2xl px-2 ml-2 text-center cursor-not-allowed " > Rejected</button>:'' }
                             
                             </div>
                             </td>

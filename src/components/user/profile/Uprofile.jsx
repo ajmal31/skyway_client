@@ -323,7 +323,7 @@ const Uprofile = () => {
                             <p>Profile photo</p>
                             <div className="   lg:w-[100px] lg:h-[100px] xl:w-[150px] xl:h-[150px] 2xl:w-[150px] 2xl:h-[150px]  md:h-[120px] md:w-[120px]  rounded-full mt-2 overflow-hidden  " >
 
-                                <img src={ userCred?.profile_image?? "/user-avatar.jpg"} alt="user profile image" className="object-fill " contentEditable />
+                                <img src={ userCred?.profile_image?? "/user-avatar.jpg"} alt="user profile image"  className="object-fill h-full w-full " contentEditable />
 
 
                             </div>

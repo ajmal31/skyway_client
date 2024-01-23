@@ -20,7 +20,7 @@ const Comment=({allComments,comments})=>{
               <div className="w-full h-2/6  flex justify-center " >
 
                 <div className=" w-1/2  h-full rounded-full overflow-hidden " >
-                  <img src={ val?.userId?.profile_image ??"/user-avatar.jpg"} className="w-full  h-auto object-cover" alt="user-profile" />
+                  <img src={ val?.userId?.profile_image ??"/user-avatar.jpg"} className="w-[150px]  h-[90px] object-cover" alt="user-profile" />
                 </div>
 
               </div>

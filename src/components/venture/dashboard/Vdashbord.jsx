@@ -8,6 +8,9 @@ const VentureDashbord = () => {
 
     const dispatch=useDispatch() 
     const [totalUsersCount,setTotalUsersCount]=useState(0)
+    const [allowedUsersCount,setAllowedUsersCount]=useState(0)
+    const [rejectedUsersCount,setRejectedUsersCount]=useState(0)
+    const [pendingUsersCount,setPendingUsersCount]=useState(0)
     const Hover = {
         initial: { scale: 1 },
         whileHover: { scale: 1.1 }
@@ -22,35 +25,33 @@ const VentureDashbord = () => {
         animate: { translateY: 0, opacity: 1 },
         transition: { duration: 0.6, ease: "easeInOut" }
     }
-    const paymentDiv = {
-        initial: { translateY: -50, opacity: 0 },
-        animate: { translateY: 0, opacity: 1 },
-        transition: { duration: 0.9, ease: "easeInOut" }
-    }
-    const opacity = {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 1.5 }
 
-    }
-
-    const getUsersCountByVenture=async()=>{
+    const getUsersCountByVenture=async(url,status=null)=>{
 
         const apiDetails={
            method:"get",
-           url: USER_SRV_BASE_URL+"users/count/by/venture",
+           url: status ?USER_SRV_BASE_URL+url+status:USER_SRV_BASE_URL+url,
            data:null,
            token:true,
            to:"venture"
 
         }
         const response=await dispatch(fetchData(apiDetails))
-        console.log('response user count based on venture',response)
-        setTotalUsersCount(response?.payload?.data)
+        const {data}=response?.payload
+        if(!status)setTotalUsersCount(data)
+        else if(status==="allowed") setAllowedUsersCount(data)
+        else if(status==="pending") setPendingUsersCount(data)
+        else if(status==="rejected") setRejectedUsersCount(data)
+        
     }
 
+    
+
     useEffect(()=>{
-        getUsersCountByVenture()
+        getUsersCountByVenture("users/count/by/venture")
+        getUsersCountByVenture("users/count/by/venture/","allowed")
+        getUsersCountByVenture("users/count/by/venture/","pending")
+        getUsersCountByVenture("users/count/by/venture/","rejected")
 
     },[])
 
@@ -91,18 +92,19 @@ const VentureDashbord = () => {
 
                     </div>
                     <div className="flex  w-full h-2/3 mt-3 ">
+                    <div className=" justify-center flex items-center w-3/12 h-1/2 " >
+                            <p className="text-1xl" >{totalUsersCount}</p>
+                        </div>
                         <div className="border-r-2 border-gray-400 flex justify-center items-center w-3/12 h-1/2  "  >
-                            <p className="text-1xl" >helo4</p>
+                            <p className="text-1xl" >{pendingUsersCount}</p>
                         </div>
                         <div className="border-r-2 flex justify-center items-center border-gray-400 w-3/12 h-1/2 " >
-                            <p className="text-1xl" >helo3</p>
+                            <p className="text-1xl" >{rejectedUsersCount}</p>
                         </div>
                         <div className="border-r-2  border-gray-400 justify-center flex items-center w-3/12 h-1/2 " >
-                            <p className="text-1xl" >helo2</p>
+                            <p className="text-1xl" >{allowedUsersCount}</p>
                         </div>
-                        <div className=" justify-center flex items-center w-3/12 h-1/2 " >
-                            <p className="text-1xl" >helo</p>
-                        </div>
+                       
                     </div>
                 </motion.div>
                 {/* <motion.div  {...paymentDiv} className=" bg-primary cursor-pointer hover:scroll-m-1.5  shadow-lg rounded-3xl w-4/12 hover:bg-button duration-500 hover:border-b-4 border-gray-400 font-semibold justify-between font-Outfit flex items-center flex-col p-4 ">

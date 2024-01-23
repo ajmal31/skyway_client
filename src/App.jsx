@@ -35,6 +35,8 @@ import { ventureLogout } from "./redux/slices/ventureSlices"
 import Users from "./pages/venture/users/Users"
 import UserDetails from "./pages/venture/userDetails/UserDetails"
 import VentureProfile from "./pages/venture/profile/Profile"
+import PendingVenture from "./pages/venture/pending-venture/PendingVenture"
+import VentureFeedbacks from "./pages/venture/venture-feedbacks/VentureFeedbacks"
 
 
 //Admin Related imports
@@ -104,11 +106,12 @@ function App() {
          <Route path="/venture/register" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureRegister/>}/>
          <Route path="/venture/login" element={ventureToken&&ventureId?<Navigate to={"/venture/dashboard"}/>:<VentureLogin/>}/>
          <Route path="/venture/dashboard" element={ ventureStatus==="pending"? <Navigate to={'/venture/pending'}/>:ventureStatus==="allowed" && ventureToken&&ventureId?<VentureDashbord/>:<Navigate to={'/venture/login'} />}/>
-         <Route path="/venture/pending" element={ventureStatus==="pending"?<h1> Your venture Registration  process is going on..be patient pleasse wait for the confirmation</h1>:<Navigate to={'/venture/dashboard'} />}/>
+         <Route path="/venture/pending" element={ventureStatus==="pending"?<PendingVenture/>:<Navigate to={'/venture/dashboard'} />}/>
          <Route path="/venture/chats" element={ventureId&&ventureToken? <Suspense ><Chat roll={"venture"} /></Suspense> :<Navigate to={'/venture/login'} />}/>
          <Route path="/venture/users" element={ventureId&&ventureToken ? <Users/>:<VentureLogin/>}/>
          <Route path="/venture/userDetails/:userId" element={ventureId&&ventureToken ? <UserDetails/>:<VentureLogin/>}/>
          <Route path="/venture/profile" element={ventureId&&ventureToken ? <VentureProfile/>:<VentureLogin/>}/>
+         <Route path="/venture/feedbacks" element={ventureId&&ventureToken ? <VentureFeedbacks/>:<VentureLogin/>}/>
         
          
    

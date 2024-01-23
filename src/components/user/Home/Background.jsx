@@ -76,6 +76,7 @@ const Background = () => {
 
 
   }
+  //Get top 5 ventures
   const getTopVentures=async()=>{
 
     console.log("is it enter")
@@ -91,7 +92,6 @@ const Background = () => {
     // console.log("all venture oh home filter 5 items",Allventures)
 
     let k=Allventures.slice(0,5)
-    console.log("filtered items",k)
     setTopVentures(k)
 
   }

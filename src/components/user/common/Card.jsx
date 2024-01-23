@@ -3,12 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 const Card = (prop) => {
     const { topVentures = [] } = prop
     const navigate=useNavigate()
-    const arr = ["MT Global  ", "Adidas", "Zanzat", "G Tech", "Edumpuss"]
-    //     <motion.div initial={{ scale: 1 }} whileHover={{ scale: 1.1 }} className="  overflow-hidden flex-1 m-3 rounded-xl bg-secondory h-48 flex justify-center items-center shadow-2xl shadow-black ">
-    //     helo
-    //  </motion.div>
+    
     const handleTopVenture=(id)=>{
-        console.log(id)
         navigate(`/ventureDetails/${id}`)
     }
     return (
@@ -35,7 +31,7 @@ const Card = (prop) => {
                             <div onClick={e=>handleTopVenture(val._id)} className="border-r border-gray-500 w-4/12  flex justify-center items-center cursor-pointer " >
                                
                                 <div className="w-5/6 h-3/6 overflow-hidden flex  text-ellipsis" >
-                                    <p className="text-3xl overflow-hidden text-ellipsis" >{val.ventureName}</p>
+                                    <p className="text-3xl overflow-hidden text-ellipsis" >{val.ventureName??val}</p>
                                 </div>
                                                   
 

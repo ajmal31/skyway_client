@@ -19,8 +19,8 @@ const BgBox = ({ id }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [ventureData, setVentureData] = useState({})
-  const [allComments,setAllComments]=useState([])
-  const userName=localStorage.getItem("username")
+  const [allComments, setAllComments] = useState([])
+  const userName = localStorage.getItem("username")
   //taking particular venture details
   const getOneVenture = async () => {
 
@@ -35,7 +35,7 @@ const BgBox = ({ id }) => {
     setVentureData(response?.payload?.data)
 
   }
- 
+
   //get all comments
   const getAllComments = async () => {
 
@@ -130,7 +130,7 @@ const BgBox = ({ id }) => {
   }
 
   const [shouldShimmer, setShouldShimmer] = useState(false);
-  
+
   //let connect button jump in each an every second
   useEffect(() => {
     const interval = setInterval(() => {
@@ -140,9 +140,9 @@ const BgBox = ({ id }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const comment_url=VENTURE_SRV_BASE_URL+`create/comment`
-  const data={vid:id,userName:userName}
-  const commentUpdated=()=>getAllComments()    
+  const comment_url = VENTURE_SRV_BASE_URL + `create/comment`
+  const data = { vid: id, userName: userName }
+  const commentUpdated = () => getAllComments()
 
 
   return (
@@ -174,7 +174,7 @@ const BgBox = ({ id }) => {
       <Comment allComments={allComments} comments={"venture"} />
       <p className="text-4xl text-center my-8 font-Outfit">Point Out Your Valuable Words About us</p>
       <Feedback comment_url={comment_url} data={data} commentUpdated={commentUpdated} roll={"venture"} />
-      <Footer/>
+      <Footer />
 
     </div>
 
