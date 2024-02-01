@@ -78,7 +78,7 @@ const Contact = ({ chats, roll, socket }) => {
 
                     <div className="  flex gap-5 hover:bg-button cursor-pointer rounded-xl p-1 " key={index} onClick={e => oppositePersonData(val?.data[0]?.data)} >
 
-                        <Dp h={"h-16"} w={"w-2/12"} />
+                        <Dp h={"h-16"} w={"w-2/12"} image={roll==="venture"?val?.data[0]?.data?.profile_image:val?.data[0]?.data?.logo} />
                         <div className="   w-10/12 " >
                             <div className="flex justify-between" >
 

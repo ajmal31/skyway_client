@@ -36,7 +36,7 @@ const UsersTable = (prop) => {
     }, [])
 
     const handleAllow = async (uid) => {
-
+         console.log("handle allow clicked ")
         const apiDetails = {
             method: 'post',
             url: USER_SRV_BASE_URL + '/changeUserStatus',

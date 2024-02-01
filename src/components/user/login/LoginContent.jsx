@@ -92,8 +92,8 @@ const LoginContent = () => {
 
     return (
 
-        <div className="grid grid-cols-2 h-4/5 mt-5   bg-secondory">
-            <div className=" bg-secondory h-2/2 w-4/8 text-black border-r-4 border-gray-200 grid place-items-start  "  >
+        <div className="grid grid-cols-2 h-4/5 mt-5  bg-secondory">
+            <div className=" bg-secondory h-2/2 w-4/8 text-black border-r-4 sm:hidden lg:block border-gray-200 grid place-items-start  "  >
 
                 <div className=" bg-secondor w-11/12 h-full  ">
 
@@ -118,10 +118,10 @@ const LoginContent = () => {
 
 
             <form onSubmit={handleLogin}>
-                <div className=" bg-secondory flex justify-center">
+                <div className=" bg-secondory flex   justify-center">
 
 
-                    <div className=" h-1/2 w-3/4 mt-20" >
+                    <div className=" h-1/2 lg:w-3/4 sm:w-full   mt-20" >
                         <div className="flex justify-start flex-col">
                             {/* <p className="text-sm flex justify-start pl-2  text-gray-300">email</p> */}
 

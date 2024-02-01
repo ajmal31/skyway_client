@@ -1,6 +1,6 @@
 import UsersTable from "../../../components/common/UsersTable"
 import { USER_SRV_BASE_URL } from "../../../data/const"
-import Sidebar from "../../../components/venture/sidebar/sidebar"
+import Sidebar from "../../../components/venture/sidebar/Sidebar"
 const Users=()=>{
 
     const apiDetails={

@@ -1,5 +1,6 @@
-import VentureProfile from "../../../components/venture/profile/Profile"
-import Sidebar from "../../../components/venture/sidebar/sidebar"
+import VentureProfile from "../../../components/venture/profile/Profile.jsx"
+// import Sidebar from "../../../components/venture/sidebar/sidebar.jsx"
+import Sidebar from "../../../components/venture/sidebar/Sidebar"
 const Profile=()=>{
 
 

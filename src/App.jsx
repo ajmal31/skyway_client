@@ -10,43 +10,44 @@ import {useDispatch} from "react-redux"
 
 
 //User related imports
-import UserLogin from "./pages/user/login/UserLogin"
-import UserRegister from "./pages/user/register/UserRegister"
-import Home from "./pages/user/home/Home"
-import UserSlice from "./redux/slices/UserSlice"
+import UserLogin from "./pages/user/login/UserLogin.jsx"
+import UserRegister from "./pages/user/register/UserRegister.jsx"
+import Home from "./pages/user/home/Home.jsx"
+import UserSlice from "./redux/slices/UserSlice.js"
 import { useSelector } from "react-redux"
-import Profile from "./pages/user/profile/Profile"
-import VentureList from "./pages/user/ventures/ventureList"
-import VentureDetails from "./pages/user/ventureDetails/VentureDetails"
-import { userLogout } from "./redux/slices/UserSlice"
-import About from "./pages/user/About/About"
-import Contact from "./pages/user/contact/contact"
+import Profile from "./pages/user/profile/Profile.jsx"
+// import VentureList from "./pages/user/ventures/ventureList"
+import VentureList from "./pages/user/ventures/VentureList.jsx"
+import VentureDetails from "./pages/user/ventureDetails/VentureDetails.jsx"
+import { userLogout } from "./redux/slices/UserSlice.js"
+import About from "./pages/user/About/About.jsx"
+import Contact from "./pages/user/contact/contact.jsx"
 
 
 
 
 //Venture related imports
 
-import VentureRegister from "./pages/venture/register/VentureRegister"
-import VentureLogin from "./pages/venture/Login/VentureLogin"
-import VentureDashbord from "./pages/venture/dashbord/VentureDashbord"
-import ventureSlices from "./redux/slices/ventureSlices"
-import { ventureLogout } from "./redux/slices/ventureSlices"
-import Users from "./pages/venture/users/Users"
-import UserDetails from "./pages/venture/userDetails/UserDetails"
-import VentureProfile from "./pages/venture/profile/Profile"
-import PendingVenture from "./pages/venture/pending-venture/PendingVenture"
-import VentureFeedbacks from "./pages/venture/venture-feedbacks/VentureFeedbacks"
+import VentureRegister from "./pages/venture/register/VentureRegister.jsx"
+import VentureLogin from "./pages/venture/Login/VentureLogin.jsx"
+import VentureDashbord from "./pages/venture/dashbord/VentureDashbord.jsx"
+import ventureSlices from "./redux/slices/ventureSlices.js"
+import { ventureLogout } from "./redux/slices/ventureSlices.js"
+import Users from "./pages/venture/users/Users.jsx"
+import UserDetails from "./pages/venture/userDetails/UserDetails.jsx"
+import VentureProfile from "./pages/venture/profile/Profile.jsx"
+import PendingVenture from "./pages/venture/pending-venture/PendingVenture.jsx"
+import VentureFeedbacks from "./pages/venture/venture-feedbacks/VentureFeedbacks.jsx"
 
 
 //Admin Related imports
-import AdminLogin from "./pages/admin/Login/AdminLogin"
-import adminSlice from "./redux/slices/adminSlice"
-import UsersList from "./pages/admin/usersList/UsersList"
+import AdminLogin from "./pages/admin/Login/AdminLogin.jsx"
+import adminSlice from "./redux/slices/adminSlice.js"
+import UsersList from "./pages/admin/usersList/UsersList.jsx"
 import AdminHome from "./pages/admin/home/Dasboard"
-import ListVentures from "./pages/admin/venturesList/ListVentures"  
-import Dashboard from "./components/admin/dashboard/Dashboard"    
-import AventureDetails from "./pages/admin/ventureDetails/ventureDetails"
+import ListVentures from "./pages/admin/venturesList/ListVentures.jsx"  
+// import Dashboard from "./components/admin/dashboard/Dashboard"    
+import AventureDetails from "./pages/admin/ventureDetails/VentureDetails.jsx"
 
 
 // Chat Related Imports

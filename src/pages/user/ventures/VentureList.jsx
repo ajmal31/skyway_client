@@ -1,4 +1,4 @@
-import ListVentures from "../../../components/user/ventureList/listVentures"
+import ListVentures from "../../../components/user/ventureList/ListVentures"
 import { VENTURE_SRV_BASE_URL } from "../../../data/const"
 import { useParams } from "react-router-dom"
 const VentureList=()=>{

@@ -1,5 +1,5 @@
 import Vdashbord from "../../../components/venture/dashboard/Vdashbord"
-import Sidebar from "../../../components/venture/sidebar/sidebar"
+import Sidebar from "../../../components/venture/sidebar/Sidebar.jsx"
 const VentureDashbord = () => {
 
    return (

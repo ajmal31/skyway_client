@@ -1,4 +1,4 @@
-import Sidebar from "../../../components/venture/sidebar/Sidebar"
+import Sidebar from "../../../components/venture/sidebar/Sidebar.jsx"
 import Feedback from "../../../components/venture/Feedbacks/Feedback"
 const VentureFeedbacks=()=>{
 

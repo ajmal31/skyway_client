@@ -153,15 +153,15 @@ const ChatContent = ({ roll,socket }) => {
         <div className="bg-secondory h-full w-3/5 px-8  pb-14 pt-2 text-gray-300 rounded-xl">
             <div className="w-full h-full  ">
                 <div className="h-1/6 w-full  flex bg-secondory">
-                    <div className="w-2/12 flex flex-wrap justify-center items-center">
-                        <div className="h-full w-4/5 rounded-full">
-                            <img src="/temp/venture-contact-dp.png" className="h-full w-full" alt="Venture_Contact_Image" />
+                    <div className="w-2/12 flex flex-wrap justify-center items-center ">
+                        <div className="h-5/6  w-3/5 rounded-full overflow-hidden">
+                            <img src={roll==="venture"? data.oppsitePersonData.profile_image:data.oppsitePersonData?.logo ??`/temp/venture-contact-dp.png`} className="h-full w-full" alt="Venture_Contact_Image" />
                         </div>
                     </div>
                     <div className="w-10/12  h-full">
                         <div className="" >
-                            <p className="font-semibold mt-3">{roll === "venture" ? data.oppsitePersonData.username : data.oppsitePersonData.ventureName}</p>
-                            <p className="">Last seen 12.30 pm</p>
+                            <p className="font-semibold mt-6 ">{roll === "venture" ? data.oppsitePersonData.username : data.oppsitePersonData.ventureName}</p>
+                            {/* <p className="">Last seen 12.30 pm</p> */}
                         </div>
                     </div>
                 </div>

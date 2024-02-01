@@ -9,13 +9,13 @@ import env from "../data/env";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: env.apiKey,
-  authDomain: env.authDomain,
-  projectId: env.projectId,
-  storageBucket: env.storageBucket,
-  messagingSenderId: env.messagingSenderId,
-  appId: env.appId,
-  measurementId: env.measurementId
+  apiKey: env?.apiKey,
+  authDomain: env?.authDomain,
+  projectId: env?.projectId,
+  storageBucket: env?.storageBucket,
+  messagingSenderId: env?.messagingSenderId,
+  appId: env?.appId,
+  measurementId: env?.measurementId
 };
 
 // Initialize Firebase

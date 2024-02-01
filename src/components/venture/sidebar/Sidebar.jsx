@@ -9,7 +9,7 @@ import { RiLogoutCircleRFill } from "react-icons/ri";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { IoMdChatbubbles } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { ventureLogout } from "../../../redux/slices/ventureSlices";
+import { ventureLogout } from "../../../redux/slices/ventureSlices.js";
 import { useDispatch } from "react-redux";
 const Sidebar = () => {
 
